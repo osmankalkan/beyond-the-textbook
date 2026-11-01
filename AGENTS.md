@@ -1,4 +1,4 @@
-# Working on Denklem Atölyesi
+# Working on Beyond the Textbook
 
 ## Project context
 
