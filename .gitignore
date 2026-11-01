@@ -1,0 +1,17 @@
+# Local source material and generated archives
+/private/
+/artifacts/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+
+# Dependencies, caches, and operating-system files
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+*.log
+.vscode/
+.idea/
