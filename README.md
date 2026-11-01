@@ -1,6 +1,10 @@
-# Denklem Atölyesi
+# Beyond the Textbook · Denklem Atölyesi
 
-Wei-Chau Xie'nin *Differential Equations for Engineers* kitabının §3.1 (basılı s.87–90 / PDF s.105–108) temelinde hazırlanmış Türkçe öğrenme prototipi.
+Beyond the Textbook projesini başlattık: kitapları Türkçe ders notları, etkileşimli deneyler, alıştırmalar ve kişisel notlarla çalışılabilen bir öğrenme alanına dönüştürüyoruz. Öğrenme akışı: **oku → tahmin et → dene → çöz → kendi cümlelerinle açıkla**.
+
+İlk prototip olan **Denklem Atölyesi**, Wei-Chau Xie'nin *Differential Equations for Engineers* kitabının §3.1 (basılı s.87–90 / PDF s.105–108) temelinde hazırlanmıştır. Zamanla başka bölümler ve farklı kitaplar ekleyeceğiz. Şu anda yalnızca §3.1 geliştirilmiş ders olarak hazırdır; çok kitaplı kitaplık henüz uygulanmamıştır.
+
+Bu klasör, projenin güncel çalışma klasörüdür. Devam etmeden önce [proje durumu ve devam notlarına](docs/PROJE-DURUMU.md) bakabilirsiniz. [Önizleme](docs/onizleme.jpg) ilk prototipin yerel QA görünümüdür.
 
 ## Çalıştırma
 
@@ -11,6 +15,8 @@ npm start
 ```
 
 Tarayıcı: http://127.0.0.1:4317
+
+Yerelde çalıştırırken **ChatGPT ile giriş veya başka bir hesap gerekmez**. Node.js kurulu olmalıdır; bağımlılıklar yerel olarak dahil edildiğinden `npm install` gerekmez.
 
 Alternatif olarak `dist` klasörünü herhangi bir statik HTTP sunucusuyla sunabilirsiniz. `file://` üzerinden açmak yerine HTTP kullanın; ders Markdown dosyası `fetch` ile okunur. Üretimde yalnızca `dist` sunulur.
 
@@ -38,7 +44,17 @@ Bir sunucu uç noktası ve sunucu ortamında saklanan API anahtarı gerekir. Tar
 
 ## Tam kitap çıkarımı
 
-Üst dizindeki `differential-equations-for-engineers-ham.md` ayrı bir otomatik metin çıkarımıdır. Şekiller dahil değildir; formüller ve okuma sırası doğrulanmamıştır. Uygulamaya ve yayımlanan dosyalara eklenmez. Kullanıcının PDF'si de yayımlanan pakete dahil değildir.
+`private/book/` klasöründeki `differential-equations-for-engineers-ham.md` ayrı bir otomatik metin çıkarımıdır. Şekiller dahil değildir; formüller ve okuma sırası doğrulanmamıştır. Kullanıcının PDF'sinin yerel kopyası da aynı klasördedir. Bu klasör Git dışında tutulur; uygulamaya ve yayımlanan dosyalara eklenmez.
+
+## Yayın ve GitHub
+
+[Mevcut özel uygulama](https://denklem-atolyesi-xie-20261101.readyrice1025.chatgpt.site), yayın servisindeki özel erişim ayarı nedeniyle ChatGPT ile giriş ister. Bu, uygulamanın bir bağımlılığı değildir; `dist/` uygun bir statik sunucuda girişsiz çalışır. Mevcut özel erişim ayarı değiştirilmedi.
+
+[GitHub deposu](https://github.com/osmankalkan/beyond-the-textbook), projenin kaynak kodunu ve geliştirme belgelerini barındırır. İlk aktarım, mevcut iki prototip commit'i korunarak üç ayrı başlangıç commit'iyle hazırlanmıştır: Git kapsamı, prototip ve geliştirme belgeleri, proje hedefi ve başlangıç rehberi.
+
+Geliştirmeyi küçük adımlarla sürdüreceğiz. Sonraki değişiklikler, commit veya push açıkça istenmedikçe yerelde kalır. GitHub'a kaynak kodu aktarmak uygulamayı otomatik olarak yayımlamaz.
+
+`.gitignore`, `private/`, `artifacts/`, `.env` dosyaları ve yerel önbellekleri kapsam dışı bırakır. `artifacts/ilk-prototip-kaynak.zip`, ilk prototipin kaynak anlık görüntüsüdür; güncel çalışma dosyaları bu klasörün kökünde ve `dist/` altında bulunur.
 
 ## Bağımlılıklar
 
