@@ -21,6 +21,14 @@ export function buildingMetrics({tau, ratio, period, amplitude}) {
   const gain=1/Math.hypot(1+ratio,tau*omega), phase=Math.atan2(tau*omega,1+ratio);
   return {omega,decay,gain,phase,amplitude:amplitude*gain,lag:phase/omega};
 }
+export function buildingSteady(t,p) {
+  const m=buildingMetrics(p);
+  return p.setpoint + m.amplitude*Math.sin(m.omega*t-m.phase);
+}
+export function buildingTransient(t,p) {
+  const m=buildingMetrics(p);
+  return m.amplitude*Math.sin(m.phase)*Math.exp(-m.decay*t);
+}
 export function building(t,p) {
   const m=buildingMetrics(p);
   return p.setpoint + m.amplitude*(Math.sin(m.omega*t-m.phase)+Math.sin(m.phase)*Math.exp(-m.decay*t));
