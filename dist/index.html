@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Denklem Atölyesi · Isınma ve Soğuma</title>
+  <meta name="description" content="Diferansiyel denklemleri okuyarak, deneyerek ve çözerek öğren. Wei-Chau Xie, bölüm 3.1 için kişisel çalışma alanı.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="#lab"><span class="brand-mark">∂</span><span>Denklem<span class="brand-second">Atölyesi</span></span></a>
+  <div class="book"><div class="book-cover" aria-hidden="true">DIFFERENTIAL<br>EQUATIONS<br><small>FOR ENGINEERS</small><span>∫</span></div><div><p class="eyebrow">ÇALIŞTIĞIN KİTAP</p><p class="book-name">Differential Equations<br>for Engineers</p><small>Wei-Chau Xie · 2010</small></div></div>
+  <p class="nav-label">ÇALIŞMA ALANI</p>
+  <nav aria-label="Ana menü">
+    <a href="#lesson" data-view="lesson"><span>≡</span> Ders notu <small>3.1</small></a>
+    <a href="#lab" data-view="lab"><span>⌁</span> Deney laboratuvarı <span class="nav-dot"></span></a>
+    <a href="#practice" data-view="practice"><span>✎</span> Alıştırmalar <small>4</small></a>
+    <a href="#notes" data-view="notes"><span>▤</span> Not defterim</a>
+    <a href="#map" data-view="map"><span>▦</span> Kitap haritası <small>12</small></a>
+  </nav>
+  <div class="journey"><p>Bu bölümdeki ilerlemen <strong id="progress-label">0 / 5</strong></p><div class="progress-track"><span id="progress-bar"></span></div><small>Ders notu + dört alıştırma</small></div>
+  <div class="sidebar-footer"><span class="green-dot"></span> Kişisel çalışma alanı<p>§3.1 · Basılı sayfa 87–90</p><a href="#source" data-view="source">Kaynak ve uygulama bilgisi ↗</a></div>
+</aside>
+<div class="workspace">
+  <header class="topbar"><button class="mobile-menu icon-button" id="menu" aria-label="Menüyü aç" aria-expanded="false">☰</button><div class="breadcrumb">Kitaplığım <span>/</span> Diferansiyel Denklemler <span>/</span> <strong>03</strong></div><a class="search-link" href="#map">⌕ <span>Kitapta konu bul</span><kbd>/</kbd></a></header>
+  <main id="main">
+    <div class="page-heading"><div><p class="eyebrow"><span class="chapter-pill">BÖLÜM 03</span> BİRİNCİ MERTEBE DENKLEMLERİN UYGULAMALARI</p><h1>Isınma ve soğuma<span>.</span></h1><p class="page-description">Bir sıcaklık farkından, bir diferansiyel denkleme. Oku, tahmin et, dene.</p></div><a class="button secondary download" href="lesson.md" download="isinma-ve-soguma.md">↓ <span>Ders notunu indir</span><small>.md</small></a></div>
+    <div class="view-heading" id="view-heading"></div>
+    <section id="view-lab" class="view" aria-label="Deney laboratuvarı">
+      <div class="lab-toolbar"><div class="segmented" role="group" aria-label="Deney seç"><button data-mode="cooling" class="selected">01 <span>Soğuyan cisim</span></button><button data-mode="building">02 <span>Isıtılan bina</span></button></div><span class="source-tag" id="lab-source">Örnek 3.1 · s.87–88</span></div>
+      <div class="lab-grid">
+        <section class="panel controls-panel" aria-label="Deney parametreleri"><div class="panel-kicker">DENEY PARAMETRELERİ <span>↗</span></div><div id="physical-illustration"></div><div id="controls"></div><button class="text-button preset-button" id="preset">↺ Kitaptaki örneği yükle</button></section>
+        <section class="panel plot-panel" aria-label="Sıcaklık grafiği"><div class="plot-heading"><div><p class="eyebrow" id="plot-kicker">NEWTON'UN SOĞUMA YASASI</p><h2 id="plot-title">Sıcaklığın zamana yolculuğu</h2></div><button class="icon-button" id="export-svg" title="Grafiği SVG olarak indir" aria-label="Grafiği SVG olarak indir">↓</button></div><div class="legend" id="legend"></div><div class="chart-container"><svg id="chart" role="img" aria-labelledby="chart-title chart-description" viewBox="0 0 780 320"></svg></div><div class="timeline"><button class="play-button" id="play" aria-label="Zamanı oynat">▶</button><label class="sr-only" for="time">Deney zamanı</label><input type="range" id="time" min="0" max="120" value="20" step="0.5"><output id="time-output" for="time">20 dk</output></div><div class="chart-options"><label id="euler-option"><input type="checkbox" id="show-euler"> Euler yaklaşımını karşılaştır</label><span id="chart-note">Kesin çözüm · sabit ortam</span><button class="text-button" id="export-csv">Verileri indir ↗</button></div></section>
+      </div>
+      <div class="metrics" id="metrics"></div>
+      <div class="below-grid"><section class="equation-panel"><p class="eyebrow">MODELİN KALBİNDE</p><div id="equation"></div><p id="equation-explanation"></p><a href="#lesson">Çözümün adımlarını incele <span>→</span></a></section><section class="discovery-panel"><span class="discovery-icon">✧</span><div><p class="eyebrow">ÖNCE TAHMİN ET</p><h3 id="discovery-question"></h3><p id="discovery-intro"></p><details id="discovery-details"><summary>Bir ipucu göster <span>＋</span></summary><p id="discovery-hint"></p></details></div></section></div>
+      <p class="lab-footnote" id="lab-footnote"></p>
+    </section>
+    <section id="view-lesson" class="view" hidden><div class="reading-layout"><article class="panel prose" id="lesson-content"><p>Ders notu yükleniyor…</p></article><aside class="reading-aside"><p class="eyebrow">BU DERSTE</p><p>Newton'un soğuma yasası</p><p>Değişkenleri ayırma</p><p>Kitaptaki iki model</p><p>Genlik ve faz gecikmesi</p><div class="source-note">KAYNAK<br><strong>§3.1 · s.87–90</strong><br>PDF sayfaları 105–108</div><label class="complete-label"><input type="checkbox" id="lesson-complete"> Ders notunu çalıştım</label><a class="button primary" href="#practice">Kendini sına →</a></aside></div></section>
+    <section id="view-practice" class="view" hidden><div class="section-intro"><p class="eyebrow">BİLGİYİ KULLAN</p><h2>Şimdi sıra sende.</h2><p>Önce kendin dene. Gerektiğinde ipuçlarını sırayla açabilirsin.</p><small>Bu dört soru uygulama için hazırlanmıştır. Kontrol ve ipuçları önceden tanımlıdır; LLM kullanılmaz.</small></div><div class="exercise-list" id="exercises"></div></section>
+    <section id="view-notes" class="view" hidden><div class="panel notes-panel"><div class="section-intro"><p class="eyebrow">KENDİ KELİMELERİNLE</p><h2>Anladığını yaz.</h2><p>Bir tahmin, bir çözüm ya da aklında kalan bir soru. Notların bu tarayıcıda saklanır.</p></div><label for="notes" class="eyebrow">§3.1 · ÇALIŞMA NOTLARIN</label><textarea id="notes" placeholder="Örneğin: k iki katına çıkınca yarılanma süresi neden yarıya iniyor?" spellcheck="false"></textarea><div class="notes-footer"><span id="save-status" role="status">Bu cihazda otomatik kaydedilir.</span><button class="button secondary" id="export-notes">↓ Notları indir</button></div></div></section>
+    <section id="view-map" class="view" hidden><div class="section-intro"><p class="eyebrow">KİTABIN TAMAMINA BİR BAKIŞ</p><h2>Öğrenme haritan.</h2><p>12 ana bölüm. Bu ilk sürümde §3.1 ders ve deney olarak hazır; diğer bölümler içerik haritasıdır.</p></div><label class="map-search"><span>⌕</span><input id="chapter-search" type="search" placeholder="Konu ara: Laplace, titreşim, Euler…" aria-label="Kitap haritasında konu ara"></label><div id="chapter-list" class="chapter-list"></div><p id="no-chapters" hidden>Bu aramayla eşleşen bölüm bulunamadı.</p></section>
+    <section id="view-source" class="view" hidden><article class="panel prose"><p class="eyebrow">KAYNAK VE KAPSAM</p><h2>Kitaptan çalışma alanına.</h2><p><strong>Wei-Chau Xie · Differential Equations for Engineers</strong><br>Cambridge University Press, 2010. Kullanıcının sağladığı PDF: 568 sayfa.</p><p>Bu sürüm, §3.1 Heating and Cooling, basılı s.87–90 (PDF s.105–108) temelinde hazırlanmış Türkçe bir çalışma notunu içerir. Kitabın birebir çevirisi değildir. §2.1 ve §2.4 ön bilgileriyle ilişkilendirilmiştir.</p><h3>Ne çalışıyor?</h3><p>İki parametrik deney, analitik çözümler, Euler karşılaştırması, dört alıştırma, tarayıcıda saklanan notlar ve Markdown indirme. Kitap haritasındaki diğer bölümler henüz derslere dönüştürülmedi.</p><h3>LLM bağlantısı</h3><p>Bu prototipte LLM API bağlı değildir. İpuçları önceden yazılmış, alıştırma kontrolleri sayısal veya çoktan seçmeli olarak tanımlanmıştır. Sonraki sürümde, bölüm kaynaklarıyla çalışan bir soru-cevap alanı eklenebilir.</p><h3>Verilerin</h3><p>Notların ve ilerlemen yalnızca bu tarayıcıda saklanır. Tarayıcı verilerini temizlersen silinir; notlarını indirme düğmesiyle yedekleyebilirsin. Uygulama verilerini dış bir LLM servisine göndermez. PDF'nin tamamı bu siteye yüklenmemiştir.</p><h3>Model sınırları</h3><p>Soğuma deneyi, sabit ortam ve sabit k varsayımıyla tek sıcaklıklı bir cisim modeli kullanır. Bina modelinde sabit katsayılar ve sınırsız doğrusal ısıtıcı tepkisi varsayılır. Gösterilen genlik ve faz, kalıcı rejime aittir; grafikte geçici rejim de bulunur.</p><a class="button secondary" href="lesson.md" download="isinma-ve-soguma.md">↓ Denetlenmiş ders notu (.md)</a></article></section>
+    <footer class="page-footer"><span>∂ <strong>Denklem Atölyesi</strong></span><span>Her denklem, bir davranış anlatır.</span><a href="#source">Kaynak: Xie · §3.1 ↗</a></footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script type="module" src="app.js"></script>
+</body></html>
