@@ -25,9 +25,10 @@ Projeye katkı veren her ajan, aşağıdaki mimari değişmezlere koşulsuz uyma
 * Tarayıcı kodları doğrudan yerel ES modülleri (`import/export`), saf HTML5, CSS3 ve modern Vanilla JavaScript ile çalışır.
 * Yerel geliştirme yalnızca Node.js'in yerleşik HTTP modülü ile çalışan `server.mjs` ve yerleşik test koşucusu (`node --test`) üzerinden yürütülür.
 
-### 2.2. Matematik Hattı: LaTeX ↔ MathML Bütünlüğü
+### 2.2. Matematik Hattı ve Çift Dilli (TR / EN) İçerik Senkronizasyonu
 * Matematik formülleri hem erişilebilirlik hem de eklentisiz tarayıcı performansı için **MathML** olarak sunulur.
-* `dist/lesson.md` içindeki LaTeX blokları ile `build_math.py` ve `dist/math.json` çıktısı **daima senkron** olmak zorundadır.
+* `dist/lesson.md` (Türkçe) ve `dist/lesson-en.md` (İngilizce) içindeki LaTeX blokları birebir aynı sırada olmalı; `build_math.py` ve `dist/math.json` çıktısı ile **daima senkron** tutulmalıdır.
+* **Çift Dilli Tutarlılık:** Uygulama Türkçe (`tr`) ve İngilizce (`en`) dillerinde tam simetrik çalışır. `dist/i18n.js` içindeki `UI_STRINGS.tr` ve `UI_STRINGS.en` anahtarları birebir örtüşmeli; `dist/content.js` altındaki tüm metin, ipucu, alıştırma ve türetim adımları `{ tr, en }` şemasıyla her iki dili de eksiksiz barındırmalıdır.
 * **Kritik MathML Kuralı:** Tarayıcı render motorlarındaki görsel kaymaları önlemek için tüm MathML kökleri (`<math>...</math>`) doğrudan açık bir `<mrow>` sarmalayıcısı içermelidir (`<math display="block"><mrow>...</mrow></math>`).
 * Ders içeriğindeki formüller güncellendiğinde veya yeni formül eklendiğinde `python3 build_math.py` çalıştırılarak `math.json` güncellenmelidir.
 
@@ -81,10 +82,11 @@ beyond-the-textbook/
 │   ├── index.html             # Semantik tek sayfa uygulama kabuğu (SPA)
 │   ├── styles.css             # Bağımlılıksız modern CSS (değişkenler, responsive grid)
 │   ├── app.js                 # UI kontrolcüsü, reaktivite, grafikler, yerel depolama
-│   ├── content.js             # Kitap kataloğu, ders metaverisi, alıştırma havuzu
+│   ├── i18n.js                # Çift dilli (TR/EN) arayüz sözlüğü ve yerelleştirme yardımcıları
+│   ├── content.js             # Kitap kataloğu, çift dilli ders metaverisi, alıştırma havuzu
 │   ├── models.js              # Saf matematiksel ve sayısal modeller (ODE, Euler, RK4)
 │   ├── lesson.md              # Kaynak Türkçe ders metni (LaTeX blokları ile)
-│   ├── lesson-en.md           # İngilizce ders metni alternatifi / taslağı
+│   ├── lesson-en.md           # Kaynak İngilizce ders metni (LaTeX blokları ile)
 │   ├── math.json              # Derlenmiş, doğrulanmış MathML sözlüğü
 │   └── vendor/                # Yerel barındırılan harici hafif araçlar (marked.js vb.)
 │
@@ -106,7 +108,8 @@ beyond-the-textbook/
 ```mermaid
 flowchart TD
     subgraph Offline / Build Zamanı
-        L[dist/lesson.md] -->|LaTeX blokları| BM[build_math.py]
+        L_TR[dist/lesson.md] -->|LaTeX blokları| BM[build_math.py]
+        L_EN[dist/lesson-en.md] -->|LaTeX blokları| BM
         BM -->|Önceden derlenmiş MathML| MJ[dist/math.json]
     end
 
@@ -114,18 +117,23 @@ flowchart TD
         HTML[index.html] --> APP[app.js]
         CSS[styles.css] --> HTML
         
-        CJ[content.js] -->|Ders verisi & Alıştırmalar| APP
+        I18N[i18n.js] -->|TR / EN Arayüz & deepLocalize| APP
+        I18N --> CJ[content.js]
+        CJ -->|Çift dilli ders verisi & Alıştırmalar| APP
         MJ -->|MathML enjeksiyonu| APP
-        L -->|Markdown metni| APP
+        L_TR -->|TR Markdown| APP
+        L_EN -->|EN Markdown| APP
         
         APP -->|Parametreler| MOD[models.js]
         MOD -->|Analitik eğriler & Metrikler| APP
         
-        APP <-->|Notlar & İlerleme| LS[(Tarayıcı localStorage)]
+        APP <-->|Notlar, İlerleme & Dil| LS[(Tarayıcı localStorage)]
     end
 
     subgraph Doğrulama Hattı
         MOD -->|Sayısal Doğrulama| TEST[tests/models.test.mjs]
+        CJ -->|Katalog & İki Dilli Eşlik| TEST
+        I18N -->|Anahtar Eşliği| TEST
     end
 ```
 
@@ -134,15 +142,17 @@ flowchart TD
    - DOM'a veya herhangi bir UI mantığına erişimi olmayan saf JavaScript fonksiyonlarıdır.
    - Analitik çözümler (`cooling`, `building`, `buildingSteady`, `buildingTransient`) ve sayısal çözücüler (`eulerCooling`, `rk4Step`) barındırır.
    - Doğrudan `tests/models.test.mjs` tarafından Node.js ortamında test edilebilir durumdadır.
-2. **`content.js` (İçerik Katmanı):**
-   - Gelecekteki çoklu kitap mimarisini destekleyecek şekilde `BOOKS` koleksiyonunu ve derslerin metaverilerini tutar.
-   - Tahmin senaryoları, vize/final kliniği soruları, aşamalı ipuçları ve beklenen değer aralıkları burada tanımlanır.
-3. **`app.js` (Uygulama ve Sunum Katmanı):**
+2. **`i18n.js` (Çift Dilli Yerelleştirme Katmanı):**
+   - Türkçe (`tr`) ve İngilizce (`en`) arayüz sözlüğünü (`UI_STRINGS`) ve `normalizeLang`, `pickLang`, `deepLocalize`, `ui` yardımcılarını barındırır.
+3. **`content.js` (İçerik ve Katalog Katmanı):**
+   - Çoklu kitap mimarisini destekleyecek şekilde `BOOKS` koleksiyonunu ve derslerin çift dilli (`{ tr, en }`) metaverilerini tutar.
+   - Tahmin senaryoları, 5 adımlı analitik türetimler, vize/final kliniği soruları (Problem 3.1 ve 3.2), 8 sınav sorusu ve aşamalı ipuçları burada tanımlanır.
+4. **`app.js` (Uygulama ve Sunum Katmanı):**
    - SVG tabanlı etkileşimli grafik çizimleri (Chart kütüphanesi kullanılmaz; saf SVG oluşturulur).
-   - Kullanıcı etkileşimleri (sürgüler, oynatma kontrolleri, alıştırma kontrolü, CSV/SVG dışa aktarım).
-   - Markdown çıktısını `vendor/marked.js` ile derleyip `math.json` eşleşmelerini MathML olarak yerleştirme.
-4. **`server.mjs` (Yerel Sunucu):**
-   - Ek kütüphane gerektirmeyen, Node.js yerleşik modülleriyle yazılmış statik dosya sunucusu (varsayılan port: `4317`).
+   - Canlı `TR | EN` dil geçişi, sürgüler, A/B senaryo karşılaştırması, kalibrasyon hesaplayıcıları, alıştırma kontrolü ve CSV/SVG/Markdown dışa aktarım.
+   - Seçili dile göre `lesson.md` veya `lesson-en.md` çıktısını `vendor/marked.js` ile derleyip `math.json` eşleşmelerini MathML olarak yerleştirme.
+5. **`server.mjs` (Yerel Sunucu):**
+   - Ek kütüphane gerektirmeyen, Node.js yerleşik modülleriyle yazılmış statik dosya sunucusu (varsayılan port: `4317`, port doluysa otomatik sonraki porta geçer ve `Cache-Control: no-cache` başlığı gönderir).
 
 ---
 
@@ -152,10 +162,12 @@ Uygulama, karmaşık durum yönetim kütüphaneleri yerine şeffaf ve yerel bir 
 
 | Durum Alanı | Depolama Türü | Saklanan Veriler |
 | :--- | :--- | :--- |
-| **Kullanıcı Notları** | `localStorage` | Bölüm bazlı çalışma notları ve kişisel açıklamalar |
-| **Alıştırma İlerlemesi**| `localStorage` | Çözülen sorular, ipucu kullanım seviyesi, doğruluk durumu |
-| **Simülasyon Ayarları** | Bellek içi (In-Memory) | Slider parametreleri ($k, T_0, T_a$), animasyon zamanı ($t$) |
-| **Sekme & Görünüm** | URL Hash / In-Memory | Aktif sekme (Ders, Laboratuvar, Alıştırma, Sınav Kliniği) |
+| **Dil Tercihi** | `localStorage` (`denklem-v1-lang`) | Seçili uygulama ve ders dili (`tr` veya `en`) |
+| **Aktif Ders** | `localStorage` (`denklem-v1-active-lesson`) | Son çalışılan ders kimliği (ör. `xie-2010:3.1`) |
+| **Kullanıcı Notları** | `localStorage` (`denklem-v1-notes`) | Ders kimliği bazlı çalışma notları ve kişisel açıklamalar |
+| **Alıştırma İlerlemesi**| `localStorage` (`denklem-v1-progress`) | Ders kimliği bazlı okuma durumu ve çözülen soru indeksleri |
+| **Simülasyon Ayarları** | Bellek içi (In-Memory) | A/B senaryo parametreleri ($k, T_0, T_a, \tau, r$), animasyon zamanı ($t$) |
+| **Sekme & Görünüm** | URL Hash / In-Memory | Aktif görünüm (`#library`, `#lab`, `#lesson`, `#practice`, `#notes`, `#map`, `#source`) |
 
 ---
 
@@ -165,14 +177,14 @@ Repoda çalışacak her yapay zeka ajanının izlemesi gereken eylem protokolü 
 
 ### Adım 1: Değişiklik Öncesi İnceleme
 - Değişiklik yapılacak alan bir matematik modeli ise `tests/models.test.mjs` incelenmeli.
-- Değişiklik ders içeriği veya formüllerle ilgiliyse `dist/lesson.md` ve `build_math.py` eşleşmesi kontrol edilmeli.
+- Değişiklik ders içeriği, arayüz veya formüllerle ilgiliyse `dist/lesson.md`, `dist/lesson-en.md`, `dist/content.js`, `dist/i18n.js` ve `build_math.py` eşleşmesi kontrol edilmeli.
 
 ### Adım 2: Kapsam İçi Uygulama
 - Kod yazarken projenin buildless yapısı korunmalı (yeni npm modülü eklenemez, `import` sadece yerel dosyalara veya tarayıcı standardına yönelik olabilir).
-- Yeni bir stil veya UI öğesi eklendiğinde responsive yapı (masaüstü ve mobil ~390px) gözetilmeli.
+- Yeni bir metin veya içerik eklendiğinde hem Türkçe (`tr`) hem İngilizce (`en`) karşılığı eksiksiz tanımlanmalı; responsive yapı (masaüstü ve mobil ~390px) gözetilmeli.
 
 ### Adım 3: Doğrulama ve Test
-- Matematiksel modeller etkilendiyse terminalde `npm test` çalıştırılmalı ve tüm testlerin geçtiği görülmeli.
+- Terminalde `npm test` çalıştırılmalı; matematiksel modellerin ve çift dilli katalog/sözlük testlerinin tamamının geçtiği görülmeli.
 - LaTeX formülü eklendiyse veya değiştirildiyse `python3 build_math.py` çalıştırılarak `dist/math.json` güncellenmeli ve MathML `<mrow>` yapısı korunmalı.
 
 ### Adım 4: Değişiklik Raporlama
