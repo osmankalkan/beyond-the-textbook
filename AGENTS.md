@@ -2,7 +2,7 @@
 
 ## Project context
 
-This folder is the canonical project. Read `README.md` and `docs/PROJE-DURUMU.md` before continuing. The long-term goal is a learning workspace spanning multiple books; the current prototype covers one section of one book. The user intends to develop incrementally and normally upload each step to GitHub themselves. Leave changes local unless committing, pushing, or publishing is explicitly requested.
+This folder is the canonical project. Read `README.md`, `ARCHITECTURE.md`, and `docs/PROJE-DURUMU.md` before continuing. `ARCHITECTURE.md` defines the binding architectural contract and boundaries for agents. The long-term goal is a learning workspace spanning multiple books; the current prototype covers one section of one book. The user intends to develop incrementally and normally upload each step to GitHub themselves. Leave changes local unless committing, pushing, or publishing is explicitly requested.
 
 ## Implementation
 
