@@ -84,17 +84,15 @@ $$
 
 Bina deneyinde **Kitaptaki sınır koşulu** düğmesi bu durumu yükler. Çizimde görünen iç sıcaklık, Tʙ(0) = Tₛ başlangıç koşulunu da içeren tam çözümdür. Görselleştirmede T₀ = 10 °C ve Tₛ = 22 °C seçilmiştir; bunlar kitabın genlik hesabına eklenen uygulama değerleridir. Sabit katsayılı doğrusal modelde kalıcı genlik bu iki ortalamadan bağımsızdır. Isıtıcı doygunluğu gibi etkiler bu modelde yoktur.
 
-## 5. Deneyi nasıl kullanmalı?
+## 5. Etkileşimli laboratuvarı nasıl kullanmalı?
 
-1. Bir parametreyi değiştirmeden önce sonucu tahmin et.
-2. Parametreyi değiştir ve grafiği incele.
-3. Gözlemini denklemdeki terimlerle açıkla.
-4. Alıştırmaları çöz ve gerekçeni not defterine yaz.
+1. Sürgüleri değiştirmeden önce **Kavramsal Tahmin** panelinden bir senaryo seçip sezgini sına.
+2. **İki senaryoyu karşılaştır (A/B)** veya **Saf kalıcı rejimi ayrı çiz** seçeneklerini açarak parametrelerin geçici sönümü, yarılanma süresini ve faz gecikmesini nasıl değiştirdiğini incele.
+3. **Deneysel Kalibrasyon** ve **Adım Adım Analitik Türetim** panelleriyle fiziksel varsayımları her bir cebirsel adımla ilişkilendir.
+4. **Vize & Final Çözüm Kliniği** (sayfa 130'daki Problem 3.1 ve 3.2) adımlarını incele ve 8 aşamalı sınav sorusunu çöz.
 
-Soğuma deneyindeki kesikli turuncu çizgi, ileri Euler yaklaşımıdır. Her adımda sıcaklığı Tₙ₊₁ = Tₙ − hk(Tₙ − Tₘ) ile günceller. Adım büyüklüğünü azaltınca analitik çözüme yaklaşmasını inceleyebilirsin. Bu sayısal karşılaştırma uygulamaya eklenmiştir; kitabın sayısal yöntemleri ele aldığı §10.1'e bağ kurar.
+Soğuma deneyindeki kesikli turuncu çizgi, sıcaklığı her adımda Tₙ₊₁ = Tₙ − hk(Tₙ − Tₘ) ile güncelleyen ileri Euler sayısal yöntemini gösterir. Adım büyüklüğü h küçültüldüğünde analitik eğriye yakınsaması, §3.1 konusunu §10.1'deki sayısal başlangıç değer problemi yöntemlerine bağlar.
 
 ## 6. Ön bilgiler ve kapsam
 
-Gerekli ön bilgiler: türev, üstel fonksiyon, belirli olmayan integral ve başlangıç koşulu. Çözüm yönteminin kitap içindeki ön koşulu **§2.1 Değişkenlerin ayrılması, basılı s.16**; bina modeli için ayrıca **§2.4 Birinci mertebe doğrusal denklemler, basılı s.55**.
-
-Bu prototipte §3.1 çalışma içeriği, iki deney, dört alıştırma ve yerel not defteri bulunur. Kitap haritası tüm ana bölümleri listeler; diğer bölümler henüz derslere dönüştürülmemiştir. LLM API henüz bağlı değildir. İpuçları ve alıştırma geri bildirimleri önceden hazırlanmıştır.
+Gerekli ön bilgiler: türev, üstel ve logaritmik fonksiyonlar, belirsiz integral ve başlangıç değer problemleri. Kitap içindeki matematiksel ön koşullar: sabit ortamda soğuma için **§2.1 Değişkenlerin ayrılması (basılı s.16)**; zamana bağlı dış ortam ve zorlamalı bina tepkisi için **§2.4 Birinci mertebe doğrusal denklemler (basılı s.55)**.

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {cooling,calibrateK,targetTime,halfLife,eulerCooling,building,buildingSteady,buildingTransient,buildingMetrics,rk4Step} from '../dist/models.js';
 import {BOOKS,LEGACY_LESSON_ID,getBook,getLesson,findLessonBySection,migrateProgressStore,migrateNotesStore,countLessonProgress} from '../dist/content.js';
+import {UI_STRINGS,normalizeLang,pickLang} from '../dist/i18n.js';
 const close=(a,b,t=1e-8)=>assert.ok(Math.abs(a-b)<t,`${a} != ${b}`);
 const p={ambient:20,initial:100,k:Math.log(2)/20};
 test('Book example 3.1: calibration, intermediate observation, total and remaining time',()=>{
@@ -55,4 +56,54 @@ test('Content catalog and legacy notes/progress migration',()=>{
 
   const bp={tau:4,ratio:1,period:24,amplitude:12,setpoint:22};
   close(building(15,bp),buildingSteady(15,bp)+buildingTransient(15,bp));
+
+  assert.equal(normalizeLang('en'),'en');
+  assert.equal(normalizeLang('tr'),'tr');
+  assert.equal(normalizeLang('other'),'tr');
+  assert.equal(pickLang(lesson.title,'tr'),'Isınma ve soğuma');
+  assert.equal(pickLang(lesson.title,'en'),'Heating and cooling');
+  assert.equal(pickLang(lesson.lessonPath,'tr'),'lesson.md');
+  assert.equal(pickLang(lesson.lessonPath,'en'),'lesson-en.md');
+  assert.deepEqual(Object.keys(UI_STRINGS.tr).sort(),Object.keys(UI_STRINGS.en).sort());
+  for(const q of lesson.questions){
+    assert.ok(pickLang(q.title,'tr')&&pickLang(q.title,'en'));
+    assert.ok(pickLang(q.text,'tr')&&pickLang(q.text,'en'));
+    assert.ok(pickLang(q.feedback,'tr')&&pickLang(q.feedback,'en'));
+    assert.equal(pickLang(q.hints,'tr').length,pickLang(q.hints,'en').length);
+  }
+});
+
+test('Bilingual TR/EN localization and formula synchronization',async()=>{
+  const fs=await import('node:fs/promises');
+  const trBundle=getLesson(LEGACY_LESSON_ID,'tr');
+  const enBundle=getLesson(LEGACY_LESSON_ID,'en');
+  assert.equal(trBundle.lesson.title,'Isınma ve soğuma');
+  assert.equal(enBundle.lesson.title,'Heating and cooling');
+  assert.equal(trBundle.lesson.lessonPath,'lesson.md');
+  assert.equal(enBundle.lesson.lessonPath,'lesson-en.md');
+  assert.equal(trBundle.lesson.downloadName,'isinma-ve-soguma.md');
+  assert.equal(enBundle.lesson.downloadName,'heating-and-cooling.md');
+  assert.equal(trBundle.lesson.highlights.length,enBundle.lesson.highlights.length);
+  assert.equal(trBundle.lesson.questions.length,enBundle.lesson.questions.length);
+
+  for(const chap of trBundle.book.chapters){
+    assert.equal(chap.length,5);
+    assert.equal(chap[3].split('|').length,chap[4].split('|').length);
+  }
+
+  const [mdTr,mdEn,mathJson]=await Promise.all([
+    fs.readFile(new URL('../dist/lesson.md',import.meta.url),'utf8'),
+    fs.readFile(new URL('../dist/lesson-en.md',import.meta.url),'utf8'),
+    fs.readFile(new URL('../dist/math.json',import.meta.url),'utf8')
+  ]);
+  const extractBlocks=md=>[...md.matchAll(/\$\$\s*([\s\S]*?)\s*\$\$/g)].map(m=>m[1].trim());
+  const trBlocks=extractBlocks(mdTr);
+  const enBlocks=extractBlocks(mdEn);
+  const mathMap=JSON.parse(mathJson);
+  assert.equal(trBlocks.length,9);
+  assert.deepEqual(trBlocks,enBlocks);
+  for(const latex of trBlocks){
+    assert.ok(mathMap[latex],`Missing MathML for: ${latex}`);
+    assert.ok(mathMap[latex].includes('<mrow>'),`Missing explicit <mrow> in MathML for: ${latex}`);
+  }
 });

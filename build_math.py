@@ -30,7 +30,9 @@ expressions=[
  r+mo('≥')+bound+mo('≈')+mn('2.86049')
 ]
 blocks=re.findall(r'\$\$\s*([\s\S]*?)\s*\$\$',(root/'lesson.md').read_text())
+blocks_en=re.findall(r'\$\$\s*([\s\S]*?)\s*\$\$',(root/'lesson-en.md').read_text())
 assert len(blocks)==len(expressions),(len(blocks),len(expressions))
+assert blocks==blocks_en,'lesson.md and lesson-en.md LaTeX blocks must match exactly'
 data={latex:'<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">'+row(expression)+'</math>' for latex,expression in zip(blocks,expressions)}
 (root/'math.json').write_text(json.dumps(data,ensure_ascii=False))
 print(f'{len(data)} reviewed formula blocks generated.')
