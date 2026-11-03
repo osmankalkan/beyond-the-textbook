@@ -1,6 +1,6 @@
 # Mevcut derslerin öğrenme derinliği revizyonu
 
-Kullanıcı §1.1, §1.2 ve §2.1’in §3.1 kadar ayrıntılı ve anlamlı bir çalışma akışı sunmasını istedi. Bu kayıt önce bu üç dersin revizyonunu, ardından aynı standartla eklenen §2.2’yi kapsar.
+Kullanıcı §1.1, §1.2 ve §2.1’in §3.1 kadar ayrıntılı ve anlamlı bir çalışma akışı sunmasını istedi. Bu kayıt önce bu üç dersin revizyonunu, ardından aynı standartla eklenen §2.2 ve §2.3’ü kapsar.
 
 ## Bölümler
 
@@ -10,6 +10,8 @@ Kullanıcı §1.1, §1.2 ve §2.1’in §3.1 kadar ayrıntılı ve anlamlı bir 
 - §2.1 serbest deney: y′=kxy, y′=ky², y′=ky(1−y), y′=kx(1+y²) aileleri. A/B ilk değerleri, ortak k, seçili x’te değer/eğim, denge çizgileri, bağlı en geniş çözüm aralığı ve geçersiz nokta bildirimi. Bütün aralıklar x₀=0 ve k>0 içindir. Lojistik ve tanjant deneyleri ek pedagojik örneklerdir; kaynak kitap verisi olarak sunulmaz.
 - §2.2: Örnek 2.4 homojen IVP’si ve Örnek 2.9 özel dönüşümü için iki tahmin ve beşer türetim adımı. Örnek 2.4’te v=−1 dalı, logaritmik aile, örtük türev ve x<1/e aralığı; Örnek 2.9’da v=x+y, tanjant kutupları ve doğrulama ayrıntılandırıldı. Dört çözümlü vize problemi (Örnek 2.4, 2.6, 2.7, 2.12) 5+5+5+5=20 puanla eklendi; 11 soru hazırlandı. Notlar Örnek 2.4–2.12’yi ara işlemler, kayıp dal kontrolü, doğrulama ve aralıkla kapsar; 36 formül bloğu iki dilde eşlenmiştir.
 - §2.2 serbest deney: daire x²+y²=Ax, elips x²−xy+y²=A, toplam y=tan(x+C)−x ve köklü y²=−2Cx−C² aileleri. x₀=1 sabittir; A/B y(1) değerleri, seçili x’te çözüm/eğim, dönüşüm sabiti, bağlı en geniş aralık ve geçersiz başlangıç verisi gösterilir. Dairede y(1)=0, elipste 2y(1)=1, köklü ailede |y(1)|≥1 geçersizdir. Dört aile de kaynak örneklerinden türetilmiş özgün analitik modellerdir.
+- §2.3: Örnek 2.13 tam denklemi ve Örnek 2.26 gruplarla çarpan yöntemi için iki tahmin ve beşer türetim adımı. Örnek 2.13’te iki potansiyel yöntemi ve türevle doğrulama; Örnek 2.26’da grup ayrıştırması, ortak çarpan x²y ve kayıp dallar ayrıntılandırıldı. Dört çözümlü vize problemi (Örnek 2.13, 2.18, 2.21, 2.26) 5+5+5+5=20 puanla eklendi; 11 soru hazırlandı. Notlar Örnek 2.13–2.29’u M_y=N_x testi, μ(x)/μ(y), inceleme, gruplar, kayıp dal, doğrulama ve tanım bölgesiyle kapsar; 90 formül bloğu iki dilde eşlenmiştir.
+- §2.3 serbest deney: tam denklem x²+xy+y²=C, μ(x)=e^x ailesi e^x y(2x−y)=C, μ(y)=1/y ailesi xy+½y²−ln y=C ve inceleme ailesi ln(x²+y²)+2√x=C düzey eğrileri. x₀=1 sabittir; A/B y(1) değerleri farklı C düzeylerini seçer. Seçili başlangıçta C, μ, M_y−N_x artığı ve eğim gösterilir. μ(x) ailesinde y=0 ve y=2x, μ(y) ailesinde y=0, inceleme ailesinde x=0 ve y=0 geçersizdir; düzey eğrileri potansiyelin tanım bölgesinde çizilir. Dört aile de kaynak örneklerinden türetilmiş özgün analitik modellerdir.
 
 ## Sorumluluklar
 
@@ -19,8 +21,8 @@ Kalıcı kullanıcı ilerlemesi ve notların biçimi değiştirilmedi. Rehberdek
 
 ## Doğrulama
 
-33 otomatik test: mevcut modeller ve yaşam döngüsü, §2.2 dönüşüm ailelerinin analitik türevleri, tanım bölgeleri ve geçersiz başlangıç verisi, iki dilde rehber ve klinik bütünlüğü, önceki ilerleme indekslerinin anlamı. `build_math.py` beş dersin LaTeX çiftlerini doğrular; §2.2’nin 36 formül bloğu iki dilde birebir eşleşir. Yeni MathML parçaları XML olarak ve açık mrow kökleriyle kontrol edildi.
+37 otomatik test: mevcut modeller ve yaşam döngüsü, §2.2 dönüşüm ve §2.3 tamlık ailelerinin analitik türevleri, tanım bölgeleri, düzey eğrileri ve geçersiz başlangıç verisi, iki dilde rehber ve klinik bütünlüğü, önceki ilerleme indekslerinin anlamı. `build_math.py` beş dersin LaTeX çiftlerini doğrular; §2.2’nin 36, §2.3’ün 90 formül bloğu iki dilde birebir eşleşir. Yeni MathML parçaları XML olarak ve açık mrow kökleriyle kontrol edildi.
 
-Tarayıcıda tahmin seçimi/geri bildirimi, beş adımın açılması, dil değişiminde açık adım ve deney parametreleri, kutup dışındaki geçersiz değer, dört klinik / 11 soru, 390 px mobilde §1.1 ve §1.2 rehberleri, §2.1 notu ve vize çözümleri kontrol edildi. §2.2 için 36 formülün ham `$$` olmadan render edildiği, A/B aile geçişinin ve metriklerin çalıştığı, daire/elips/köklü ailelerde geçersiz başlangıç verisinin yakalandığı, dil değişiminin aile ve parametreleri koruduğu doğrulandı. Yatay sayfa taşması yok. §3.1’in mevcut laboratuvarı ve rehber görünürlük ayrımı kontrol edildi.
+Tarayıcıda tahmin seçimi/geri bildirimi, beş adımın açılması, dil değişiminde açık adım ve deney parametreleri, kutup dışındaki geçersiz değer, dört klinik / 11 soru, 390 px mobilde §1.1 ve §1.2 rehberleri, §2.1 notu ve vize çözümleri kontrol edildi. §2.2 için 36 formülün ham `$$` olmadan render edildiği, A/B aile geçişinin ve metriklerin çalıştığı, daire/elips/köklü ailelerde geçersiz başlangıç verisinin yakalandığı, dil değişiminin aile ve parametreleri koruduğu doğrulandı. §2.3 için 90 formülün ham `$$` olmadan ve açık mrow kökleriyle render edildiği; dört aile geçişinde düzey eğrileri, C/μ/artık/eğim metrikleri ve dışlanan dalların güncellendiği; y=0 ve y=2x geçersiz verisinin yakalandığı; ön ayar, A/B karşılaştırma ve dil değişiminin parametreleri koruduğu doğrulandı. Yatay sayfa taşması yok. §3.1’in mevcut laboratuvarı ve rehber görünürlük ayrımı kontrol edildi.
 
-İnceleme bağlantıları: `?lesson=xie-2010%3A1.1&lang=tr#lab`, `?lesson=xie-2010%3A1.2&lang=tr#lab`, `?lesson=xie-2010%3A2.1&lang=tr#lab`, `?lesson=xie-2010%3A2.2&lang=tr#lab`. Kullanıcının değerlendirmesini bekle; yeni konu ekleme veya talep edilmeden commit/push yapma.
+İnceleme bağlantıları: `?lesson=xie-2010%3A1.1&lang=tr#lab`, `?lesson=xie-2010%3A1.2&lang=tr#lab`, `?lesson=xie-2010%3A2.1&lang=tr#lab`, `?lesson=xie-2010%3A2.2&lang=tr#lab`, `?lesson=xie-2010%3A2.3&lang=tr#lab`. Kullanıcının değerlendirmesini bekle; yeni konu ekleme veya talep edilmeden commit/push yapma.
