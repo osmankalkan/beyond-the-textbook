@@ -22,6 +22,8 @@ SYMBOLS = {
     'to': mo('→'), 'mapsto': mo('↦'),
     'le': mo('≤'), 'leq': mo('≤'), 'ge': mo('≥'), 'geq': mo('≥'),
     'cdot': mo('⋅'), 'times': mo('×'),
+    'cdots': mo('⋯'), 'ldots': mo('…'), 'dots': mo('…'),
+    'approx': mo('≈'), 'equiv': mo('≡'), 'sim': mo('∼'),
     'Longrightarrow': mo('⟹'), 'Rightarrow': mo('⇒'), 'iff': mo('⟺'),
     'int': mo('∫'), 'sum': mo('∑'), 'partial': mo('∂'), 'prime': mo('′'),
     'vert': mo('&#124;'), 'mid': mo('&#124;'),
