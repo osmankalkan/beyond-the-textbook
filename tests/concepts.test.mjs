@@ -99,6 +99,7 @@ test('Concept catalog, classifier traps, named formulas and progress stay consis
   assert.deepEqual(tr.lesson.activities.map(item=>item.id),['classification','families','uniqueness','verification']);
   assert.equal(findLessonBySection(tr.book,'2.1').id,'xie-2010:2.1');
   assert.equal(findLessonBySection(tr.book,'2.2').id,'xie-2010:2.2');
+  assert.equal(findLessonBySection(tr.book,'2.3').id,'xie-2010:2.3');
   const cases=Object.fromEntries(tr.lesson.classificationCases.map(item=>[item.id,item]));
   assert.equal(cases.squared.answers.order,'1');assert.equal(cases.squared.answers.linearity,'nonlinear');
   assert.equal(cases.swapped.answers.linearity,'linear');assert.equal(cases.biharmonic.answers.order,'4');
