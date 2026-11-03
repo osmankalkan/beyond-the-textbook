@@ -4,6 +4,17 @@ Tarih: 2 Kasım 2026. Bu dosya, başka bir agent'ın projeyi ve şimdiye kadar a
 
 Bu bir durum kaydıdır; aşağıdaki gelecek fikirleri henüz kullanıcı tarafından verilmiş geliştirme görevleri değildir. Yeni çalışmaya başlamadan önce `ARCHITECTURE.md` sözleşmesini, kullanıcının seçtiği işi ve güncel dosyaları esas al.
 
+## 3 Kasım 2026 — §1.2 güncel devir eki
+
+Kullanıcı §1.1 sonrasında §1.2’nin geliştirilmesini istedi. §1.2 tamamlandı; **başka konuya geçmeden kullanıcı incelemesini bekle**. Hazır dersler §1.1, §1.2 ve §3.1’dir. Aşağıdaki eski kayıtlar tarihsel bağlamdır.
+
+- Güncel kapsam ve kontroller: `docs/REVIEW-1-2.md`. Kaynak basılı s.6–15, PDF s.24–33.
+- Dört çalışma alanı, sekiz sınıflandırma örneği, 14 soru ve 38 çift dilli formül eklendi.
+- Yeni etkinlikler `dist/labs/concepts/activities/`, saf matematik `dist/models/concepts.js`, içerik `dist/lessons/xie-2010/1-2/` altında.
+- `npm test`: 26 test. `python3 build_math.py`: üç dersin formül eşliğini doğrular.
+- §1.1 daha önce kullanıcı talebiyle GitHub’a gönderildi (5bae99d). §1.2 değişiklikleri yereldedir; ayrıca istenmeden commit/push/yayın yapma.
+- İnceleme bağlantısı: `http://127.0.0.1:4317/?lesson=xie-2010%3A1.2&lang=tr#lab`.
+
 ## 3 Kasım 2026 — güncel devir eki
 
 Kullanıcı birinci üniteden başlayarak konu konu ilerlenmesini ve **her konu tamamlandıktan sonra incelemesi için durulmasını** istedi. Yeni eklenen tek konu §1.1’dir; §1.2 hâlâ içerik haritasıdır. Güncel kapsam ve testler `docs/REVIEW-1-1.md` içinde kayıtlıdır. Aşağıdaki 2 Kasım kaydı tarihsel ayrıntıdır; hazır ders sayısı gibi eski durum ifadelerinde bu ek ve güncel kod esas alınır.

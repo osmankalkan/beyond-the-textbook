@@ -71,3 +71,6 @@ export function mixingTankState(t,{volume,initial,inflow,outflow,inlet}) {
   const concentration=inlet+(initial-inlet)*attenuation;
   return {volume:currentVolume,concentration,pollutant:currentVolume*concentration,rate:inflow===0?0:inflow*(inlet-concentration)/currentVolume};
 }
+
+// §1.2 domain functions are isolated; preserve a stable public model facade.
+export {lineFamily,lineInitialConstant,fallingBody,fallingBoundaryVelocity,regularInitialSolution,regularExistenceBound,singularInitialCase,singularBranch,delayedBranch,odeCandidate,heatCandidate} from './models/concepts.js';

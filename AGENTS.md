@@ -2,7 +2,7 @@
 
 ## Project context
 
-This folder is the canonical project. Read `README.md`, `ARCHITECTURE.md`, `docs/PROJE-DURUMU.md`, and `docs/DEVIR-NOTU.md` before continuing. `ARCHITECTURE.md` defines the binding architectural contract and boundaries for agents. The long-term goal is a bilingual (Turkish and English) learning workspace spanning multiple books; the current prototype covers one section of one book. The user intends to develop incrementally and normally upload each step to GitHub themselves. Leave changes local unless committing, pushing, or publishing is explicitly requested.
+This folder is the canonical project. Read `README.md`, `ARCHITECTURE.md`, `docs/PROJE-DURUMU.md`, and `docs/DEVIR-NOTU.md` before continuing. `ARCHITECTURE.md` defines the binding architectural contract and boundaries for agents. The long-term goal is a bilingual (Turkish and English) learning workspace spanning multiple books; the current prototype covers three sections of one book. The user intends to develop incrementally and normally upload each step to GitHub themselves. Leave changes local unless committing, pushing, or publishing is explicitly requested.
 
 ## Implementation
 
@@ -11,7 +11,7 @@ This folder is the canonical project. Read `README.md`, `ARCHITECTURE.md`, `docs
 - The workspace is fully bilingual (`tr` and `en`):
   - Lesson Markdown comes from `dist/lesson.md` (Turkish) and `dist/lesson-en.md` (English). Keep the LaTeX blocks in both files and `build_math.py` / `dist/math.json` strictly synchronized. Regenerate formulas with `python3 build_math.py`. MathML roots must contain an explicit `mrow` to preserve layout.
   - Structured catalog, guided lab tools, exam clinic, and exercise data live in `dist/content.js` using `{ tr, en }` localized fields. Static UI strings live in `dist/i18n.js` (`UI_STRINGS.tr` and `UI_STRINGS.en` must maintain identical keys).
-- Developed lessons are §1.1 (Motivating Examples) and §3.1 (Heating and Cooling). §1.1 is the current user review checkpoint: do not proceed to §1.2 or another new topic until the user reviews it and asks to continue. Other sections remain a searchable bilingual contents map.
+- Developed lessons are §1.1 (Motivating Examples), §1.2 (General Concepts and Definitions), and §3.1 (Heating and Cooling). §1.2 is the current user review checkpoint: do not proceed to another new topic until the user reviews it and asks to continue. Other sections remain a searchable bilingual contents map.
 - New lesson data belongs to its own module under `dist/lessons/`, registered through `dist/content.js`. New labs implement the `mount / update / destroy` lifecycle through `dist/core/lab-host.js`. Keep numerical functions independent of DOM and use `dist/core/lesson-repository.js` for shared lesson asset loading.
 - `build_math.py` validates every registered bilingual pair before writing output. Formula definitions live in `math_sources/`; §1.1 has its own Markdown pair and MathML map under `dist/lessons/xie-2010/1-1/`.
 - Preserve the distinction between total cooling time and additional time after observation. The building amplitude and phase metrics refer to steady state; the plotted temperature includes the transient.

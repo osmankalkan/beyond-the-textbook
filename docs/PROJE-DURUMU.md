@@ -31,7 +31,7 @@ Yeni içerik ve laboratuvar ayrı modüllerdedir; ortak yaşam döngüsü, ders 
 - **Kitaplık ve yerel depolama:**
   - `#library` görünümüyle kitap ve hazır ders seçimi.
   - Notlar (`denklem-v1-notes`), ilerleme (`denklem-v1-progress`), aktif ders (`denklem-v1-active-lesson`) ve dil tercihi (`denklem-v1-lang`) aynı tarayıcının yerel depolamasında tutulur; eski tekil kayıtlar otomatik olarak ders kimliği (`xie-2010:3.1`) altına taşınır.
-- **Kitap haritası:** 12 ana bölümü ve alt başlıkları Türkçe ve İngilizce olarak içerir; her iki dilde arama yapılabilir. §1.1 ve §3.1 dışındaki bölümler henüz derslere dönüştürülmemiştir.
+- **Kitap haritası:** 12 ana bölümü ve alt başlıkları Türkçe ve İngilizce olarak içerir; her iki dilde arama yapılabilir. §1.1, §1.2 ve §3.1 dışındaki bölümler henüz derslere dönüştürülmemiştir.
 - **Mimari sözleşme:** `ARCHITECTURE.md` dosyası projenin derlemesiz (buildless) yapısını, kırmızı çizgilerini ve ajan çalışma protokolünü tanımlar.
 - LLM API bağlı değildir; sahte sohbet arayüzü gösterilmez.
 
@@ -84,7 +84,7 @@ beyond-the-textbook/
 
 ## Güncel kontrol durumu
 
-- Otomatik test sayısı: 16. Mevcut yedi teste, atış / tank sayısal doğrulaması, iki dersin yerel kayıt ayrımı, tüm konuların iki dil / formül eşliği ve laboratuvar / yükleme yaşam döngüsü kontrolleri eklendi.
+- Otomatik test sayısı: 26. Mevcut yedi teste, atış / tank sayısal doğrulaması, iki dersin yerel kayıt ayrımı, tüm konuların iki dil / formül eşliği ve laboratuvar / yükleme yaşam döngüsü kontrolleri eklendi.
 - §1.1 formülleri PDF’den çıkarılan metin ve sayfa görüntüleriyle karşılaştırıldı. Kaynak PDF ve ham kitap metni yayımlanacak dosyalara alınmadı.
 - Masaüstü / mobil 390 px tarayıcı kontrolü ve dersler arası geçiş doğrulandı; ayrıntılar inceleme notunda kayıtlıdır.
 
@@ -102,3 +102,9 @@ Bunlar önerilen çalışma dilimleridir; henüz kullanıcı tarafından sıraya
 Depo: https://github.com/osmankalkan/beyond-the-textbook
 
 Varsayılan yaklaşım, değişiklikleri yerelde bırakmak ve kullanıcının istediği adımları commit/push etmektir; açıkça istenirse commit ve push yapılabilir. PDF, ham kitap çıkarımı, ZIP arşivleri ve `.env` dosyaları `.gitignore` kapsamındadır.
+
+## §1.2 — güncel inceleme noktası (3 Kasım 2026)
+
+§1.2 Genel Kavramlar ve Tanımlar tamamlandı. Kaynak basılı s.6–15 / PDF s.24–33 ile karşılaştırıldı. Dört etkileşimli çalışma alanı, sekiz sınıflandırma örneği, 38 formül ve 14 soru iki dilde hazırdır. Ayrıntılar `REVIEW-1-2.md` içindedir. Önceki test listeleri tarihsel kapsamı gösterir; güncel toplam 26 testtir.
+
+Yeni kod yalnızca yerelde bırakılır. Sonraki konu kullanıcı incelemesinden sonra seçilecek; §2.1 geliştirilmedi.

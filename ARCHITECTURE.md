@@ -39,7 +39,7 @@ Projeye katkı veren her ajan, aşağıdaki mimari değişmezlere koşulsuz uyma
 * Herhangi bir model veya analitik çözüm değişikliğinde `npm test` ile tüm testlerin (`tests/models.test.mjs`) geçtiği teyit edilmelidir.
 
 ### 2.4. Kapsam Dürüstlüğü (No Fake Features)
-* Hazır dersler **§1.1 (Motive Edici Örnekler)** ve **§3.1 (Isınma ve Soğuma)** bölümleridir. Kullanıcının incelemesini bekleyen yeni konu §1.1’dir. Kullanıcı devam demeden §1.2 eklenmez.
+* Hazır dersler **§1.1 (Motive Edici Örnekler)**, **§1.2 (Genel Kavramlar ve Tanımlar)** ve **§3.1 (Isınma ve Soğuma)** bölümleridir. Kullanıcının incelemesini bekleyen yeni konu §1.2’dir. Kullanıcı devam demeden başka konu eklenmez.
 * Kitap haritasındaki diğer bölümler sadece **aranabilir bir içindekiler haritasıdır**.
 * Ajanlar, kullanıcının açık talimatı olmadan diğer bölümleri tamamlanmış gibi gösteremez, "mock" içeriklerle sahte bitmişlik hissi yaratamaz veya sahte interaktif butonlar ekleyemez.
 
@@ -220,3 +220,14 @@ Bu ek, kullanıcının ölçeklenebilirlik / SOLID ve tek konu sonrası inceleme
 - **Doğrulama:** `npm test`, `tests/*.test.mjs` dosyalarını çalıştırır. Alan modelleri, çift dil / katalog / formül tutarlılığı ve yaşam döngüsü / yükleme yarışları bu sınırların test kapsamıdır.
 
 Ölçeklenebilirlik burada yeni konuları izole ekleme ve mevcut konuları bozmama hedefidir; çok kullanıcılı bir sunucu altyapısı veya tamamlanmış bir içerik yönetim sistemi vaat edilmez.
+
+## 9. §1.2 genişleme sınırları — 3 Kasım 2026
+
+Kullanıcı §1.2’ye geçilmesini açıkça istedi. Yeni inceleme noktası bu konudur.
+
+- Ders verileri ve çift dilli Markdown `dist/lessons/xie-2010/1-2/` içindedir.
+- `dist/labs/concepts/controller.js` yalnızca dört etkinliği birleştirir; etkinlikler kendi durumlarını ve aboneliklerini yönetir. Dil ve etkinlik geçişinde parametreler korunur; ders ailesi değişiminde kaynaklar temizlenir.
+- Saf hesaplamalar `dist/models/concepts.js` içindedir; mevcut `models.js` dış arayüzünden de sunulur. Ortak SVG geometri yardımcısı `dist/core/cartesian-plot.js` DOM’dan bağımsızdır.
+- `math_sources/concepts.py` kararlı formül kimliklerini tanımlar. `build_math.py`, 38 iki dilli bloğu doğrulayarak MathML haritası ve laboratuvarın kullandığı `equations.js` eşlemesini üretir.
+- Doğrulayıcılar tanımlı aday ailelerini analitik olarak kontrol eder; genel amaçlı sembolik cebir sistemi oldukları iddia edilmez. Teorem koşulları yeterlidir; tek noktada kalan sıfır olması kanıt değildir.
+- `tests/concepts.test.mjs` sayısal ve analitik alan kurallarını denetler; toplam test sayısı 26’dır.
