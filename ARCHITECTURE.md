@@ -4,7 +4,7 @@ Bu belge bütün ajanlar ve geliştiriciler için bağlayıcıdır. Kullanıcın
 
 ## Amaç ve kalite standardı
 
-Sistem, birden fazla kitabı Türkçe ve İngilizce ders notu, rehberli düşünme, deney, ayrıntılı sınav çözümü ve kişisel notlarla çalışılabilir hale getirir. Hazır dersler Xie §1.1, §1.2, §2.1, §2.2, §2.3 ve §3.1’dir. Diğer başlıklar içindekiler haritasıdır. §3.1 öğrenme derinliği referansıdır; arayüzü körlemesine kopyalamak kalite sayılmaz.
+Sistem, birden fazla kitabı Türkçe ve İngilizce ders notu, rehberli düşünme, deney, ayrıntılı sınav çözümü ve kişisel notlarla çalışılabilir hale getirir. Hazır dersler Xie §1.1, §1.2, §2.1, §2.2, §2.3, §2.4 ve §3.1’dir. Diğer başlıklar içindekiler haritasıdır. §3.1 öğrenme derinliği referansıdır; arayüzü körlemesine kopyalamak kalite sayılmaz.
 
 Her yeni konu kaynak sayfalarından doğrulanır. Konuya uygun tahmin → gerekçe → türetim → deney → doğrulama → alıştırma akışı tasarlanır. Sınav kliniği ara işlemleri, varsayımları, hata tuzaklarını, çözüm aralığını ve puan anahtarını açıklar. Özgün uygulama soruları kitaptan veya gerçek sınavdan alınmış gibi sunulmaz. Her konu sonrası kullanıcı incelemesi beklenir.
 
@@ -33,7 +33,7 @@ Bağımlılık yönü görünüm → içerik/model/çekirdek şeklindedir. Mevcu
 
 Laboratuvar sözleşmesi `mount(root, context) → {update(context), destroy()}` biçimindedir; mount asenkron olabilir. Context ders, dil, çeviri/sayı biçimi, MathML yükleme ve iptal sinyalini sağlar. Her laboratuvar yalnız kendi kökünü ve olay aboneliklerini yönetir. destroy abonelikleri, animasyonları ve kaynakları temizler. Eski bir asenkron sonuç yeni dersin üstüne yazamaz. Dil değişimi parametreleri korur.
 
-Notlar ve ilerleme ders kimliği altında localStorage’da saklanır. Soru indeksleri mevcut çözümlerin anlamını korur; soru sırasını değiştirmek migrasyon gerektirir. §2.1’in ilk üç soru indeksi korunur; §2.2 ve §2.3 için önceki kullanıcı ilerlemesi yoktur. Rehber tahminleri, açık adımlar ve deney parametreleri oturum belleğindedir; yenilemede sıfırlanabilir. URL ders, dil ve görünümü ifade eder.
+Notlar ve ilerleme ders kimliği altında localStorage’da saklanır. Soru indeksleri mevcut çözümlerin anlamını korur; soru sırasını değiştirmek migrasyon gerektirir. §2.1’in ilk üç soru indeksi korunur; §2.2, §2.3 ve §2.4 için önceki kullanıcı ilerlemesi yoktur. Rehber tahminleri, açık adımlar ve deney parametreleri oturum belleğindedir; yenilemede sıfırlanabilir. URL ders, dil ve görünümü ifade eder.
 
 ## Matematik ve iki dil
 
@@ -41,7 +41,7 @@ Bütün kullanıcı metinleri TR/EN eksiksizdir. Statik UI metinleri `i18n.js` i
 
 Notların eşlenmiş LaTeX blokları aynı sırada olmalı; `build_math.py` bütün çiftleri doğrulamadan çıktı yazmaz. Denetlenmiş tanımlar `math_sources/` içindedir. Ham MathML kullanan notlar ve study.js formülleri birlikte güncellenir. Her math kökü açık mrow içerir. Ham LaTeX kullanıcıya görünür bırakılmaz. MathML parçaları XML olarak denetlenir.
 
-Modellerde tanım bölgesi, işaret ve birimler açık tutulur. Kutup üzerinden eğri bağlanmaz; ekran penceresi ile çözüm aralığı ayrıdır. §2.1 aileleri x₀=0 ve k>0 kullanır. §2.2 aileleri x₀=1 kullanır; daire x²+y²=Ax, elips x²−xy+y²=A, toplam y=tan(x+C)−x ve köklü aile y²=−2Cx−C² biçimindedir. Dairede y(1)=0, elipste 2y(1)=1, köklü ailede |y(1)|≥1 geçersizdir; bağlı aralık kutuplar arasında açık yazılır. §2.3 aileleri x₀=1 kullanır; tam denklem x²+xy+y²=C, μ(x)=e^x ailesi e^x y(2x−y)=C, μ(y)=1/y ailesi xy+½y²−ln y=C ve inceleme ailesi ln(x²+y²)+2√x=C düzey eğrileridir. μ(x) ailesinde y=0 ve y=2x, μ(y) ailesinde y=0, inceleme ailesinde x=0 ve y=0 geçersizdir. Soğumada toplam süre ile gözlem sonrası ek süre ayrılır. Bina genlik/faz metrikleri kalıcı rejime aittir; grafik geçici rejimi de içerir. Tek noktada sıfır artık çözüm kanıtı değildir. Teorem varsayımının bozulması tek başına yokluk veya çokluk sonucu vermez.
+Modellerde tanım bölgesi, işaret ve birimler açık tutulur. Kutup üzerinden eğri bağlanmaz; ekran penceresi ile çözüm aralığı ayrıdır. §2.1 aileleri x₀=0 ve k>0 kullanır. §2.2 aileleri x₀=1 kullanır; daire x²+y²=Ax, elips x²−xy+y²=A, toplam y=tan(x+C)−x ve köklü aile y²=−2Cx−C² biçimindedir. Dairede y(1)=0, elipste 2y(1)=1, köklü ailede |y(1)|≥1 geçersizdir; bağlı aralık kutuplar arasında açık yazılır. §2.3 aileleri x₀=1 kullanır; tam denklem x²+xy+y²=C, μ(x)=e^x ailesi e^x y(2x−y)=C, μ(y)=1/y ailesi xy+½y²−ln y=C ve inceleme ailesi ln(x²+y²)+2√x=C düzey eğrileridir. μ(x) ailesinde y=0 ve y=2x, μ(y) ailesinde y=0, inceleme ailesinde x=0 ve y=0 geçersizdir. §2.4 aileleri kaynak örneklerinden türetilmiştir: y′=1+3y tan x çözümü y=sec³x(sin x−sin³x/3+C) ve tanım aralığı (−π/2,π/2); x’in bağımlı olduğu y dx−(e^y+2xy−2x)dy=0 için xy²=Ce^{2y}−e^y(y+1) ve y>0 dalı; n=−1 Bernoulli 2xyy′=y²−2x³ için y²=x(C−x²) ve 0<x<√C; n=4 Bernoulli 3y dx−(x+3x⁴y ln y)dy=0 için x³=4y/[4C−3y²(2ln y−1)] ve y>0. §2.4’te y=0, cos x=0, cos y=0 ve y>0 sınırları ayrıca yazılır. Soğumada toplam süre ile gözlem sonrası ek süre ayrılır. Bina genlik/faz metrikleri kalıcı rejime aittir; grafik geçici rejimi de içerir. Tek noktada sıfır artık çözüm kanıtı değildir. Teorem varsayımının bozulması tek başına yokluk veya çokluk sonucu vermez.
 
 ## Güvenlik ve yayın
 
