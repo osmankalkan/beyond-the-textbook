@@ -1,3 +1,5 @@
+> Tarihsel ilk teslim kaydıdır. Güncel kapsam PROJE-DURUMU.md ve QUALITY-REVISION.md içindedir; eski bekleyen konu/test sayısı ifadeleri güncel durum sayılmaz.
+
 # §1.1 inceleme noktası — 3 Kasım 2026
 
 Bu adım yalnızca **Motive Edici Örnekler / Motivating Examples** konusunu ekler. §1.2 kullanıcı incelemesi sonrasına bırakılmıştır.

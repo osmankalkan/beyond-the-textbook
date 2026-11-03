@@ -1,35 +1,22 @@
 # Beyond the Textbook
 
-A project I started to keep lesson notes, small experiments, and exercises in one place while studying books. It's still early, and I plan to add more books over time.
+A bilingual learning workspace for studying textbooks through notes, guided reasoning, interactive experiments, worked problems, and a personal notebook.
 
-Three bilingual lessons are available from Wei-Chau Xie's *Differential Equations for Engineers*:
+Four sections of Wei-Chau Xie's *Differential Equations for Engineers* are available in Turkish and English:
 
-- **§1.1 — Motivating Examples:** six model-formulation walkthroughs, interactive projectile and mixing-tank plots, and six concept checks.
-- **§1.2 — General Concepts and Definitions:** eight classification cases, solution families and IVP/BVP, existence and uniqueness, analytic ODE/PDE verification, 38 formulas and 14 concept checks. This is the current review checkpoint.
-- **§3.1 — Heating and Cooling:** two guided temperature experiments with A/B comparison, a worked exam clinic, eight exercises, and a notebook.
+- **§1.1 — Motivating Examples:** six model walkthroughs, projectile and tank experiments, two guided derivations with predictions, two worked exam cases, and six checks.
+- **§1.2 — General Concepts and Definitions:** classification, families/conditions, existence/uniqueness, and ODE/PDE verification; two guided reasoning paths, two worked exam cases, and fourteen checks.
+- **§2.1 — Separation of Variables:** source Examples 2.1–2.3, guided integration and excluded branches, four analytic families with A/B comparison and maximal intervals, four fully worked midterm problems, and eleven checks.
+- **§3.1 — Heating and Cooling:** guided temperature experiments, A/B comparison, calibration, transient and steady-state analysis, an exam clinic, and eight checks.
 
-Everything is available in **Turkish and English** (`TR | EN`). Other sections remain a searchable contents map. See [the §1.2 review notes](docs/REVIEW-1-2.md) for scope, checks, and the incremental architecture.
+Other sections remain a searchable contents map. Browser storage keeps per-lesson notes, progress, and language preference. No account is required.
 
-Notes, language preference, and progress are saved in your browser.
+## Run locally
 
-## Running locally
+Run `npm start`, then open the address printed in the terminal (normally http://127.0.0.1:4317). No install or build is needed. `npm test` runs the mathematical, bilingual, and lifecycle checks. `python3 build_math.py` validates paired LaTeX blocks and regenerates reviewed MathML.
 
-You'll need Node.js installed.
+## Architecture
 
-```sh
-npm start
-```
+The app uses native ES modules and no runtime dependencies. Lesson data lives under `dist/lessons/`, pure models under `dist/models/`, and lab controllers under `dist/labs/`. `dist/core/study-guide.js` renders topic-authored predictions and derivations; it does not own navigation or persistent progress. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
-Open http://127.0.0.1:4317 in your browser.
-
-To run the tests:
-
-```sh
-npm test
-```
-
-## Adding lessons
-
-Lesson content is registered in `dist/content.js`; §1.1 and §1.2 own separate modules under `dist/lessons/xie-2010/`. Lab controllers implement a small `mount / update / destroy` contract. Models remain pure functions, lesson fetching is separate from DOM rendering, and no runtime dependencies were added. The existing heating lab is adapted to this lifecycle without a wholesale rewrite.
-
-Run `python3 build_math.py` to validate all registered TR/EN LaTeX pairs and regenerate their MathML maps. See [ARCHITECTURE.md](ARCHITECTURE.md) for the contract.
+Current review: the depth and learning flow of §1.1, §1.2 and §2.1 have been revised using §3.1 as the reference. See [the revision record](docs/QUALITY-REVISION.md). Changes remain local until explicitly requested for GitHub.

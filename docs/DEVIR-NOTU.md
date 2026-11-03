@@ -1,130 +1,13 @@
-# Beyond the Textbook — devir notu
+# Devralan ajan için güncel not
 
-Tarih: 2 Kasım 2026. Bu dosya, başka bir agent'ın projeyi ve şimdiye kadar alınan kararları anlayıp çalışmaya devam edebilmesi için hazırlandı.
+3 Kasım 2026. Önce AGENTS.md ve ARCHITECTURE.md sözleşmelerini oku. README çalıştırma ve ders kapsamını, PROJE-DURUMU güncel durumu açıklar.
 
-Bu bir durum kaydıdır; aşağıdaki gelecek fikirleri henüz kullanıcı tarafından verilmiş geliştirme görevleri değildir. Yeni çalışmaya başlamadan önce `ARCHITECTURE.md` sözleşmesini, kullanıcının seçtiği işi ve güncel dosyaları esas al.
+Kullanıcı tüm geliştirilmiş konuların §3.1 derinliğinde olmasını istedi. §1.1 / §1.2 / §2.1 revizyonunu olumlu değerlendirdi ve belgelerin güncellenip üç commit halinde GitHub’a gönderilmesini istedi. Yeni konu eklenmesi istenmedi. Ayrıntılı uygulama kaydı QUALITY-REVISION.md içindedir; REVIEW-1-1 ve REVIEW-1-2 tarihsel ilk teslim kayıtlarıdır.
 
-## 3 Kasım 2026 — §1.2 güncel devir eki
+Yeni rehber verileri konu study.js dosyalarında; ortak arayüz core/study-guide.js, MathML yardımcıları study/math.js içindedir. Yeni §2.1 deneyinin saf modeli models/separation.js ve denetleyicisi labs/separation/controller.js içindedir. app.js kabuk ve eski sıcaklık adaptörünü tutar. Bu sınırları koru.
 
-Kullanıcı §1.1 sonrasında §1.2’nin geliştirilmesini istedi. §1.2 tamamlandı; **başka konuya geçmeden kullanıcı incelemesini bekle**. Hazır dersler §1.1, §1.2 ve §3.1’dir. Aşağıdaki eski kayıtlar tarihsel bağlamdır.
+§2.1’in ilk üç soru indeksi eski kullanıcı kayıtlarını korur; sekiz yeni soru sonlarına eklenmiştir. Oturumdaki rehber adımları ve deney parametreleri dil değişiminde korunur, yenilemede sıfırlanabilir. Not ve puan ilerlemesi kalıcı yerel kayıttır. Sınav puanları öz denetim içindir; otomatik notlandırılmış gerçek sınav sistemi yoktur.
 
-- Güncel kapsam ve kontroller: `docs/REVIEW-1-2.md`. Kaynak basılı s.6–15, PDF s.24–33.
-- Dört çalışma alanı, sekiz sınıflandırma örneği, 14 soru ve 38 çift dilli formül eklendi.
-- Yeni etkinlikler `dist/labs/concepts/activities/`, saf matematik `dist/models/concepts.js`, içerik `dist/lessons/xie-2010/1-2/` altında.
-- `npm test`: 26 test. `python3 build_math.py`: üç dersin formül eşliğini doğrular.
-- §1.1 daha önce kullanıcı talebiyle GitHub’a gönderildi (5bae99d). §1.2 değişiklikleri yereldedir; ayrıca istenmeden commit/push/yayın yapma.
-- İnceleme bağlantısı: `http://127.0.0.1:4317/?lesson=xie-2010%3A1.2&lang=tr#lab`.
+30 test geçmektedir. Kritik kutup ve başlangıç verisi durumları ayrıca model testindedir. Dört Markdown çiftinin blok formüllerini build_math.py denetler. Ham MathML eklenmiş notlar değiştiğinde study.js ile eşlik ve açık mrow kökü ayrıca kontrol edilir. §3.1’in eski laboratuvarına yeni rehber yanlışlıkla gösterilmemelidir.
 
-## 3 Kasım 2026 — güncel devir eki
-
-Kullanıcı birinci üniteden başlayarak konu konu ilerlenmesini ve **her konu tamamlandıktan sonra incelemesi için durulmasını** istedi. Yeni eklenen tek konu §1.1’dir; §1.2 hâlâ içerik haritasıdır. Güncel kapsam ve testler `docs/REVIEW-1-1.md` içinde kayıtlıdır. Aşağıdaki 2 Kasım kaydı tarihsel ayrıntıdır; hazır ders sayısı gibi eski durum ifadelerinde bu ek ve güncel kod esas alınır.
-
-- §1.1’in iki dilde dersleri, 11 formülü, altı model incelemesi ve altı sorusu `dist/lessons/xie-2010/1-1/` altındadır. Atış ve tank grafikleri uygulamaya özel ek görselleştirmelerdir; diğer dört örnek çözüm simülasyonu değildir.
-- `dist/core/lab-host.js` yaşam döngüsünü, `dist/core/lesson-repository.js` varlık erişimini yönetir. Yeni laboratuvar `dist/labs/introduction/controller.js` içinde izoledir.
-- `models.js` içindeki yeni saf modeller, `tests/introduction.test.mjs` ile; yaşam döngüsü / varlık erişimi ise `tests/lesson-infrastructure.test.mjs` ile doğrulanır. `npm test` toplam 16 testi çalıştırır.
-- Formül üretimi `math_sources/` konu modüllerine ayrılmıştır; komut hâlâ `python3 build_math.py`dir. İki dil tüm dersler için eşlenir.
-- `?lesson=xie-2010%3A1.1&lang=tr#lab` ile doğrudan yeni konuyu açabilirsiniz. Dil ve ders değişimi URL’ye de yazılır; yenilemede eski sorgu parametresi yanlış konuya döndürmez.
-- Mevcut §3.1’in laboratuvar kodu hâlâ `app.js` içindedir; adaptörle korunmuştur. Eski kayıtlar §1.1’e taşınmaz; kendi dersinde kalır.
-- Commit, push ve internet yayını yapılmadı. **Sonraki konuya geçmeden kullanıcının inceleme sonucunu bekle.**
-
-## 1. Projenin amacı
-
-Kullanıcı, kitap çalışırken konu anlatımını, deneyleri, alıştırmaları, sınav hazırlık kliniğini ve kendi notlarını aynı yerde **hem Türkçe hem İngilizce (`TR | EN`)** olarak kullanmak istiyor. Zamanla farklı kitaplar da eklenecek.
-
-Genel proje ve arayüz adı **Beyond the Textbook**. Uygulama çoklu kitap ve ders yapısını destekleyen bir katalog (`dist/content.js`) ve `#library` görünümü üzerine kurulu; şu an içinde ilk kitap (Wei-Chau Xie) ve onun tam geliştirilmiş ilk dersi (**§3.1**) yer alıyor.
-
-Öğrenme yaklaşımı: konuyu oku, sonucu tahmin et, parametreleri ve A/B senaryolarını değiştirerek dene, türetim adımlarını ve sınav kliniğini incele, soruları çöz ve kendi cümlelerinle not al. Matematiksel sonuçların kaynağı ve modelin varsayımları açık olmalı.
-
-## 2. Şu anda hangi içerik var?
-
-Kaynak, Wei-Chau Xie'nin *Differential Equations for Engineers* kitabı (Cambridge University Press, 2010). Kullanıcının yerel PDF'si 568 sayfa.
-
-Yalnızca **§3.1 Heating and Cooling / Isınma ve Soğuma** tam ders ve laboratuvar olarak geliştirilmiş durumda. Kaynak aralığı basılı sayfa 87–90 ve Bölüm 3 sonu problemleri s.130 (PDF sayfa 105–108, 148). Hem Türkçe (`dist/lesson.md`) hem İngilizce (`dist/lesson-en.md`) ders notu kaynağa dayanan özgün çalışma uyarlamalarıdır.
-
-Ders ve rehberli laboratuvar şu konuları kapsar:
-
-- Fiziksel enerji dengesinden (Biot sayısı $\mathrm{Bi} \ll 1$) Newton'un soğuma denklemine geçiş.
-- Değişkenleri ayırma (§2.1), başlangıç koşulu, denge çözümü, ısıl zaman sabiti ($\tau = 1/k$) ve yarılanma süresi ($t_{1/2} = \ln(2)/k$).
-- Kitaptaki soğuma problemi (Örnek 3.1), ara gözlemden $k$ kalibrasyonu ve **toplam süre / gözlem sonrası kalan ek süre** ayrımı.
-- Dış sıcaklığı sinüzoidal değişen ve oransal geri beslemeyle ısıtılan bina modeli (Örnek 3.2, §2.4 integral çarpanı).
-- **Geçici (transient) ve kalıcı (steady-state) rejim ayrışımı**, kalıcı salınım genliği $A$, faz gecikmesi $\phi/\omega$ ve ilk periyottaki geçici aşım (overshoot).
-- Analitik çözümle ileri Euler sayısal yaklaşımının karşılaştırılması (§10.1 bağlantısı).
-- **Vize & Final Çözüm Kliniği (s.130):** Problem 3.1 (değişken ortam sıcaklığı $T_m(t) = 20e^{-0.02t}$ altında ölüm saati tayini) ve Problem 3.2 (ısıtıcısız atölyede günlük maksimum/minimum sıcaklıklar).
-
-Kitabın 12 ana bölümü, alt başlıkları ve sayfaları Türkçe ve İngilizce olarak aranabilir bir haritada listeleniyor. **Haritada görünmesi, o bölümün dersinin hazır olduğu anlamına gelmiyor.**
-
-## 3. Çalışan özellikler
-
-| Alan | Mevcut davranış |
-| --- | --- |
-| Çift dilli yapı (`TR \| EN`) | Üst çubuktan tek tıkla (veya `?lang=en` / `?lang=tr` ile) tüm arayüz, ders notu, türetimler, sınav kliniği, sorular ve sayı biçimlendirmesi anında Türkçe / İngilizce arasında geçiş yapar |
-| Kitaplık (`#library`) | Kitap kartları, hazır derslerin listesi, ders bazlı ilerleme rozeti ve doğrudan Ders / Sınav / Laboratuvar görünümüne geçiş |
-| Ders notu (`#lesson`) | `dist/lesson.md` (TR) ve `dist/lesson-en.md` (EN), dokuz LaTeX bloğunun yerel MathML gösterimi, `.md` indirme |
-| Deney laboratuvarı (`#lab`) | Rehberli çalışma ve Serbest deney modları, Soğuyan cisim ve Isıtılan bina modelleri, **A/B senaryo karşılaştırması**, saf kalıcı rejim eğrisi, ileri Euler eğrisi, anlık türev/rejim denetçisi |
-| Rehberli araçlar | 5 kavramsal tahmin senaryosu (3 soğuma, 2 bina), ara gözlemden $k$ kalibrasyon hesaplayıcısı, bina için $r = K_2/K_1$ geri besleme hesaplayıcısı, 5'er adımlı analitik türetim |
-| Vize & Final Kliniği | 4 adımlı sınav çözüm şablonu (blueprint) + Problem 3.1 ve Problem 3.2 için sınav tuzağı uyarıları ve adım adım MathML çözümleri |
-| Sınav & Alıştırma (`#practice`) | 8 aşamalı soru (sayısal ve çoktan seçmeli), sırayla açılan ipuçları, çözüm yöntemi özeti |
-| İlerleme ve Notlar (`#notes`) | Ders kimliği (`xie-2010:3.1`) bazında saklanan 9 adımlı ilerleme (1 ders + 8 soru) ve kişisel çalışma notları, Markdown indirme |
-| Kitap haritası (`#map`) | 12 bölümde hem Türkçe hem İngilizce anahtar kelimelerle konu arama ve hazır olan §3.1 dersine bağlantı |
-
-Hesap, giriş sistemi, bulut eşitlemesi, veritabanı veya çalışan LLM bağlantısı yok.
-
-## 4. Teknik yapı ve dosyalar
-
-Uygulama derleme gerektirmeyen (buildless) HTML, CSS ve JavaScript ES modülleriyle yazılmıştır.
-
-| Dosya / klasör | Görevi |
-| --- | --- |
-| `README.md` | Kısa İngilizce proje açıklaması ve çalıştırma komutları |
-| `AGENTS.md` | Repo içinde çalışırken izlenecek hızlı kurallar |
-| `ARCHITECTURE.md` | Projenin bağlayıcı mimari şartnamesi, kırmızı çizgileri ve ajan sözleşmesi |
-| `docs/PROJE-DURUMU.md` | Güncel proje özeti ve doğrulama durumu |
-| `docs/DEVIR-NOTU.md` | Bu ayrıntılı devir belgesi |
-| `dist/index.html` | Sayfa iskeleti, üst çubuk dil seçici (`TR \| EN`), menüler ve görünümler |
-| `dist/styles.css` | Masaüstü ve mobil (~390px) duyarlı tasarım |
-| `dist/app.js` | Etkileşimler, canlı dil geçişi, SVG grafik çizimi, kalibrasyon, alıştırmalar ve `localStorage` yönetimi |
-| `dist/i18n.js` | `UI_STRINGS.tr` ve `UI_STRINGS.en` (260'ar anahtar), `normalizeLang`, `pickLang`, `deepLocalize`, `ui` |
-| `dist/content.js` | Çoklu kitap kataloğu (`BOOKS`), çift dilli (`{ tr, en }`) ders, tahmin, türetim, sınav kliniği ve 8 soru verisi + depolama migrasyonu |
-| `dist/models.js` | Soğuma (`cooling`, `calibrateK`, `targetTime`, `halfLife`, `eulerCooling`) ve bina (`building`, `buildingSteady`, `buildingTransient`, `buildingMetrics`, `rk4Step`) saf model fonksiyonları |
-| `dist/lesson.md` | Türkçe ders metni (9 LaTeX formül bloğu ile) |
-| `dist/lesson-en.md` | İngilizce ders metni (aynı 9 LaTeX formül bloğu ile) |
-| `build_math.py` | `lesson.md` ve `lesson-en.md` içindeki LaTeX bloklarının birebir eşleştiğini doğrulayıp `dist/math.json` dosyasını üreten Python betiği |
-| `dist/math.json` | Ders görünümünün kullandığı LaTeX → MathML eşlemesi |
-| `dist/vendor/` | Yerel Markdown görüntüleyicisi Marked ve MIT lisansı |
-| `server.mjs` | `dist/` sunan yerel HTTP sunucusu (`Cache-Control: no-cache` ve port doluysa otomatik sonraki porta geçiş destekli) |
-| `tests/models.test.mjs` | Node.js ile çalışan 7 kapsamlı model, katalog ve çift dilli senkronizasyon testi |
-| `.openai/hosting.json` | Mevcut Sites yayınıyla bağlantı bilgisi; koru |
-
-## 5. Yerelde çalıştırma ve doğrulama
-
-```sh
-npm start
-```
-
-Varsayılan adres: `http://127.0.0.1:4317` (eğer `4317` doluysa otomatik olarak `4318` vb. açılır ve terminalde yazdırılır).
-
-Testleri çalıştırmak için:
-
-```sh
-npm test
-```
-
-Formül eşlemesini yeniden üretmek ve `lesson.md` ile `lesson-en.md` arasındaki LaTeX blok eşliğini doğrulamak için:
-
-```sh
-python3 build_math.py
-```
-
-## 6. Matematikte ve çift dilli yapıda korunacak noktalar
-
-- **Soğuma:** `T(t) = Tm + (Ti − Tm) exp(−kt)`. Üstel azalan şey ortamla sıcaklık farkıdır ($\theta = T - T_m$). Toplam soğuma süresi ($t_{\text{toplam}} = 60\text{ dk}$) ile gözlemden sonraki kalan ek süre ($\Delta t = 40\text{ dk}$) ayrımı korunmalıdır.
-- **Bina:** `τ θ' + (1+r) θ = T1 sin(ωt)`. Genlik ve faz kartları **kalıcı rejime (steady-state)** aittir; grafikte **geçici + kalıcı tam çözüm** çizilir ve ilk periyottaki geçici aşım (overshoot) açıkça gösterilir.
-- **Çift Dilli Simetri:** `dist/i18n.js` altındaki `UI_STRINGS.tr` ve `UI_STRINGS.en` anahtarları birebir aynı kalmalı; `dist/content.js` altındaki her yeni içerik `{ tr, en }` şemasıyla eklenmeli; `dist/lesson.md` ve `dist/lesson-en.md` içindeki `$$...$$` blokları birebir aynı sırada olmalıdır.
-
-## 7. Devralan agent için ilk adımlar
-
-1. Önce `ARCHITECTURE.md`, `AGENTS.md`, `README.md`, `docs/PROJE-DURUMU.md` ve bu dosyayı oku.
-2. `git status` ile mevcut çalışma ağacını kontrol et.
-3. `npm test` ve `python3 build_math.py` komutlarının temiz geçtiğini doğrula.
-4. Kullanıcının seçtiği geliştirmeyi `ARCHITECTURE.md` içindeki kırmızı çizgilere (buildless yapı, sıfır bağımlılık, bilimsel doğruluk, TR/EN simetrisi) uyarak uygula.
-5. Kullanıcı açıkça istemedikçe `git commit`, `git push` veya yayın komutu çalıştırma; değişiklikleri yerelde bırak.
+Kaynak ve arşivler Git dışında tutulur. Hosting ayarlarını değiştirme; LLM henüz yoktur. Kullanıcı yeni adım seçene kadar yeni konuya geçme. Genel, sürekli commit/push yetkisi varsayma.

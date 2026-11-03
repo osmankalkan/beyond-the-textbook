@@ -1,110 +1,13 @@
-# Proje durumu ve devam notları
+# Güncel proje durumu
 
-Son düzenleme: 3 Kasım 2026.
+Son güncelleme: 3 Kasım 2026.
 
-## Amaç
+Dört çift dilli ders hazırdır: §1.1, §1.2, §2.1, §3.1. Diğer konular aranabilir içindekiler haritasıdır. §1.1 / §1.2 / §2.1 kalite revizyonu kullanıcı tarafından olumlu değerlendirildi; sonraki konu henüz seçilmedi.
 
-Beyond the Textbook projesiyle farklı kitapları, Markdown temelli dersler, etkileşimli modeller, alıştırmalar ve ileride kaynak gösteren LLM desteğiyle çift dilli (Türkçe ve İngilizce) kişisel bir öğrenme uygulamasına dönüştürmek. İlk örnek olan Wei-Chau Xie'nin *Differential Equations for Engineers* kitabının §3.1 bölümüyle başladı; proje küçük ve doğrulanmış adımlarla başka bölümlere ve kitaplara genişletilecek.
+§1.1 altı model, iki deney, iki rehberli türetim, iki sınav kliniği ve altı kontrol içerir. §1.2 dört kavram alanı, iki rehberli yol, iki klinik ve 14 soru içerir. §2.1 ayrıntılı kaynak integralleri, dört ailede A/B ve bağlı çözüm aralığı deneyi, dört puanlı tam çözüm ve 11 soru içerir. §3.1 sıcaklık deneyleri, kalibrasyon, geçici/kalıcı analiz, klinik ve sekiz soru içerir.
 
-## 3 Kasım güncellemesi — inceleme bekliyor
+30 otomatik test geçer. Dört dersin eşlenmiş LaTeX blokları üretim hattında doğrulanır; ham MathML kökleri ayrıca denetlenmiştir. Yeni rehberler ve §2.1 mobil 390 px akışları kontrol edilmiştir. Ayrıntılar QUALITY-REVISION.md içinde.
 
-§1.1 **Motive Edici Örnekler / Motivating Examples** eklendi. Basılı s.1–6 / PDF s.19–24 doğrulandı. Altı model incelemesi, Türkçe/İngilizce ders notları, 11 yeni MathML formülü, iki etkileşimli grafik (atış ve tank) ve altı kavrama sorusu içerir. Diğer dört örnekte model ve koşullar açıklanır; çözüm simülasyonu sunulmaz.
+Hesap veya LLM entegrasyonu yoktur. Notlar/ilerleme yerel tarayıcıda ders kimliğine göre tutulur. Kaynak PDF dağıtım ve Git dışıdır. npm start yerel adresi bildirir; port 4317 doluysa sonraki port kullanılır.
 
-Yeni içerik ve laboratuvar ayrı modüllerdedir; ortak yaşam döngüsü, ders varlık erişimi ve formül üretimi sorumlulukları ayrılmıştır. Mevcut §3.1 ve eski not/ilerleme kayıtları korunur. Ayrıntılar: [§1.1 inceleme notu](REVIEW-1-1.md).
-
-**Kullanıcı kontrol noktası:** §1.1 incelenmeden §1.2’ye veya başka yeni bir konuya geçilmez. Bu adımda commit, push veya yayın yapılmadı.
-
-## Mevcut §3.1 sürümü
-
-- **Kaynak kitap:** Wei-Chau Xie, *Differential Equations for Engineers*, Cambridge University Press, 2010. Kullanıcının PDF'si 568 sayfa.
-- **İşlenen bölüm:** §3.1 Heating and Cooling / Isınma ve Soğuma, basılı s.87–90 (Bölüm 3 sonu problemleri s.130); PDF s.105–108, 148.
-- **Çift dilli çalışma alanı (`TR | EN`):**
-  - Türkçe (`dist/lesson.md`) ve İngilizce (`dist/lesson-en.md`) ders notları, kaynağa dayanan etkileşimli çalışma uyarlamalarıdır. Dokuz LaTeX formülünün MathML gösterimi her iki dilde de `build_math.py` ve `dist/math.json` ile birebir senkronizedir.
-  - Arayüz metinleri (`dist/i18n.js`) ve ders/alıştırma kataloğu (`dist/content.js`) üst çubuktaki `TR | EN` seçiciyle sayfa yenilenmeden ve simülasyon durumu kaybolmadan anında dil değiştirir.
-- **İki deney ve rehberli laboratuvar:**
-  - Newton soğuma modeli (Örnek 3.1) ve geri beslemeli bina ısıtması (Örnek 3.2).
-  - İki senaryoyu aynı grafikte karşılaştırma (**A/B karşılaştırma**), saf kalıcı rejim eğrisini geçici + kalıcı tam çözümden ayrı çizme, ileri Euler karşılaştırması, zaman imleci / oynatma, anlık türev/rejim denetçisi, CSV ve SVG indirme.
-  - **Rehberli çalışma tezgahı:** Kavramsal tahmin senaryoları, ara gözlemden deneysel $k$ ve süre kalibrasyon hesaplayıcısı, bina için $r = K_2/K_1$ geri besleme tasarım hesaplayıcısı ve 5 adımlı analitik türetim.
-- **Vize & Final Çözüm Kliniği ve 8 Alıştırma:**
-  - Kitabın 130. sayfasındaki **Problem 3.1** (zamanla değişen ortamda adli tıp ölüm saati tayini — integral çarpanı) ve **Problem 3.2** (ısıtıcısız atölyede günlük sıcaklık ekstremumları) için 4 adımlı çözüm şablonu, sınav tuzakları ve adım adım tam çözümler.
-  - Sekiz aşamalı sınav/alıştırma sorusu, çoktan seçmeli ve sayısal cevap kontrolü, sırayla açılan ipuçları ve çözüm yöntemi özetleri.
-- **Kitaplık ve yerel depolama:**
-  - `#library` görünümüyle kitap ve hazır ders seçimi.
-  - Notlar (`denklem-v1-notes`), ilerleme (`denklem-v1-progress`), aktif ders (`denklem-v1-active-lesson`) ve dil tercihi (`denklem-v1-lang`) aynı tarayıcının yerel depolamasında tutulur; eski tekil kayıtlar otomatik olarak ders kimliği (`xie-2010:3.1`) altına taşınır.
-- **Kitap haritası:** 12 ana bölümü ve alt başlıkları Türkçe ve İngilizce olarak içerir; her iki dilde arama yapılabilir. §1.1, §1.2 ve §3.1 dışındaki bölümler henüz derslere dönüştürülmemiştir.
-- **Mimari sözleşme:** `ARCHITECTURE.md` dosyası projenin derlemesiz (buildless) yapısını, kırmızı çizgilerini ve ajan çalışma protokolünü tanımlar.
-- LLM API bağlı değildir; sahte sohbet arayüzü gösterilmez.
-
-## Çalıştırma ve giriş
-
-`npm start` ardından http://127.0.0.1:4317 adresini açın (`4317` portu doluysa sunucu otomatik olarak `4318` gibi bir sonraki boş porta geçer). Çalışan uygulamada ChatGPT hesabı veya başka bir giriş gerekmez. Node.js kurulu olmalıdır; `npm install` gerekmiyor.
-
-Mevcut özel yayın: https://denklem-atolyesi-xie-20261101.readyrice1025.chatgpt.site
-
-Bu adresin ChatGPT giriş ekranı, Sites üzerindeki owner-private erişim ayarından kaynaklanır. Uygulamanın kaynak kodunda giriş zorunluluğu yoktur.
-
-## Doğrulananlar
-
-- **Yedi otomatik test (`npm test`) geçti:**
-  1. Kitap Örnek 3.1: kalibrasyon, ara gözlem, toplam ve kalan ek süre, yarılanma süresi.
-  2. Denge, ısınma ve sonlu sürede erişilemeyen hedef durumları.
-  3. Adım küçüldükçe ileri Euler yönteminin analitik çözüme yakınsaması.
-  4. Bina başlangıç koşulu ve analitik çözümün bağımsız RK4 integrasyonuyla uyumu.
-  5. Kitap Örnek 3.2: 3 °C kalıcı genlik sınırı için gereken geri besleme oranı.
-  6. Katalog yapısı (`dist/content.js`), eski not/ilerleme verilerinin ders kimliğine migrasyonu ve geçici + kalıcı rejim toplamı.
-  7. Çift dilli (`TR` / `EN`) arayüz sözlüğü (`UI_STRINGS`), ders/soru/ipucu eşliği ve `lesson.md` $\leftrightarrow$ `lesson-en.md` $\leftrightarrow$ `math.json` formül senkronizasyonu.
-- `dist/app.js` içindeki tüm `t(...)` anahtarlarının ve `#id` seçicilerinin `dist/i18n.js` ve `dist/index.html` ile sıfır eksik ve sıfır fazlalıkla eşleştiği denetlendi.
-
-## Dosyalar
-
-```text
-beyond-the-textbook/
-├── README.md                  Kısa tanıtım ve çalıştırma komutları
-├── AGENTS.md                  Geliştirme oturumları için hızlı bağlam ve kurallar
-├── ARCHITECTURE.md            Mimari şartname ve bağlayıcı ajan sözleşmesi
-├── package.json
-├── server.mjs                 Yerel statik HTTP sunucusu (otomatik port + no-cache)
-├── build_math.py              Denetlenmiş LaTeX → MathML eşlemesi (TR & EN senkron)
-├── dist/                      Yayımlanacak derlemesiz istemci uygulaması
-│   ├── index.html, styles.css, app.js
-│   ├── i18n.js                TR / EN arayüz sözlüğü ve yerelleştirme yardımcıları
-│   ├── content.js             Çift dilli kitap/ders kataloğu, laboratuvar ve soru verisi
-│   ├── models.js              Saf analitik ve sayısal model fonksiyonları
-│   ├── lesson.md, lesson-en.md, math.json
-│   └── vendor/                Yerel Markdown görüntüleyicisi + lisansı
-├── tests/models.test.mjs      Model, katalog ve çift dilli senkronizasyon testleri
-├── docs/
-│   ├── PROJE-DURUMU.md        Bu durum belgesi
-│   ├── DEVIR-NOTU.md          Ayrıntılı devir ve mimari geçmiş notu
-│   └── onizleme.jpg           İlk prototip QA ekran görüntüsü
-├── private/book/              Yerel kaynak kitap + ham çıkarım; Git dışında
-├── artifacts/                 İlk prototip kaynak ZIP'i; Git dışında
-└── .openai/hosting.json       Mevcut özel yayın kimliği
-```
-
-## Güncel kontrol durumu
-
-- Otomatik test sayısı: 26. Mevcut yedi teste, atış / tank sayısal doğrulaması, iki dersin yerel kayıt ayrımı, tüm konuların iki dil / formül eşliği ve laboratuvar / yükleme yaşam döngüsü kontrolleri eklendi.
-- §1.1 formülleri PDF’den çıkarılan metin ve sayfa görüntüleriyle karşılaştırıldı. Kaynak PDF ve ham kitap metni yayımlanacak dosyalara alınmadı.
-- Masaüstü / mobil 390 px tarayıcı kontrolü ve dersler arası geçiş doğrulandı; ayrıntılar inceleme notunda kayıtlıdır.
-
-## Sonraki küçük adımlar
-
-Bunlar önerilen çalışma dilimleridir; henüz kullanıcı tarafından sıraya konmuş değildir:
-
-1. Çift dilli §3.1 çalışma alanını kullanarak içerik, okunabilirlik ve deney akışı üzerinde geri bildirim toplamak.
-2. İkinci bir bölümü (ör. §2.1, §2.4 veya §3.2) seçmek, kaynak PDF'den doğrulamasını yapmak, Türkçe/İngilizce Markdown ve etkileşimli modelini eklemek.
-3. LLM için sunucu uç noktası, kaynak gösterme (sayfa/bölüm atfı) ve aşamalı ipucu davranışını tasarlamak; gerçek API erişimi sağlandığında bağlamak.
-4. İstenirse giriş gerektirmeyen genel bir statik internet yayını hazırlamak.
-
-## GitHub yaklaşımı
-
-Depo: https://github.com/osmankalkan/beyond-the-textbook
-
-Varsayılan yaklaşım, değişiklikleri yerelde bırakmak ve kullanıcının istediği adımları commit/push etmektir; açıkça istenirse commit ve push yapılabilir. PDF, ham kitap çıkarımı, ZIP arşivleri ve `.env` dosyaları `.gitignore` kapsamındadır.
-
-## §1.2 — güncel inceleme noktası (3 Kasım 2026)
-
-§1.2 Genel Kavramlar ve Tanımlar tamamlandı. Kaynak basılı s.6–15 / PDF s.24–33 ile karşılaştırıldı. Dört etkileşimli çalışma alanı, sekiz sınıflandırma örneği, 38 formül ve 14 soru iki dilde hazırdır. Ayrıntılar `REVIEW-1-2.md` içindedir. Önceki test listeleri tarihsel kapsamı gösterir; güncel toplam 26 testtir.
-
-Yeni kod yalnızca yerelde bırakılır. Sonraki konu kullanıcı incelemesinden sonra seçilecek; §2.1 geliştirilmedi.
+GitHub: https://github.com/osmankalkan/beyond-the-textbook . Kullanıcı mevcut çalışmaların üç commit halinde gönderilmesini istedi. Sonraki geliştirmeler için commit/push yetkisi ayrıca değerlendirilir; bu istek sürekli yayın izni değildir.

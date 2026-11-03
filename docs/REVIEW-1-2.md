@@ -1,3 +1,5 @@
+> Tarihsel ilk teslim kaydıdır. Güncel kapsam PROJE-DURUMU.md ve QUALITY-REVISION.md içindedir; eski bekleyen konu/test sayısı ifadeleri güncel durum sayılmaz.
+
 # §1.2 inceleme notları
 
 Kaynak: Xie (2010), §1.2, basılı s.6–15 / PDF s.24–33. Özgün TR/EN çalışma uyarlaması; PDF ve ham kitap metni dağıtıma dahil değildir.
