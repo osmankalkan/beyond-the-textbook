@@ -901,10 +901,14 @@ async function loadLesson(){
   const request=++lessonRequest;
   $('#lesson-content').innerHTML=`<p>${escape(t('lessonLoading'))}</p>`;
   try{
-    const {markdown,formulas}=await lessonRepository.load(lesson);
+    const [{markdown,formulas},inline]=await Promise.all([
+      lessonRepository.load(lesson),
+      lesson.inlinePath?lessonRepository.loadMath(lesson.inlinePath).catch(()=>null):null
+    ]);
     if(request!==lessonRequest||currentLesson.id!==lesson.id||lang!==selectedLanguage)return;
     const prepared=markdown.replace(/\$\$\s*([\s\S]*?)\s*\$\$/g,(_,latex)=>`<div class="formula">${formulas[latex.trim()]}<details><summary>${escape(t('latexSourceLabel'))}</summary><code>${escape(latex.trim())}</code></details></div>`);
-    $('#lesson-content').innerHTML=marked.parse(prepared);
+    const typeset=prepared.replace(/\\\((.+?)\\\)/g,(whole,latex)=>inline&&inline[latex.trim()]?`<span class="imath">${inline[latex.trim()]}</span>`:whole);
+    $('#lesson-content').innerHTML=marked.parse(typeset);
     loadedLessonKey=targetKey;
   }catch(error){
     if(request!==lessonRequest||currentLesson.id!==lesson.id||lang!==selectedLanguage)return;
@@ -927,6 +931,7 @@ const labHost=createLabHost({
   'transformation':()=>import('./labs/transformation/controller.js'),
   'exactness':()=>import('./labs/exactness/controller.js'),
   'linear':()=>import('./labs/linear/controller.js'),
+  'solvable':()=>import('./labs/solvable/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));

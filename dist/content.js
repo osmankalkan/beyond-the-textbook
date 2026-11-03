@@ -2,6 +2,7 @@ import {separationLesson} from './lessons/xie-2010/2-1/content.js';
 import {transformationLesson} from './lessons/xie-2010/2-2/content.js';
 import {exactnessLesson} from './lessons/xie-2010/2-3/content.js';
 import {linearLesson} from './lessons/xie-2010/2-4/content.js';
+import {solvableLesson} from './lessons/xie-2010/2-5/content.js';
 import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
@@ -34,6 +35,7 @@ export const BOOKS = [
       transformationLesson,
       exactnessLesson,
       linearLesson,
+      solvableLesson,
       {
         id: 'xie-2010:3.1',
         section: '3.1',
