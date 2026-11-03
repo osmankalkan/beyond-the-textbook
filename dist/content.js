@@ -1,4 +1,5 @@
 import {separationLesson} from './lessons/xie-2010/2-1/content.js';
+import {transformationLesson} from './lessons/xie-2010/2-2/content.js';
 import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
@@ -28,6 +29,7 @@ export const BOOKS = [
       introductionLesson,
       conceptsLesson,
       separationLesson,
+      transformationLesson,
       {
         id: 'xie-2010:3.1',
         section: '3.1',

@@ -7,10 +7,12 @@ from math_sources.introduction import expressions as introduction
 from math_sources.concepts import FORMULAS as concepts
 
 from math_sources.separation import expressions as separation
+from math_sources.transformation import expressions as transformation
 
 ROOT = Path(__file__).parent / 'dist'
 FORMULA_SETS = [
     ('lessons/xie-2010/2-1/lesson.md', 'lessons/xie-2010/2-1/lesson-en.md', 'lessons/xie-2010/2-1/math.json', separation),
+    ('lessons/xie-2010/2-2/lesson.md', 'lessons/xie-2010/2-2/lesson-en.md', 'lessons/xie-2010/2-2/math.json', transformation),
     ('lesson.md', 'lesson-en.md', 'math.json', heating),
     ('lessons/xie-2010/1-1/lesson.md', 'lessons/xie-2010/1-1/lesson-en.md', 'lessons/xie-2010/1-1/math.json', introduction),
     ('lessons/xie-2010/1-2/lesson.md', 'lessons/xie-2010/1-2/lesson-en.md', 'lessons/xie-2010/1-2/math.json', [item[2] for item in concepts]),

@@ -924,6 +924,7 @@ const labHost=createLabHost({
   'heating-cooling':async()=>({mount:()=>{setupMode();return {update:()=>setupMode(),destroy:stop};}}),
   'introduction-modeling':()=>import('./labs/introduction/controller.js'),
   'separation':()=>import('./labs/separation/controller.js'),
+  'transformation':()=>import('./labs/transformation/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));
