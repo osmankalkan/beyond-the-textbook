@@ -2,6 +2,9 @@
 from .common import row, mi, mn, mo, frac, power, sqrt, fun, sub
 
 sp = '<mspace width="1em"/>'
+dq = '<mspace width="2em"/>'
+quad = '<mspace width="1em"/>'
+implies = mo('⟹')
 
 
 def par(*parts):
@@ -66,7 +69,7 @@ zero, one, two, three, four, five, six, seven, nine, twelve = (mn(s) for s in ('
 plus, minus, equal = mo('+'), mo('−'), mo('=')
 comma = mo(',')
 
-expressions = [
+_b = [
     # 1-4: exact differential and potential
     eq(M, par(x, comma, y), d(x), plus, N, par(x, comma, y), d(y), equal, zero),
     eq(d(u), equal, pd(u, x), d(x), plus, pd(u, y), d(y)),
@@ -240,4 +243,39 @@ expressions = [
     eq(u, par(x, comma, y), equal, expm(x), y, par(two, x, minus, y)),
     eq(u, par(x, comma, y), equal, x, y, plus, frac(one, two), power(y, two), minus, ln(y)),
     eq(u, par(x, comma, y), equal, ln(row(power(x, two), plus, power(y, two))), plus, two, sqrt(x)),
+]
+
+
+# Merged review steps: adjacent reviewed fragments joined by an explicit arrow.
+def step(first, second):
+    return row(first, quad, implies, quad, second)
+
+
+expressions = [
+    _b[0],
+    row(_b[1], comma, _b[2], quad, implies, quad, _b[3]),
+    _b[4], _b[5], _b[6],
+    step(_b[7], _b[8]),
+    _b[9],
+    _b[10], step(_b[11], _b[12]),
+    _b[13], _b[14], _b[15], _b[16],
+    _b[17], _b[18], _b[19],
+    _b[20], _b[21],
+    row(_b[22], dq, _b[23]),
+    _b[24], step(_b[25], _b[26]),
+    _b[27], step(_b[28], _b[29]), _b[30],
+    _b[31], step(_b[32], _b[33]),
+    step(_b[34], _b[35]), _b[36], step(_b[37], _b[38]),
+    _b[44], step(_b[45], _b[46]), _b[47],
+    _b[48], _b[49], step(_b[50], _b[51]),
+    _b[52], _b[53], step(_b[54], _b[55]),
+    _b[56], _b[57], _b[59],
+    _b[60], step(_b[61], _b[62]), _b[63],
+    _b[64], _b[65],
+    _b[66], _b[67], step(_b[68], _b[69]), _b[70],
+    _b[71], _b[72], _b[73], step(_b[74], _b[75]),
+    _b[76], _b[77], step(_b[78], _b[79]),
+    _b[80], _b[81], _b[82], step(_b[83], _b[84]),
+    _b[85],
+    _b[86], _b[87], _b[88], _b[89],
 ]

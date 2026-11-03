@@ -72,7 +72,7 @@ test('Section 2.3 has bilingual formulas, two study paths and four scored clinic
   const trBlocks=blocks(tr.lessonPath),enBlocks=blocks(en.lessonPath);
   assert.deepEqual(trBlocks,enBlocks);
   assert.equal(new Set(trBlocks).size,trBlocks.length);
-  assert.equal(trBlocks.length,90);
+  assert.equal(trBlocks.length,66);
   assert.equal(tr.questions.length,11);assert.equal(en.questions.length,11);
   assert.equal(tr.labFamily,'exactness');
   assert.equal(tr.studySupport.paths.length,2);
@@ -83,4 +83,22 @@ test('Section 2.3 has bilingual formulas, two study paths and four scored clinic
   const mapping=JSON.parse(readFileSync('dist/'+tr.mathPath,'utf8'));
   assert.deepEqual(Object.keys(mapping),trBlocks);
   for(const math of Object.values(mapping))assert.match(math,/<math[^>]*><mrow>/);
+});
+
+test('Section 2.3 renders every inline formula and keeps prose free of raw LaTeX',()=>{
+  const tr=getLesson('xie-2010:2.3','tr').lesson,en=getLesson('xie-2010:2.3','en').lesson;
+  assert.equal(tr.inlinePath,'lessons/xie-2010/2-3/inline.json');
+  const tokens=path=>[...readFileSync('dist/'+path,'utf8').matchAll(/\\\((.+?)\\\)/g)].map(m=>m[1].trim());
+  const trTokens=tokens(tr.lessonPath),enTokens=tokens(en.lessonPath);
+  assert.deepEqual([...new Set(trTokens)].sort(),[...new Set(enTokens)].sort());
+  assert.ok(trTokens.length>145);
+  const inline=JSON.parse(readFileSync('dist/'+tr.inlinePath,'utf8'));
+  assert.deepEqual(Object.keys(inline).sort(),[...new Set(trTokens)].sort());
+  for(const math of Object.values(inline)){
+    assert.ok(!math.includes('display="block"'));
+    assert.match(math,/<math[^>]*><mrow>/);
+    assert.ok(!math.includes('&lt;mi&gt;'));
+    assert.ok(!math.includes('\\'));
+    assert.ok(!math.includes('|'),'inline MathML must encode pipes as &#124; so tables keep their cells');
+  }
 });

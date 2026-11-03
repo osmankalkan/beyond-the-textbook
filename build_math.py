@@ -39,6 +39,21 @@ NAMED_SETS = {
 # The third element is a reviewed LaTeX->MathML table when hand tuning is
 # needed, or None to render the closed subset in math_sources.inline_math.
 INLINE_SETS = {
+    'lessons/xie-2010/2-2/lesson.md': (
+        'lessons/xie-2010/2-2/lesson-en.md',
+        'lessons/xie-2010/2-2/inline.json',
+        None,
+    ),
+    'lessons/xie-2010/2-3/lesson.md': (
+        'lessons/xie-2010/2-3/lesson-en.md',
+        'lessons/xie-2010/2-3/inline.json',
+        None,
+    ),
+    'lessons/xie-2010/2-4/lesson.md': (
+        'lessons/xie-2010/2-4/lesson-en.md',
+        'lessons/xie-2010/2-4/inline.json',
+        None,
+    ),
     'lessons/xie-2010/2-5/lesson.md': (
         'lessons/xie-2010/2-5/lesson-en.md',
         'lessons/xie-2010/2-5/inline.json',
@@ -82,10 +97,10 @@ def main():
                 raise ValueError(f'Inline formula registry mismatch: {tr_path} (missing {missing}, extra {extra})')
             mapping = {latex: '<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>' + expressions[latex] + '</mrow></math>' for latex in tr}
         outputs.append((ROOT / target, mapping))
-    # Validate the new inline sources before modifying any generated file.
+    # Validate every source before modifying any generated file.
     namespace = '{http://www.w3.org/1998/Math/MathML}'
     for path, mapping in outputs:
-        if path.name != 'inline.json':
+        if isinstance(mapping, str):
             continue
         for latex, math in mapping.items():
             try:

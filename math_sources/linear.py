@@ -62,9 +62,9 @@ n = mi('n')
 zero, one, two, three, four, five = (mn(s) for s in ('0', '1', '2', '3', '4', '5'))
 plus, minus, equal, comma = mo('+'), mo('−'), mo('='), mo(',')
 cdot, neq, implies, colon = mo('·'), mo('≠'), mo('⟹'), mo(':')
-lt, gt = mo('<'), mo('>')
+lt, gt = mo('&lt;'), mo('>')
 
-expressions = [
+_b = [
     # 1-9: linear first-order theory
     row(prime(y), plus, P, par(x), y, equal, Q, par(x)),
     row(M, par(x, comma, y), equal, P, par(x), y, minus, Q, par(x), comma, dq, N, par(x, comma, y), equal, one),
@@ -177,4 +177,56 @@ expressions = [
     row(frac(d(x), d(y)), plus, P, par(y), x, equal, Q, par(y), dq, implies, dq,
         mu, equal, expm(integral(row(P, d(y))))),
     row(y, equal, zero, sp, par(n, gt, zero), comma, dq, cos(x), neq, zero, comma, dq, y, neq, zero),
+]
+
+# Merged review steps: adjacent reviewed fragments joined by an explicit arrow.
+def step(first, second):
+    return row(first, quad, implies, quad, second)
+
+
+quad = '<mspace width="1em"/>'
+
+expressions = [
+    # 1-8: linear theory
+    _b[0],
+    row(_b[1], comma, dq, _b[2]),
+    _b[3], _b[4], _b[5], _b[6], _b[7], _b[8],
+
+    # 9-15: Example 2.30
+    _b[9], _b[10], _b[11], _b[12], _b[13],
+    step(_b[14], _b[15]),
+    step(_b[16], _b[17]),
+
+    # 16-25: Example 2.31
+    _b[19], _b[20], _b[21], _b[22], _b[23],
+    row(_b[24], comma, dq, _b[25]),
+    _b[26], _b[27],
+    step(_b[28], _b[29]),
+    _b[30],
+
+    # 26-33: Example 2.32
+    _b[32], _b[33], _b[34], _b[35], _b[36], _b[37], _b[38],
+    step(_b[39], _b[40]),
+
+    # 34-39: Bernoulli theory
+    _b[41],
+    row(_b[42], comma, dq, _b[43]),
+    _b[44], _b[45], _b[46], _b[47],
+
+    # 40-49: Example 2.33
+    _b[48], _b[49], _b[50], _b[51], _b[52],
+    row(_b[53], comma, dq, _b[54]),
+    row(_b[55], quad, implies, quad, _b[56], quad, implies, quad, _b[57]),
+    _b[58], _b[59], _b[60],
+
+    # 50-58: Example 2.34
+    _b[61], _b[62], _b[63],
+    step(_b[64], _b[65]),
+    _b[66], _b[67],
+    step(_b[68], _b[69]),
+    step(_b[70], _b[71]),
+    _b[72],
+
+    # 59-62: decision summary
+    _b[73], _b[74], _b[75], _b[76],
 ]
