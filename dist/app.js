@@ -933,6 +933,7 @@ const labHost=createLabHost({
   'linear':()=>import('./labs/linear/controller.js'),
   'solvable':()=>import('./labs/solvable/controller.js'),
   'reduction':()=>import('./labs/reduction/controller.js'),
+  'summary':()=>import('./labs/summary/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));

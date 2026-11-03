@@ -4,6 +4,7 @@ import {exactnessLesson} from './lessons/xie-2010/2-3/content.js';
 import {linearLesson} from './lessons/xie-2010/2-4/content.js';
 import {solvableLesson} from './lessons/xie-2010/2-5/content.js';
 import {reductionLesson} from './lessons/xie-2010/2-6/content.js';
+import {summaryLesson} from './lessons/xie-2010/2-7/content.js';
 import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
@@ -38,6 +39,7 @@ export const BOOKS = [
       linearLesson,
       solvableLesson,
       reductionLesson,
+      summaryLesson,
       {
         id: 'xie-2010:3.1',
         section: '3.1',

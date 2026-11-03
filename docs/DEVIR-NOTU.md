@@ -1,13 +1,18 @@
 # Devralan ajan için güncel not
 
-3 Kasım 2026. Önce AGENTS.md ve ARCHITECTURE.md sözleşmelerini oku. README çalıştırma ve ders kapsamını, PROJE-DURUMU güncel durumu açıklar.
+4 Kasım 2026. Önce AGENTS.md ve ARCHITECTURE.md sözleşmelerini oku. README çalıştırma ve ders kapsamını, PROJE-DURUMU güncel durumu açıklar.
 
-Kullanıcı tüm geliştirilmiş konuların §3.1 derinliğinde olmasını istedi. §1.1 / §1.2 / §2.1 revizyonunu olumlu değerlendirdi ve belgelerin güncellenip üç commit halinde GitHub’a gönderilmesini istedi. §2.2 aynı standartla eklendi ve üç commit halinde gönderildi. §2.3 de aynı standartla eklendi ve gönderildi. §2.4 de aynı standartla eklendi ve üç commit halinde gönderildi. §2.5 de aynı standartla eklendi; ardından §2.2, §2.3 ve §2.4 notları §2.5’in not düzenine göre yeniden yazıldı. Dördü birlikte inceleme ve commit/push kararı bekliyor. Ayrıntılı uygulama kaydı QUALITY-REVISION.md içindedir; REVIEW-1-1 ve REVIEW-1-2 tarihsel ilk teslim kayıtlarıdır.
+Kullanıcı tüm geliştirilmiş konuların §3.1 derinliğinde olmasını istedi. §1.1, §1.2, §2.1, §2.2, §2.3, §2.4, §2.5 hazır durumdaydı; kullanıcı §2.6 (Basit yüksek mertebe denklemler) ve §2.7 (Özet: yöntem seçme sanatı) bölümlerini bitirmeyi ve özellikle §2.7 özet kısmını daha güzel, interaktif ve pekiştirici kılmayı istedi. Her iki bölüm §3.1 derinlik standardı ve buildless mimariyle tamamlandı. Bölüm 2 böylece tam olarak tamamlanmıştır.
 
-Yeni rehber verileri konu study.js dosyalarında; ortak arayüz core/study-guide.js, MathML yardımcıları study/math.js içindedir. §2.1 deneyinin saf modeli models/separation.js ve denetleyicisi labs/separation/controller.js içindedir. §2.2 deneyinin saf modeli models/transformation.js ve denetleyicisi labs/transformation/controller.js içindedir. §2.3 deneyinin saf modeli models/exactness.js ve denetleyicisi labs/exactness/controller.js içindedir. §2.4 deneyinin saf modeli models/linear.js ve denetleyicisi labs/linear/controller.js içindedir. §2.5 deneyinin saf modeli models/solvable.js ve denetleyicisi labs/solvable/controller.js içindedir. app.js kabuk ve eski sıcaklık adaptörünü tutar. Bu sınırları koru.
+Yeni rehber verileri konu study.js dosyalarında; ortak arayüz core/study-guide.js, MathML yardımcıları study/math.js içindedir.
+- §2.1 deneyinin saf modeli models/separation.js ve denetleyicisi labs/separation/controller.js içindedir.
+- §2.2 deneyinin saf modeli models/transformation.js ve denetleyicisi labs/transformation/controller.js içindedir.
+- §2.3 deneyinin saf modeli models/exactness.js ve denetleyicisi labs/exactness/controller.js içindedir.
+- §2.4 deneyinin saf modeli models/linear.js ve denetleyicisi labs/linear/controller.js içindedir.
+- §2.5 deneyinin saf modeli models/solvable.js ve denetleyicisi labs/solvable/controller.js içindedir.
+- §2.6 deneyinin saf modeli models/reduction.js ve denetleyicisi labs/reduction/controller.js içindedir.
+- §2.7 deneyinin saf modeli models/summary.js ve denetleyicisi labs/summary/controller.js içindedir (10 meydan okuma denklemli Teşhis Simülatörü ve 10 yöntemli Karar Ağacı & İndirgeme Matrisi).
 
-§2.1’in ilk üç soru indeksi eski kullanıcı kayıtlarını korur; sekiz yeni soru sonlarına eklenmiştir. §2.2, §2.3, §2.4 ve §2.5 için önceki kullanıcı ilerlemesi yoktur; 11 soru yeni indekslerdir. Oturumdaki rehber adımları ve deney parametreleri dil değişiminde korunur, yenilemede sıfırlanabilir. Not ve puan ilerlemesi kalıcı yerel kayıttır. Sınav puanları öz denetim içindir; otomatik notlandırılmış gerçek sınav sistemi yoktur.
+58 test geçmektedir. §2.6'nın 57 formül bloğu ve 92 satır içi formülü; §2.7'nin 8 formül bloğu ve 67 satır içi formülü build_math.py hattında üretilmekte ve MathML açık mrow kökleri tam denetlenmektedir.
 
-49 test geçmektedir. Kritik kutup, dal ve başlangıç verisi durumları ayrıca model testindedir. Sekiz Markdown çiftinin blok formüllerini build_math.py denetler; §2.2’nin 28, §2.3’ün 66, §2.4’ün 62, §2.5’in 42 bloğu tekil ve iki dilde eşlenmiştir. §2.2–§2.5 sırasıyla 155 / 151 / 73 / 69 satır içi formülü `inline.json` üzerinden üretir; `\(…\)` kalıntısı tarayıcıda kalmaz. §2.2–§2.4’te satır içi MathML `math_sources/inline_math.py` kapalı LaTeX alt kümesinden üretilir; §2.5’in elle denetlenmiş sözlüğü korunur. Satır içi MathML’de dikey çubuk `&#124;` olarak yazılır, çünkü satır içi ikame Markdown tablo ayrıştırmasından önce yapılır ve ham `|` hücreyi böler; `build_math.py` bunu ve dört satır içi testini denetler. Ham MathML eklenmiş notlar değiştiğinde study.js ile eşlik ve açık mrow kökü ayrıca kontrol edilir. §3.1’in eski laboratuvarına yeni rehber yanlışlıkla gösterilmemelidir.
-
-Kaynak ve arşivler Git dışında tutulur. Hosting ayarlarını değiştirme; LLM henüz yoktur. Kullanıcı yeni adım seçene kadar yeni konuya geçme. Genel, sürekli commit/push yetkisi varsayma.
+Kaynak ve arşivler Git dışında tutulur. Hosting ayarlarını değiştirme; LLM henüz yoktur. Kullanıcı yeni adım seçene kadar yeni konuya geçme. Kullanıcı açıkça istemedikçe commit/push yapma.
