@@ -1,10 +1,12 @@
+import {escapeHtml as escape} from './core/html.js';
+import {createLabHost} from './core/lab-host.js';
+import {createLessonRepository} from './core/lesson-repository.js';
 import {marked} from './vendor/marked.js';
 import {cooling, calibrateK, halfLife, targetTime, eulerCooling, building, buildingSteady, buildingTransient, buildingMetrics} from './models.js';
 import {BOOKS, LEGACY_LESSON_ID, getBook, getLesson, localizeBook, findLessonBySection, migrateProgressStore, migrateNotesStore, countLessonProgress} from './content.js';
 import {normalizeLang, ui} from './i18n.js';
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let storageOK=true;
 function readStore(key,fallback){try{return JSON.parse(localStorage.getItem('denklem-v1-'+key))??fallback;}catch{storageOK=false;return fallback;}}
 function saveStore(key,value){try{localStorage.setItem('denklem-v1-'+key,JSON.stringify(value));return true;}catch{storageOK=false;return false;}}
@@ -23,7 +25,7 @@ let notesByLesson=migrateNotesStore(readStore('notes',null));
 saveStore('progress',progressByLesson);
 saveStore('notes',notesByLesson);
 
-const savedActiveId=readStore('active-lesson',LEGACY_LESSON_ID);
+const savedActiveId=new URLSearchParams(location.search).get('lesson')||readStore('active-lesson',BOOKS[0].lessons[0].id);
 let {book:currentBook,lesson:currentLesson}=getLesson(savedActiveId,lang);
 
 function currentProgress(){
@@ -84,6 +86,7 @@ function renderExamClinicSection(){
   </article>`).join('');
   $('#exam-blueprint').innerHTML=bpHtml;
   $('#exam-clinic-list').innerHTML=clinicHtml;
+  $('#practice-clinic-mirror').hidden=clinic.length===0;
   $('#practice-clinic-mirror').innerHTML=`<section class="panel exam-clinic-panel">
     <div class="exam-clinic-header"><div><p class="eyebrow">${escape(t('practiceMirrorEyebrow'))}</p><h3>${escape(t('practiceMirrorTitle'))}</h3></div></div>
     <div class="exam-blueprint">${bpHtml}</div>
@@ -255,6 +258,16 @@ function applyActiveContext(){
   $('#source-download').href=currentLesson.lessonPath;
   $('#source-download').setAttribute('download',currentLesson.downloadName);
   $('#footer-source').textContent=`${t('footerSourcePrefix')} ${currentBook.author.split(' ').at(-1)} · §${currentLesson.section} ↗`;
+  const presentation=currentLesson.presentation||{};
+  $('#meta-description').setAttribute('content',currentLesson.subtitle);
+  $('#nav-label-lab').textContent=presentation.lab||t('navLab');
+  $('#nav-label-practice').textContent=presentation.practice||t('navPractice');
+  $('#go-to-practice-btn').textContent=presentation.practice||t('goToPracticeBtn');
+  for(const [id,key] of [['practice-eyebrow','practiceEyebrow'],['practice-title','practiceTitle'],['practice-intro','practiceIntro'],['practice-disclaimer','practiceDisclaimer']]){
+    if(presentation[key])$('#'+id).textContent=presentation[key];
+    else if(key!=='practiceDisclaimer')$('#'+id).textContent=t(key);
+  }
+  $('#source-what-works-body').textContent=presentation.featureSummary||t('sourceWhatWorksBody');
   renderExamClinicSection();
   renderExercises();
   updateProgress();
@@ -269,7 +282,8 @@ function setLang(nextLang){
   loadedLessonKey=null;
   applyStaticTranslations();
   applyActiveContext();
-  setupMode();
+  syncContextUrl();
+  if(view==='lab')activateLab();
   if(view==='library')renderLibrary();
   if(view==='lesson')loadLesson();
   if(view==='map')renderMap();
@@ -286,8 +300,10 @@ function selectLesson(lessonId,targetView=null){
   currentBook=found.book;
   currentLesson=found.lesson;
   saveStore('active-lesson',currentLesson.id);
-  if(changed)loadedLessonKey=null;
+  if(changed){loadedLessonKey=null;++lessonRequest;}
+  applyStaticTranslations();
   applyActiveContext();
+  syncContextUrl();
   if(targetView){
     if(location.hash==='#'+targetView)route();
     else location.hash=targetView;
@@ -322,8 +338,8 @@ function renderLibrary(){
         <div class="library-lesson-actions">
           <span class="library-progress-pill" title="${escape(t('progressPillTitle'))}">${escape(t('progressPill',stats.completed,stats.total))}</span>
           <button type="button" class="button secondary" data-open-lesson="${escape(lesson.id)}" data-target-view="lesson">${escape(t('lessonBtn'))}</button>
-          <button type="button" class="button secondary" data-open-lesson="${escape(lesson.id)}" data-target-view="practice">${escape(t('examPrepBtn'))}</button>
-          <button type="button" class="button primary" data-open-lesson="${escape(lesson.id)}" data-target-view="lab">${escape(t('labBtn'))}</button>
+          <button type="button" class="button secondary" data-open-lesson="${escape(lesson.id)}" data-target-view="practice">${escape(lesson.presentation?.practice||t('examPrepBtn'))}</button>
+          <button type="button" class="button primary" data-open-lesson="${escape(lesson.id)}" data-target-view="lab">${escape(lesson.presentation?.lab||t('labBtn'))}</button>
         </div>
       </div>`;
     }).join('');
@@ -815,7 +831,7 @@ $('#exercises').addEventListener('submit',e=>{
   if(q.choices)answer=Number(form.querySelector('input[type=radio]:checked')?.value);
   else answer=Number(form.querySelector('input[name=numeric]').value.trim().replace(',','.'));
   const correct=Number.isFinite(answer)&&(q.choices?answer===q.answer:Math.abs(answer-q.answer)<=q.tolerance),feedback=form.querySelector('.feedback');
-  feedback.hidden=false;feedback.classList.toggle('wrong',!correct);feedback.textContent=correct?q.feedback:t('wrongFeedback');
+  feedback.hidden=false;feedback.classList.toggle('wrong',!correct);feedback.textContent=correct?q.feedback:(currentLesson.presentation?.wrongFeedback||t('wrongFeedback'));
   if(correct){
     const prog=currentProgress();
     if(!prog.solved.includes(i))prog.solved.push(i);
@@ -876,24 +892,55 @@ $('#chapter-list').addEventListener('click',e=>{
   }
 });
 
+let lessonRequest=0;
+const lessonRepository=createLessonRepository();
 async function loadLesson(){
-  const targetKey=`${currentLesson.id}:${lang}`;
+  const lesson=currentLesson, selectedLanguage=lang, targetKey=`${lesson.id}:${selectedLanguage}`;
   if(loadedLessonKey===targetKey)return;
+  const request=++lessonRequest;
   $('#lesson-content').innerHTML=`<p>${escape(t('lessonLoading'))}</p>`;
   try{
-    const [mdResponse,mathResponse]=await Promise.all([fetch(currentLesson.lessonPath),fetch(currentLesson.mathPath)]);
-    if(!mdResponse.ok||!mathResponse.ok)throw Error('Failed to load lesson files.');
-    const [md,formulaMap]=await Promise.all([mdResponse.text(),mathResponse.json()]);
-    const prepared=md.replace(/\$\$\s*([\s\S]*?)\s*\$\$/g,(_,latex)=>{
-      const m=formulaMap[latex.trim()];
-      if(!m)throw Error('Formula mapping not found.');
-      return `<div class="formula">${m}<details><summary>${escape(t('latexSourceLabel'))}</summary><code>${escape(latex.trim())}</code></details></div>`;
-    });
+    const {markdown,formulas}=await lessonRepository.load(lesson);
+    if(request!==lessonRequest||currentLesson.id!==lesson.id||lang!==selectedLanguage)return;
+    const prepared=markdown.replace(/\$\$\s*([\s\S]*?)\s*\$\$/g,(_,latex)=>`<div class="formula">${formulas[latex.trim()]}<details><summary>${escape(t('latexSourceLabel'))}</summary><code>${escape(latex.trim())}</code></details></div>`);
     $('#lesson-content').innerHTML=marked.parse(prepared);
     loadedLessonKey=targetKey;
-  }catch(e){
-    $('#lesson-content').innerHTML=`<h2>${escape(t('lessonLoadErrorTitle'))}</h2><p>${escape(t('lessonLoadErrorBody'))} <a href="${escape(currentLesson.lessonPath)}">${escape(t('lessonLoadDirectLink'))}</a></p>`;
-    console.error(e);
+  }catch(error){
+    if(request!==lessonRequest||currentLesson.id!==lesson.id||lang!==selectedLanguage)return;
+    $('#lesson-content').innerHTML=`<h2>${escape(t('lessonLoadErrorTitle'))}</h2><p>${escape(t('lessonLoadErrorBody'))} <a href="${escape(lesson.lessonPath)}">${escape(t('lessonLoadDirectLink'))}</a></p>`;
+    console.error(error);
+  }
+}
+
+function syncContextUrl(){
+  const url=new URL(location.href);
+  url.searchParams.set('lesson',currentLesson.id);
+  url.searchParams.set('lang',lang);
+  history.replaceState(null,'',url);
+}
+
+const labHost=createLabHost({
+  'heating-cooling':async()=>({mount:()=>{setupMode();return {update:()=>setupMode(),destroy:stop};}}),
+  'introduction-modeling':()=>import('./labs/introduction/controller.js')
+});
+async function activateLab(){
+  const lesson=currentLesson,selectedLanguage=lang,isHeating=lesson.labFamily==='heating-cooling';
+  $('#heating-lab').hidden=!isHeating;
+  $('#lesson-lab').hidden=isHeating;
+  if(!isHeating)stop();
+  const root=isHeating?$('#heating-lab'):$('#lesson-lab');
+  if(!isHeating&&!root.childElementCount)root.innerHTML=`<p role="status">${escape(t('labLoading'))}</p>`;
+  try{
+    await labHost.show(lesson.labFamily,root,{
+      lesson,lang:selectedLanguage,
+      t:(key,...args)=>ui(selectedLanguage,key,...args),
+      format:(value,digits=1)=>Number(value).toLocaleString(selectedLanguage==='en'?'en-US':'tr-TR',{minimumFractionDigits:digits,maximumFractionDigits:digits}),
+      loadMath:()=>lessonRepository.loadMath(lesson.mathPath)
+    });
+  }catch(error){
+    if(currentLesson.id!==lesson.id||lang!==selectedLanguage)return;
+    root.innerHTML=`<p role="alert">${escape(t('labLoadError'))}</p>`;
+    console.error(error);
   }
 }
 
@@ -908,6 +955,7 @@ function route(){
   $('#menu').setAttribute('aria-label',t('openMenuAria'));
   if(view!=='lab')stop();
   if(view==='library')renderLibrary();
+  if(view==='lab')activateLab();
   if(view==='lesson')loadLesson();
   if(view==='map')renderMap();
 }
@@ -915,10 +963,9 @@ window.addEventListener('hashchange',()=>{route();window.scrollTo(0,0);});
 $('#menu').addEventListener('click',()=>{const open=$('#sidebar').classList.toggle('open');$('#menu').setAttribute('aria-expanded',String(open));$('#menu').setAttribute('aria-label',open?t('closeMenuAria'):t('openMenuAria'));});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#sidebar').classList.remove('open');$('#menu').setAttribute('aria-expanded','false');$('#menu').setAttribute('aria-label',t('openMenuAria'));}if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();location.hash='map';setTimeout(()=>$('#chapter-search').focus(),20);}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
-window.addEventListener('resize',()=>{if(view==='lab')renderChart();});
+window.addEventListener('resize',()=>{if(view==='lab'&&currentLesson.labFamily==='heating-cooling')renderChart();});
 
 applyStaticTranslations();
 applyActiveContext();
-setupMode();
 route();
 if(!storageOK)$('#save-status').textContent=t('storageUnavailableStatus');

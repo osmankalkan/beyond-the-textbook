@@ -4,6 +4,18 @@ Tarih: 2 Kasım 2026. Bu dosya, başka bir agent'ın projeyi ve şimdiye kadar a
 
 Bu bir durum kaydıdır; aşağıdaki gelecek fikirleri henüz kullanıcı tarafından verilmiş geliştirme görevleri değildir. Yeni çalışmaya başlamadan önce `ARCHITECTURE.md` sözleşmesini, kullanıcının seçtiği işi ve güncel dosyaları esas al.
 
+## 3 Kasım 2026 — güncel devir eki
+
+Kullanıcı birinci üniteden başlayarak konu konu ilerlenmesini ve **her konu tamamlandıktan sonra incelemesi için durulmasını** istedi. Yeni eklenen tek konu §1.1’dir; §1.2 hâlâ içerik haritasıdır. Güncel kapsam ve testler `docs/REVIEW-1-1.md` içinde kayıtlıdır. Aşağıdaki 2 Kasım kaydı tarihsel ayrıntıdır; hazır ders sayısı gibi eski durum ifadelerinde bu ek ve güncel kod esas alınır.
+
+- §1.1’in iki dilde dersleri, 11 formülü, altı model incelemesi ve altı sorusu `dist/lessons/xie-2010/1-1/` altındadır. Atış ve tank grafikleri uygulamaya özel ek görselleştirmelerdir; diğer dört örnek çözüm simülasyonu değildir.
+- `dist/core/lab-host.js` yaşam döngüsünü, `dist/core/lesson-repository.js` varlık erişimini yönetir. Yeni laboratuvar `dist/labs/introduction/controller.js` içinde izoledir.
+- `models.js` içindeki yeni saf modeller, `tests/introduction.test.mjs` ile; yaşam döngüsü / varlık erişimi ise `tests/lesson-infrastructure.test.mjs` ile doğrulanır. `npm test` toplam 16 testi çalıştırır.
+- Formül üretimi `math_sources/` konu modüllerine ayrılmıştır; komut hâlâ `python3 build_math.py`dir. İki dil tüm dersler için eşlenir.
+- `?lesson=xie-2010%3A1.1&lang=tr#lab` ile doğrudan yeni konuyu açabilirsiniz. Dil ve ders değişimi URL’ye de yazılır; yenilemede eski sorgu parametresi yanlış konuya döndürmez.
+- Mevcut §3.1’in laboratuvar kodu hâlâ `app.js` içindedir; adaptörle korunmuştur. Eski kayıtlar §1.1’e taşınmaz; kendi dersinde kalır.
+- Commit, push ve internet yayını yapılmadı. **Sonraki konuya geçmeden kullanıcının inceleme sonucunu bekle.**
+
 ## 1. Projenin amacı
 
 Kullanıcı, kitap çalışırken konu anlatımını, deneyleri, alıştırmaları, sınav hazırlık kliniğini ve kendi notlarını aynı yerde **hem Türkçe hem İngilizce (`TR | EN`)** olarak kullanmak istiyor. Zamanla farklı kitaplar da eklenecek.

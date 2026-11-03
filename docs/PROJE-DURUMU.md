@@ -1,12 +1,20 @@
 # Proje durumu ve devam notları
 
-Son düzenleme: 2 Kasım 2026.
+Son düzenleme: 3 Kasım 2026.
 
 ## Amaç
 
 Beyond the Textbook projesiyle farklı kitapları, Markdown temelli dersler, etkileşimli modeller, alıştırmalar ve ileride kaynak gösteren LLM desteğiyle çift dilli (Türkçe ve İngilizce) kişisel bir öğrenme uygulamasına dönüştürmek. İlk örnek olan Wei-Chau Xie'nin *Differential Equations for Engineers* kitabının §3.1 bölümüyle başladı; proje küçük ve doğrulanmış adımlarla başka bölümlere ve kitaplara genişletilecek.
 
-## Mevcut sürüm
+## 3 Kasım güncellemesi — inceleme bekliyor
+
+§1.1 **Motive Edici Örnekler / Motivating Examples** eklendi. Basılı s.1–6 / PDF s.19–24 doğrulandı. Altı model incelemesi, Türkçe/İngilizce ders notları, 11 yeni MathML formülü, iki etkileşimli grafik (atış ve tank) ve altı kavrama sorusu içerir. Diğer dört örnekte model ve koşullar açıklanır; çözüm simülasyonu sunulmaz.
+
+Yeni içerik ve laboratuvar ayrı modüllerdedir; ortak yaşam döngüsü, ders varlık erişimi ve formül üretimi sorumlulukları ayrılmıştır. Mevcut §3.1 ve eski not/ilerleme kayıtları korunur. Ayrıntılar: [§1.1 inceleme notu](REVIEW-1-1.md).
+
+**Kullanıcı kontrol noktası:** §1.1 incelenmeden §1.2’ye veya başka yeni bir konuya geçilmez. Bu adımda commit, push veya yayın yapılmadı.
+
+## Mevcut §3.1 sürümü
 
 - **Kaynak kitap:** Wei-Chau Xie, *Differential Equations for Engineers*, Cambridge University Press, 2010. Kullanıcının PDF'si 568 sayfa.
 - **İşlenen bölüm:** §3.1 Heating and Cooling / Isınma ve Soğuma, basılı s.87–90 (Bölüm 3 sonu problemleri s.130); PDF s.105–108, 148.
@@ -23,7 +31,7 @@ Beyond the Textbook projesiyle farklı kitapları, Markdown temelli dersler, etk
 - **Kitaplık ve yerel depolama:**
   - `#library` görünümüyle kitap ve hazır ders seçimi.
   - Notlar (`denklem-v1-notes`), ilerleme (`denklem-v1-progress`), aktif ders (`denklem-v1-active-lesson`) ve dil tercihi (`denklem-v1-lang`) aynı tarayıcının yerel depolamasında tutulur; eski tekil kayıtlar otomatik olarak ders kimliği (`xie-2010:3.1`) altına taşınır.
-- **Kitap haritası:** 12 ana bölümü ve alt başlıkları Türkçe ve İngilizce olarak içerir; her iki dilde arama yapılabilir. §3.1 dışındaki bölümler henüz derslere dönüştürülmemiştir.
+- **Kitap haritası:** 12 ana bölümü ve alt başlıkları Türkçe ve İngilizce olarak içerir; her iki dilde arama yapılabilir. §1.1 ve §3.1 dışındaki bölümler henüz derslere dönüştürülmemiştir.
 - **Mimari sözleşme:** `ARCHITECTURE.md` dosyası projenin derlemesiz (buildless) yapısını, kırmızı çizgilerini ve ajan çalışma protokolünü tanımlar.
 - LLM API bağlı değildir; sahte sohbet arayüzü gösterilmez.
 
@@ -73,6 +81,12 @@ beyond-the-textbook/
 ├── artifacts/                 İlk prototip kaynak ZIP'i; Git dışında
 └── .openai/hosting.json       Mevcut özel yayın kimliği
 ```
+
+## Güncel kontrol durumu
+
+- Otomatik test sayısı: 16. Mevcut yedi teste, atış / tank sayısal doğrulaması, iki dersin yerel kayıt ayrımı, tüm konuların iki dil / formül eşliği ve laboratuvar / yükleme yaşam döngüsü kontrolleri eklendi.
+- §1.1 formülleri PDF’den çıkarılan metin ve sayfa görüntüleriyle karşılaştırıldı. Kaynak PDF ve ham kitap metni yayımlanacak dosyalara alınmadı.
+- Masaüstü / mobil 390 px tarayıcı kontrolü ve dersler arası geçiş doğrulandı; ayrıntılar inceleme notunda kayıtlıdır.
 
 ## Sonraki küçük adımlar
 

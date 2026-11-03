@@ -1,38 +1,33 @@
-"""Build exact presentation MathML for the nine reviewed LaTeX blocks."""
-import json,re
+"""Validate bilingual formula parity and generate each lesson's reviewed MathML."""
+import json
+import re
 from pathlib import Path
-root=Path(__file__).parent/'dist'
-def row(*parts):return '<mrow>'+''.join(parts)+'</mrow>'
-def mi(v):return '<mi>'+v+'</mi>'
-def mn(v):return '<mn>'+str(v)+'</mn>'
-def mo(v):return '<mo>'+v+'</mo>'
-def sub(a,b):return '<msub>'+mi(a)+(mn(b) if str(b).isdigit() else mi(b))+'</msub>'
-def frac(a,b):return '<mfrac>'+row(a)+row(b)+'</mfrac>'
-def power(a,b):return '<msup>'+a+row(b)+'</msup>'
-def par(v):return row(mo('('),v,mo(')'))
-def sqrt(v):return '<msqrt>'+v+'</msqrt>'
-def fun(n,v):return row('<mi mathvariant="normal">'+n+'</mi>',par(v))
-def derivative(v):return frac(mi('d')+v,mi('d')+mi('t'))
-T,TM,TI,TB,TS,TA,T1=mi('T'),sub('T','m'),sub('T','i'),sub('T','B'),sub('T','S'),sub('T','A'),sub('T',1)
-eq,minus,plus=mo('='),mo('−'),mo('+')
-theta,t,k,r,tau,omega=map(mi,['θ','t','k','r','τ','ω'])
-negkt=minus+k+t
-bound=sqrt(mn(16)+minus+power(par(frac(mi('π'),mn(3))),mn(2)))+minus+mn(1)
-expressions=[
- derivative(T)+eq+minus+k+par(T+minus+TM),
- '<mi mathvariant="normal">ln</mi>'+mo('|')+T+minus+TM+mo('|')+eq+negkt+plus+mi('C'),
- fun('T',t)+eq+TM+plus+par(TI+minus+TM)+power(mi('e'),negkt),
- sub('t','½')+eq+frac(fun('ln',mn(2)),k),
- k+eq+minus+frac(mn(1),mn(20))+fun('ln',frac(mn(60)+minus+mn(20),mn(100)+minus+mn(20)))+eq+frac(fun('ln',mn(2)),mn(20)),
- mi('c')+derivative(TB)+eq+mi('Q')+plus+sub('K',2)+par(TS+minus+TB)+minus+sub('K',1)+par(TB+minus+TA),
- tau+derivative(theta)+plus+par(mn(1)+plus+r)+theta+eq+T1+fun('sin',omega+t),
- mi('A')+eq+frac(T1,sqrt(power(par(mn(1)+plus+r),mn(2))+plus+power(par(tau+omega),mn(2)))),
- r+mo('≥')+bound+mo('≈')+mn('2.86049')
+from math_sources.heating_cooling import expressions as heating
+from math_sources.introduction import expressions as introduction
+
+ROOT = Path(__file__).parent / 'dist'
+FORMULA_SETS = [
+    ('lesson.md', 'lesson-en.md', 'math.json', heating),
+    ('lessons/xie-2010/1-1/lesson.md', 'lessons/xie-2010/1-1/lesson-en.md', 'lessons/xie-2010/1-1/math.json', introduction),
 ]
-blocks=re.findall(r'\$\$\s*([\s\S]*?)\s*\$\$',(root/'lesson.md').read_text())
-blocks_en=re.findall(r'\$\$\s*([\s\S]*?)\s*\$\$',(root/'lesson-en.md').read_text())
-assert len(blocks)==len(expressions),(len(blocks),len(expressions))
-assert blocks==blocks_en,'lesson.md and lesson-en.md LaTeX blocks must match exactly'
-data={latex:'<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">'+row(expression)+'</math>' for latex,expression in zip(blocks,expressions)}
-(root/'math.json').write_text(json.dumps(data,ensure_ascii=False))
-print(f'{len(data)} reviewed formula blocks generated.')
+
+def blocks(path):
+    return [match.strip() for match in re.findall(r'\$\$\s*([\s\S]*?)\s*\$\$', (ROOT / path).read_text())]
+
+def main():
+    outputs = []
+    for tr_path, en_path, target, expressions in FORMULA_SETS:
+        tr, en = blocks(tr_path), blocks(en_path)
+        if tr != en:
+            raise ValueError(f'Bilingual formula mismatch: {tr_path} / {en_path}')
+        if len(tr) != len(expressions) or len(set(tr)) != len(tr):
+            raise ValueError(f'Formula count or uniqueness mismatch: {tr_path}')
+        mapping = {latex: '<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow>' + expression + '</mrow></math>' for latex, expression in zip(tr, expressions)}
+        outputs.append((ROOT / target, mapping))
+    # Validate every source before modifying any generated file.
+    for path, mapping in outputs:
+        path.write_text(json.dumps(mapping, ensure_ascii=False))
+        print(f'{path.relative_to(ROOT)}: {len(mapping)} reviewed formula blocks')
+
+if __name__ == '__main__':
+    main()

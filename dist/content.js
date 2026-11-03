@@ -1,3 +1,4 @@
+import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
 
 export const LEGACY_LESSON_ID = 'xie-2010:3.1';
@@ -22,6 +23,7 @@ export const BOOKS = [
       en: 'Ordinary and partial differential equations arising from engineering problems, analytical solution methods, Laplace transforms, and physical system modeling.'
     },
     lessons: [
+      introductionLesson,
       {
         id: 'xie-2010:3.1',
         section: '3.1',

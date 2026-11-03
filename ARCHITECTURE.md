@@ -27,7 +27,7 @@ Projeye katkı veren her ajan, aşağıdaki mimari değişmezlere koşulsuz uyma
 
 ### 2.2. Matematik Hattı ve Çift Dilli (TR / EN) İçerik Senkronizasyonu
 * Matematik formülleri hem erişilebilirlik hem de eklentisiz tarayıcı performansı için **MathML** olarak sunulur.
-* `dist/lesson.md` (Türkçe) ve `dist/lesson-en.md` (İngilizce) içindeki LaTeX blokları birebir aynı sırada olmalı; `build_math.py` ve `dist/math.json` çıktısı ile **daima senkron** tutulmalıdır.
+* Her dersin Türkçe ve İngilizce Markdown çiftindeki LaTeX blokları birebir aynı sırada olmalı ve kendi MathML haritasıyla senkron tutulmalıdır. Mevcut §3.1 yolları `dist/lesson.md`, `dist/lesson-en.md`, `dist/math.json` olarak korunur; §1.1 dosyaları `dist/lessons/xie-2010/1-1/` altındadır. `build_math.py`, `math_sources/` tanımlarını kullanarak bütün kayıtlı çiftleri doğrular; doğrulama bitmeden çıktı yazmaz.
 * **Çift Dilli Tutarlılık:** Uygulama Türkçe (`tr`) ve İngilizce (`en`) dillerinde tam simetrik çalışır. `dist/i18n.js` içindeki `UI_STRINGS.tr` ve `UI_STRINGS.en` anahtarları birebir örtüşmeli; `dist/content.js` altındaki tüm metin, ipucu, alıştırma ve türetim adımları `{ tr, en }` şemasıyla her iki dili de eksiksiz barındırmalıdır.
 * **Kritik MathML Kuralı:** Tarayıcı render motorlarındaki görsel kaymaları önlemek için tüm MathML kökleri (`<math>...</math>`) doğrudan açık bir `<mrow>` sarmalayıcısı içermelidir (`<math display="block"><mrow>...</mrow></math>`).
 * Ders içeriğindeki formüller güncellendiğinde veya yeni formül eklendiğinde `python3 build_math.py` çalıştırılarak `math.json` güncellenmelidir.
@@ -39,7 +39,7 @@ Projeye katkı veren her ajan, aşağıdaki mimari değişmezlere koşulsuz uyma
 * Herhangi bir model veya analitik çözüm değişikliğinde `npm test` ile tüm testlerin (`tests/models.test.mjs`) geçtiği teyit edilmelidir.
 
 ### 2.4. Kapsam Dürüstlüğü (No Fake Features)
-* Projede şu an **yalnızca §3.1 (Isınma ve Soğuma)** tamamlanmış, etkileşimli bir derstir.
+* Hazır dersler **§1.1 (Motive Edici Örnekler)** ve **§3.1 (Isınma ve Soğuma)** bölümleridir. Kullanıcının incelemesini bekleyen yeni konu §1.1’dir. Kullanıcı devam demeden §1.2 eklenmez.
 * Kitap haritasındaki diğer bölümler sadece **aranabilir bir içindekiler haritasıdır**.
 * Ajanlar, kullanıcının açık talimatı olmadan diğer bölümleri tamamlanmış gibi gösteremez, "mock" içeriklerle sahte bitmişlik hissi yaratamaz veya sahte interaktif butonlar ekleyemez.
 
@@ -204,3 +204,19 @@ Repoda çalışacak her yapay zeka ajanının izlemesi gereken eylem protokolü 
 ---
 
 *Bu belge projenin gelişim sürecinde kullanıcı ve ana mimar onayıyla güncellenir.*
+
+## 8. §1.1 ile eklenen genişleme sınırları — 3 Kasım 2026
+
+Bu ek, kullanıcının ölçeklenebilirlik / SOLID ve tek konu sonrası inceleme talebiyle eklenen kapsamı tanımlar. Yukarıdaki hafiflik, gizlilik, çift dil ve dağıtım kuralları geçerlidir.
+
+- **İçerik sorumluluğu:** `dist/lessons/xie-2010/1-1/content.js`, §1.1 metaverisini, altı model incelemesini ve altı soruyu tutar. `dist/content.js` kataloğa kaydeder ve mevcut dış arayüzünü korur.
+- **Model sorumluluğu:** `projectileState`, `projectileFlightTime` ve `mixingTankState`, `dist/models.js` içinde DOM’dan bağımsızdır; ayrı sayısal testlerle denetlenir.
+- **Görünüm sorumluluğu:** `dist/labs/introduction/controller.js`, yalnızca kendi DOM kökünü ve olay aboneliklerini yönetir. İçerik / dil bağlamı ile çalışır; navigasyonu veya kullanıcı notlarını yönetmez.
+- **Açık genişleme noktası:** `dist/core/lab-host.js`, kayıtlı laboratuvar yükleyicilerini `mount(root, context) → { update(context), destroy() }` sözleşmesiyle çalıştırır. Yeni laboratuvar eklemek mevcut deneyin kontrol mantığını değiştirmeyi gerektirmez. Bağlam küçük fonksiyonlar ve veriyle sağlanır; ağır bir framework veya sınıf hiyerarşisi kullanılmaz.
+- **Yaşam döngüsü:** Dil geçişi aynı örneği günceller; laboratuvar ailesi değişince abonelikler temizlenir. Gecikmiş asenkron yüklemeler seçili görünümü değiştiremez. Yeni bir laboratuvar kendi kapsamını temizlemelidir.
+- **Varlık erişimi:** `dist/core/lesson-repository.js`, Markdown / MathML erişimini, ortak istekleri ve hata sonrası tekrar denemeyi DOM’dan ayırır. Ders görünümü de eski isteğin yeni ders veya dilin üzerine yazmasını engeller.
+- **Mevcut kodun sınırı:** Sıcaklık laboratuvarının kontrol kodu hâlâ `app.js` içindedir; yaşam döngüsüne bir adaptörle katılır. Bütün uygulamanın modüllere ayrıldığı iddia edilmez.
+- **Matematik üretimi:** `math_sources/common.py` ortak MathML yardımcılarını, konu modülleri denetlenmiş ifadeleri içerir. `build_math.py` tek komut olarak kalır; çıktıdaki her `math` kökü açık `mrow` içerir.
+- **Doğrulama:** `npm test`, `tests/*.test.mjs` dosyalarını çalıştırır. Alan modelleri, çift dil / katalog / formül tutarlılığı ve yaşam döngüsü / yükleme yarışları bu sınırların test kapsamıdır.
+
+Ölçeklenebilirlik burada yeni konuları izole ekleme ve mevcut konuları bozmama hedefidir; çok kullanıcılı bir sunucu altyapısı veya tamamlanmış bir içerik yönetim sistemi vaat edilmez.
