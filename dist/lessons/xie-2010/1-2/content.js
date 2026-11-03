@@ -1,3 +1,4 @@
+import {conceptsStudy,conceptsClinic} from './study.js';
 import {EQUATIONS} from './equations.js';
 const text=(tr,en)=>({tr,en});
 
@@ -29,7 +30,7 @@ export const conceptsLesson={
   notesPlaceholder:text('Örneğin: “Teorem uygulanamıyor” sonucundan neden tek başına “çözüm yok” diyemem? Bir aralıkta doğrulama ile tek noktada denetim nasıl ayrılır?','For example: why does “the theorem does not apply” not imply “no solution”? How does verification on an interval differ from checking one point?'),
   sourceSummary:text('§1.2, basılı s.6–15 / PDF s.24–33 temelinde özgün çift dilli çalışma uyarlaması. Tanımlar, serbest düşüş anlatımı ve Örnek 1.1–1.3 kapsanır. Beklemeli çözüm ve rezonanslı BVP karşı örnekleri ek açıklamalardır.','An original bilingual adaptation of §1.2, printed pp.6–15 / PDF pp.24–33. Covers definitions, the falling-body discussion and Examples 1.1–1.3. Waiting-time solutions and the resonant BVP counterexample are supplementary explanations.'),
   modelLimits:text('Sınıflandırıcı hazır sekiz denklem üzerinde çalışır; serbest girilen ifadeleri çözümlemez. Doğrulama, tanımlı aday ailelerinin analitik türev ve katsayı özdeşlikleri içindir. Yön alanı sonlu bir pencereyi gösterir; teklik garantisi belirtilen bölgede yereldir.','The classifier operates on eight predefined equations, not arbitrary input. Verification uses analytical derivatives and coefficient identities for defined candidate families. The direction field shows a finite window; uniqueness guarantees are local to the stated region.'),
-  presentation:{
+  presentation:{clinicEyebrow:text('ÇÖZÜMLÜ SINAV ÇALIŞMASI · §1.2','WORKED EXAM STUDY · §1.2'),
     lab:text('Kavramları keşfet','Explore concepts'),practice:text('Kavram ve ispat soruları','Concept and reasoning checks'),
     practiceEyebrow:text('§1.2 · TANI, GEREKÇELENDİR, DOĞRULA','§1.2 · RECOGNIZE, JUSTIFY, VERIFY'),
     practiceTitle:text('Tanımı kullanabildiğini göster.','Put the definitions to work.'),
@@ -71,6 +72,8 @@ export const conceptsLesson={
       {title:text('4 · Başlangıç ve sınır verilerine dön','4 · Return to initial and boundary data'),formulas:['heatConditions','heatExact'],body:text('Kitaptaki problem A=2, n=3 ister. Diğer modlar PDE’yi çözebilir, fakat farklı başlangıç verileriyle.','The book’s problem requires A=2 and n=3. Other modes can solve the PDE with different initial data.')}
     ]
   },
+  studySupport:conceptsStudy,
+  guidedTools:conceptsClinic,
   questions:[
     {title:text('Isı denkleminin mertebesi','Order of the heat equation'),tag:text('ODE / PDE','ODE / PDE'),text:text('u(x,t) için uₜ=(1/9)uₓₓ denkleminin türü ve mertebesi nedir?','For u(x,t), what are the type and order of uₜ=(1/9)uₓₓ?'),choices:text(['Birinci mertebe ODE','İkinci mertebe PDE','Üçüncü mertebe PDE'],['First-order ODE','Second-order PDE','Third-order PDE']),answer:1,feedback:text('Doğru: x ve t iki bağımsız değişkendir; en yüksek türev ikinci mertebedir. Türevlerin mertebeleri toplanmaz.','Correct: x and t are independent variables, and the highest derivative is second order. Orders of separate terms are not added.'),hints:text(['Bilinmeyen kaç bağımsız değişkene bağlı?','uₜ birinci, uₓₓ ikinci türevdir; en yükseğini seç.'],['How many independent variables does the unknown have?','uₜ is first order and uₓₓ second order; choose the highest.'])},
     {title:text('En yüksek türevi bul','Find the highest derivative'),tag:text('MERTEBE','ORDER'),text:text('x³y′′′+5xy′+6y=eˣ denkleminde, x>0 için mertebe kaçtır?','For x>0, what is the order of x³y′′′+5xy′+6y=eˣ?'),unit:text('mertebe','order'),answer:3,tolerance:.001,feedback:text('Doğru: y′′′ üçüncü türevdir. y′′ teriminin bulunmaması mertebeyi düşürmez.','Correct: y′′′ is the third derivative. The absence of y′′ does not lower the order.'),hints:text(['Katsayı x³ ile türev mertebesini birbirinden ayır.'],['Distinguish the coefficient x³ from the derivative order.'])},

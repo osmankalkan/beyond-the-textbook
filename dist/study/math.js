@@ -1,0 +1,20 @@
+import {escapeHtml} from '../core/html.js';
+/** MathML fragments for reviewed, authored lesson data only. */
+export const v=s=>`<mi>${escapeHtml(String(s))}</mi>`;
+export const n=s=>`<mn>${escapeHtml(String(s))}</mn>`;
+export const o=s=>`<mo>${escapeHtml(String(s))}</mo>`;
+export const r=s=>`<mrow>${s}</mrow>`;
+export const p=s=>r(o('(')+s+o(')'));
+export const pow=(a,b)=>`<msup>${r(a)}${r(b)}</msup>`;
+export const sub=(a,b)=>`<msub>${r(a)}${r(b)}</msub>`;
+export const f=(a,b)=>`<mfrac>${r(a)}${r(b)}</mfrac>`;
+export const fn=(a,b)=>`<mi mathvariant="normal">${a}</mi>`+p(b);
+export const exp=s=>pow(v('e'),s);
+export const prime=(a,k=1)=>pow(v(a),o('′'.repeat(k)));
+export const eq=o('='),plus=o('+'),minus=o('−'),x=v('x'),y=v('y'),t=v('t'),C=v('C');
+export const integral=s=>o('∫')+s;
+export const dx=v('d')+x,dy=v('d')+y;
+export const abs=s=>o('|')+r(s)+o('|');
+export const lines=(...items)=>'<mtable columnalign="left">'+items.map(s=>'<mtr><mtd>'+r(s)+'</mtd></mtr>').join('')+'</mtable>';
+export const T=(tr,en)=>({tr,en});
+export const step=(tr,en,math,exTr,exEn)=>({label:T(tr,en),math,text:T(exTr,exEn)});

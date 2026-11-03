@@ -333,3 +333,8 @@ The lab therefore reports three results: equation identity, endpoint conditions 
 State the unknown and interval when classifying an equation. Check differentiability, the identity throughout an interval, and prescribed conditions separately when verifying a solution. Do not infer a definitive existence/uniqueness conclusion merely because a sufficient condition failed.
 
 This step completes §1.2 only. The next topic is reserved for after this work has been reviewed.
+
+
+---
+
+Study support: open the lesson workshop for guided reasoning and the practice screen for worked problems. Keep your own explanation in the per-lesson notebook.

@@ -1,3 +1,4 @@
+import {createStudyGuide} from './core/study-guide.js';
 import {escapeHtml as escape} from './core/html.js';
 import {createLabHost} from './core/lab-host.js';
 import {createLessonRepository} from './core/lesson-repository.js';
@@ -75,7 +76,7 @@ function renderExamClinicSection(){
     <h4>${escape(c.title)}</h4>
     <p class="clinic-statement">${escape(c.statement)}</p>
     <div class="clinic-trap"><strong>${escape(t('examTrapPrefix'))}</strong> ${escape(c.trap)}</div>
-    <details class="clinic-steps" ${idx===0?'open':''}>
+    <details class="clinic-steps" ${!currentLesson.studySupport&&idx===0?'open':''}>
       <summary>${escape(t('examStepsSummary',c.steps.length))}</summary>
       <div class="clinic-step-list">${c.steps.map(st=>`<div class="clinic-step">
         <strong>${escape(st.label)}</strong>
@@ -88,7 +89,7 @@ function renderExamClinicSection(){
   $('#exam-clinic-list').innerHTML=clinicHtml;
   $('#practice-clinic-mirror').hidden=clinic.length===0;
   $('#practice-clinic-mirror').innerHTML=`<section class="panel exam-clinic-panel">
-    <div class="exam-clinic-header"><div><p class="eyebrow">${escape(t('practiceMirrorEyebrow'))}</p><h3>${escape(t('practiceMirrorTitle'))}</h3></div></div>
+    <div class="exam-clinic-header"><div><p class="eyebrow">${escape(currentLesson.presentation?.clinicEyebrow||t('practiceMirrorEyebrow'))}</p><h3>${escape(t('practiceMirrorTitle'))}</h3></div></div>
     <div class="exam-blueprint">${bpHtml}</div>
     <div class="exam-clinic-list">${clinicHtml}</div>
   </section>`;
@@ -922,10 +923,13 @@ function syncContextUrl(){
 const labHost=createLabHost({
   'heating-cooling':async()=>({mount:()=>{setupMode();return {update:()=>setupMode(),destroy:stop};}}),
   'introduction-modeling':()=>import('./labs/introduction/controller.js'),
+  'separation':()=>import('./labs/separation/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });
+const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));
 async function activateLab(){
   const lesson=currentLesson,selectedLanguage=lang,isHeating=lesson.labFamily==='heating-cooling';
+  studyGuide.update({lesson,lang:selectedLanguage,t:(key,...args)=>ui(selectedLanguage,key,...args)});
   $('#heating-lab').hidden=!isHeating;
   $('#lesson-lab').hidden=isHeating;
   if(!isHeating)stop();

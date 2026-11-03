@@ -133,3 +133,8 @@ Hareketi belirlemek için yalnızca başlangıç bilgisi yetmez; köprünün uç
 Her örnek için bilinmeyeni, bağımsız değişkeni, fiziksel dengeyi ve bir varsayımı kendi cümlenle yaz. Laboratuvardaki iki grafikte bir parametreyi değiştirmeden önce sonuç tahmini yap. Ardından altı kavrama sorusunu çöz.
 
 Bu sürüm yalnızca §1.1'i ekler. §1.2 “Genel Kavramlar ve Tanımlar”, bu konu incelendikten sonra ele alınacaktır.
+
+
+---
+
+Çalışma desteği: rehberli gerekçeler için konunun atölyesini, çözümlü sorular için sınav hazırlığı ekranını aç. Kendi açıklamanı dersin not defterine kaydet.

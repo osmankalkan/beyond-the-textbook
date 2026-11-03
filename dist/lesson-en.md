@@ -96,3 +96,8 @@ The dashed orange curve in the cooling lab illustrates the forward Euler numeric
 ## 6. Prerequisites and scope
 
 Required background: differentiation, exponential and logarithmic functions, indefinite integration, and initial value problems. Within the textbook, the mathematical prerequisites are **§2.1 Method of Separation of Variables (p. 16)** for constant-medium cooling and **§2.4 Linear First-Order Equations (p. 55)** for time-varying environments and forced building response.
+
+
+---
+
+Study support: open the lesson workshop for guided reasoning and the practice screen for worked problems. Keep your own explanation in the per-lesson notebook.

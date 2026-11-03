@@ -333,3 +333,8 @@ Laboratuvar bu nedenle üç ayrı sonuç gösterir: denklem özdeşliği, uç ko
 Bir denklemi sınıflandırırken bilinmeyeni ve aralığı söyle. Bir çözümü kontrol ederken türevlenebilirliği, bütün aralıktaki özdeşliği ve verilmiş koşulları ayrı ayrı doğrula. Varlık–teklik konusunda “yeterli koşul sağlanmadı” sonucundan kesin bir hüküm çıkarma.
 
 Bu adım yalnızca §1.2'yi tamamlar. Sonraki konu, bu çalışma incelendikten sonra ele alınacaktır.
+
+
+---
+
+Çalışma desteği: rehberli gerekçeler için konunun atölyesini, çözümlü sorular için sınav hazırlığı ekranını aç. Kendi açıklamanı dersin not defterine kaydet.

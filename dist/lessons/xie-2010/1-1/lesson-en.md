@@ -133,3 +133,8 @@ Initial information alone is not enough; the behavior at the ends of the beam al
 For each example, describe the unknown, independent variable, physical balance and one assumption in your own words. Predict what will happen before changing a parameter in either interactive plot. Then complete the six concept checks.
 
 This update adds only §1.1. §1.2, “General Concepts and Definitions,” is reserved for after this topic has been reviewed.
+
+
+---
+
+Study support: open the lesson workshop for guided reasoning and the practice screen for worked problems. Keep your own explanation in the per-lesson notebook.

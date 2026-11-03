@@ -66,7 +66,8 @@ test('First topic is bilingual, source-linked and isolated from legacy progress'
   assert.equal(tr.lesson.section,'1.1');assert.equal(tr.lesson.modelingExamples.length,6);
   assert.equal(en.lesson.questions.length,6);assert.equal(tr.lesson.labFamily,'introduction-modeling');
   assert.equal(findLessonBySection(tr.book,'1.2')?.id,'xie-2010:1.2');
-  assert.equal(findLessonBySection(tr.book,'2.1'),null);
+  assert.equal(findLessonBySection(tr.book,'2.1').id,'xie-2010:2.1');
+  assert.equal(findLessonBySection(tr.book,'2.2'),null);
   assert.equal(findLessonBySection(tr.book,'3.1').id,'xie-2010:3.1');
   const notes=migrateNotesStore({'xie-2010:3.1':'Existing note'});
   assert.equal(notes['xie-2010:3.1'],'Existing note');assert.equal(notes['xie-2010:1.1'],'');

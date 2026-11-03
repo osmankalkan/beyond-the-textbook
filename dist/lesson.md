@@ -96,3 +96,8 @@ Soğuma deneyindeki kesikli turuncu çizgi, sıcaklığı her adımda Tₙ₊₁
 ## 6. Ön bilgiler ve kapsam
 
 Gerekli ön bilgiler: türev, üstel ve logaritmik fonksiyonlar, belirsiz integral ve başlangıç değer problemleri. Kitap içindeki matematiksel ön koşullar: sabit ortamda soğuma için **§2.1 Değişkenlerin ayrılması (basılı s.16)**; zamana bağlı dış ortam ve zorlamalı bina tepkisi için **§2.4 Birinci mertebe doğrusal denklemler (basılı s.55)**.
+
+
+---
+
+Çalışma desteği: rehberli gerekçeler için konunun atölyesini, çözümlü sorular için sınav hazırlığı ekranını aç. Kendi açıklamanı dersin not defterine kaydet.
