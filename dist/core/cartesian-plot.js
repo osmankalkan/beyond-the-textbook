@@ -18,7 +18,7 @@ export function cartesianPlot({width=740,height=330,xMin=-2,xMax=2,yMin=-3,yMax=
     if(!point||!point.every(Number.isFinite)){move=true;return '';}
     const command=move?'M':'L';move=false;return `${command}${x(point[0]).toFixed(2)},${y(point[1]).toFixed(2)}`;
   }).join(' ');}
-  const line=(points,color='#397752',options='')=>`<path d="${path(points)}" fill="none" stroke="${color}" stroke-width="2.5" ${options}/>`;
+  const line=(points,color='#397752',options='')=>`<path d="${path(points)}" fill="none" stroke="${color}" ${options.includes('stroke-width')?'':'stroke-width="2.5"'} ${options}/>`;
   const point=(a,b,color='#397752')=>`<circle cx="${x(a)}" cy="${y(b)}" r="5" fill="${color}" stroke="white" stroke-width="2"/>`;
   return {x,y,line,point,clipId,markup,width,height,left,right,top,bottom};
 }
