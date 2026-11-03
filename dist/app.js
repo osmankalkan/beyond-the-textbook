@@ -926,6 +926,7 @@ const labHost=createLabHost({
   'separation':()=>import('./labs/separation/controller.js'),
   'transformation':()=>import('./labs/transformation/controller.js'),
   'exactness':()=>import('./labs/exactness/controller.js'),
+  'linear':()=>import('./labs/linear/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));
