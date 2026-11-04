@@ -986,6 +986,7 @@ const labHost=createLabHost({
   'complementary':()=>import('./labs/complementary/controller.js'),
   'particular':()=>import('./labs/particular/controller.js'),
   'linear-summary':()=>import('./labs/linear-summary/controller.js'),
+  'laplace':()=>import('./labs/laplace/controller.js'),
   'summary':()=>import('./labs/summary/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });
