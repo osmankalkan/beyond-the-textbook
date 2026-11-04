@@ -2,7 +2,7 @@
 
 A bilingual learning workspace for studying textbooks through notes, guided reasoning, interactive experiments, worked problems, and a personal notebook.
 
-Eleven sections of Wei-Chau Xie's *Differential Equations for Engineers* are available in Turkish and English:
+Fourteen sections of Wei-Chau Xie's *Differential Equations for Engineers* are available in Turkish and English:
 
 - **§1.1 — Motivating Examples:** six model walkthroughs, projectile and tank experiments, two guided derivations with predictions, two worked exam cases, and six checks.
 - **§1.2 — General Concepts and Definitions:** classification, families/conditions, existence/uniqueness, and ODE/PDE verification; two guided reasoning paths, two worked exam cases, and fourteen checks.
@@ -15,6 +15,9 @@ Eleven sections of Wei-Chau Xie's *Differential Equations for Engineers* are ava
 - **§2.7 — Summary: The Art of Choosing Methods:** the ten-method decision tree and reduction matrix, an interactive ten-card diagnostic simulator, two synthesis paths, four master-level clinic cases, and eleven checks.
 - **§3.1 — Heating and Cooling:** guided temperature experiments, A/B comparison, calibration, transient and steady-state analysis, an exam clinic, and eight checks.
 - **§4.1 — General Linear Ordinary Differential Equations:** linearity tests, the D operator and φ(D), the fundamental superposition theorem, the general solution y_C+y_P, a variable-coefficient noncommutation lab, four worked midterm cases, and twelve checks.
+- **§4.2 — Characteristic Equations and Homogeneous Solutions:** distinct real roots, hyperbolic pairing, damped complex conjugates, repeated roots (x^k e^{λx}), an interactive dual-curve A/B lab, four fully worked exam cases, and eleven checks.
+- **§4.3 — Nonhomogeneous Equations and Particular Solutions:** undetermined coefficients (Table 4.1), D-operator theorems (shift, series inversion), variation of parameters (Wronskian), an interactive total vs particular response lab, four worked exam cases, and twelve checks.
+- **§4.5 — Summary: Solving Linear Ordinary Differential Equations:** the complete Chapter 4 decision tree and reduction matrix (including Cauchy–Euler x=e^z), a 10-method interactive operator diagnostic simulator, four master-level clinic cases, and twelve checks.
 
 Every developed lesson also has a section-aware quick-reference drawer in its reading aside. It opens the derivative and integral rules that the current lesson actually uses, in Turkish or English.
 
@@ -28,4 +31,4 @@ Run `npm start`, then open the address printed in the terminal (normally http://
 
 The app uses native ES modules and no runtime dependencies. Lesson data lives under `dist/lessons/`, pure models under `dist/models/`, and lab controllers under `dist/labs/`. `dist/core/study-guide.js` renders topic-authored predictions and derivations; it does not own navigation or persistent progress. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
-Current review: the depth and learning flow of §1.1, §1.2 and §2.1 have been revised using §3.1 as the reference; §2.2–§2.7 are committed and pushed. §2.2–§2.5 notes were redesigned to the §2.5 standard, and §4.1 has now been added with its own operator lab and clinic. See [the revision record](docs/QUALITY-REVISION.md). §4.1 changes remain local until explicitly requested for GitHub.
+Current review: Chapter 2 and Chapter 4 are fully developed to the §3.1 depth standard (§4.1, §4.2, §4.3, §4.5). See [the revision record](docs/QUALITY-REVISION.md). Recent developments remain local until explicitly requested for GitHub.
