@@ -27,6 +27,11 @@ const dExpLambda=rule('Karakteristik üstel','Characteristic exponential',pow(v(
 const dSinh=rule('Hiperbolik sinüs','Hyperbolic sine',f(v('d'),dx)+fn('sinh',v('u'))+eq+prime('u')+fn('cosh',v('u')));
 const dCosh=rule('Hiperbolik kosinüs','Hyperbolic cosine',f(v('d'),dx)+fn('cosh',v('u'))+eq+prime('u')+fn('sinh',v('u')));
 const dEuler=rule('Euler operatörü','Euler operator',pow(x,n(2))+pow(v('D'),n(2))+y+eq+v('𝒟')+p(v('𝒟')+minus+n(1))+y);
+const sVar=v('s'),FVar=v('F'),LVar=v('ℒ');
+const dLaplacePrime=rule('Türevin dönüşümü','Transform of derivative',LVar+p(prime('f')+p(v('t')))+eq+sVar+FVar+p(sVar)+minus+fn('f',n(0)));
+const dLaplaceSecond=rule('İkinci türevin dönüşümü','Second derivative transform',LVar+p(prime('f',2)+p(v('t')))+eq+pow(sVar,n(2))+FVar+p(sVar)+minus+sVar+fn('f',n(0))+minus+prime('f')+p(n(0)));
+const dLaplaceParam=rule('s bölgesinde türev','Differentiation in s',f(v('d'),v('d')+sVar)+FVar+p(sVar)+eq+minus+LVar+p(v('t')+fn('f',v('t'))));
+const dLaplaceShift=rule('Frekans kaydırma','Frequency shifting',LVar+p(exp(v('a')+v('t'))+fn('f',v('t')))+eq+FVar+p(sVar+minus+v('a')));
 
 /* Integral rules. */
 const iPower=rule('Kuvvet kuralı','Power rule',integral(pow(x,v('n'))+dx)+eq+f(pow(x,v('n')+plus+n(1)),v('n')+plus+n(1))+plus+C+o(',')+v('n')+o('≠')+minus+n(1));
@@ -49,6 +54,10 @@ const iSeparable=rule('Ayrılabilir denklem','Separable equation',integral(f(v('
 const iRepeated=rule('Ardışık integrasyon','Repeated integration',integral(pow(v('y'),p(v('n')))+dx)+eq+pow(v('y'),p(v('n')+minus+n(1)))+plus+C);
 const iPotential=rule('Potansiyel fonksiyon','Potential function',v('u')+p(x+o(',')+y)+eq+integral(fn('M',x+o(',')+y)+dx)+plus+fn('g',y));
 const iPartialFrac=rule('Basit kesirlere ayırma','Partial fractions',f(n(1),y+p(n(1)+minus+y))+eq+f(n(1),y)+plus+f(n(1),n(1)+minus+y));
+const iLaplaceDef=rule('Laplace çekirdek integrali','Kernel integral',defIntegral(n(0),v('∞'),exp(minus+sVar+v('t'))+v('d')+v('t'))+eq+f(n(1),sVar)+o(',')+sVar+o('>')+n(0));
+const iLaplaceExp=rule('Üstel çekirdek integrali','Shifted kernel integral',defIntegral(n(0),v('∞'),exp(minus+p(sVar+minus+v('a'))+v('t'))+v('d')+v('t'))+eq+f(n(1),sVar+minus+v('a'))+o(',')+sVar+o('>')+v('a'));
+const iLaplaceSin=rule('Sinüs çekirdek integrali','Sine kernel integral',defIntegral(n(0),v('∞'),exp(minus+sVar+v('t'))+fn('sin',v('ω')+v('t'))+v('d')+v('t'))+eq+f(v('ω'),pow(sVar,n(2))+plus+pow(v('ω'),n(2))));
+const iLaplaceCos=rule('Kosinüs çekirdek integrali','Cosine kernel integral',defIntegral(n(0),v('∞'),exp(minus+sVar+v('t'))+fn('cos',v('ω')+v('t'))+v('d')+v('t'))+eq+f(sVar,pow(sVar,n(2))+plus+pow(v('ω'),n(2))));
 
 export const MATH_REFERENCE={
   '1.1':{
@@ -106,6 +115,10 @@ export const MATH_REFERENCE={
   '4.5':{
     derivative:[dPowerX,dExpChain,dExpLambda,dLn,dSin,dCos,dProduct,dChain,dOperator,dEuler],
     integral:[iPower,iReciprocal,iLogU,iExpA,iSin,iCos,iSub,iParts,iInverseD,iLinear]
+  },
+  '6.1':{
+    derivative:[dLaplacePrime,dLaplaceSecond,dLaplaceParam,dLaplaceShift,dProduct,dQuotient,dChain],
+    integral:[iLaplaceDef,iLaplaceExp,iLaplaceSin,iLaplaceCos,iParts,iLinear]
   }
 };
 

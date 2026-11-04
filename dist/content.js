@@ -9,6 +9,7 @@ import {generalLinearLesson} from './lessons/xie-2010/4-1/content.js';
 import {complementaryLesson} from './lessons/xie-2010/4-2/content.js';
 import {particularLesson} from './lessons/xie-2010/4-3/content.js';
 import {linearSummaryLesson} from './lessons/xie-2010/4-5/content.js';
+import {laplaceLesson} from './lessons/xie-2010/6-1/content.js';
 import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
@@ -949,7 +950,8 @@ export const BOOKS = [
       generalLinearLesson,
       complementaryLesson,
       particularLesson,
-      linearSummaryLesson
+      linearSummaryLesson,
+      laplaceLesson
     ],
     chapters: [
       [

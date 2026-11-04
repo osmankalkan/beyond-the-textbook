@@ -27,12 +27,13 @@ SYMBOLS = {
     'Longrightarrow': mo('⟹'), 'Rightarrow': mo('⇒'), 'iff': mo('⟺'),
     'Longleftrightarrow': mo('⟺'), 'implies': mo('⟹'), 'impliedby': mo('⟸'),
     'int': mo('∫'), 'sum': mo('∑'), 'partial': mo('∂'), 'prime': mo('′'),
+    'in': mo('∈'),
     'vert': mo('&#124;'), 'mid': mo('&#124;'),
     '{': mo('{'), '}': mo('}'), '%': mo('%'),
 }
 
 FUNCTIONS = {'ln', 'log', 'exp', 'sin', 'cos', 'tan', 'sec', 'csc', 'cot',
-             'arcsin', 'arccos', 'arctan', 'sinh', 'cosh', 'tanh'}
+             'arcsin', 'arccos', 'arctan', 'sinh', 'cosh', 'tanh', 'lim'}
 
 GREEK = {
     'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ', 'epsilon': 'ε',
@@ -171,6 +172,8 @@ class _Parser:
             content = self.group()
             if 'D' in content:
                 return mi('𝒟')
+            if 'L' in content:
+                return mi('ℒ')
             return content
         if name in ('mathrm', 'operatorname', 'text', 'rm', 'mathbf'):
             return self.group()
