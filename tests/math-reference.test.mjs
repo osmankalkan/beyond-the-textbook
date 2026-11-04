@@ -5,7 +5,7 @@ import {getMathReference, MATH_REFERENCE} from '../dist/lessons/math-reference.j
 import {getLesson} from '../dist/content.js';
 import {ui} from '../dist/i18n.js';
 
-const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1'];
+const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1','4.2','4.3','4.5'];
 const wrap=fragment=>`<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>${fragment}</mrow></math>`;
 
 function assertBalancedMarkup(markup,label){
@@ -51,6 +51,9 @@ test('Rules follow the mathematical focus of each lesson',()=>{
   assert.ok(has('4.1','derivative','The D operator'));
   assert.ok(has('4.1','derivative','Linearity'));
   assert.ok(has('4.1','integral','Linearity'));
+  assert.ok(has('4.2','derivative','Hyperbolic cosine'));
+  assert.ok(has('4.3','integral','Inverse operator'));
+  assert.ok(has('4.5','derivative','Euler operator'));
   assert.ok(!has('2.3','derivative','Parametric derivative'));
   assert.ok(!has('1.1','derivative','The D operator'));
 });

@@ -23,6 +23,10 @@ const dReciprocal=rule('Ters türev','Inverse derivative',f(v('d')+x,v('d')+y)+e
 const dTotal=rule('Tam diferansiyel','Total differential',v('d')+v('u')+eq+sub(v('u'),x)+dx+plus+sub(v('u'),y)+dy);
 const dMixed=rule('Karışık kısmi türev','Mixed partial derivative',sub(v('u'),x+y)+eq+sub(v('u'),y+x));
 const dOperator=rule('D operatörü','The D operator',pow(v('D'),v('n'))+v('y')+eq+pow(v('y'),p(v('n'))));
+const dExpLambda=rule('Karakteristik üstel','Characteristic exponential',pow(v('D'),v('n'))+exp(v('λ')+x)+eq+pow(v('λ'),v('n'))+exp(v('λ')+x));
+const dSinh=rule('Hiperbolik sinüs','Hyperbolic sine',f(v('d'),dx)+fn('sinh',v('u'))+eq+prime('u')+fn('cosh',v('u')));
+const dCosh=rule('Hiperbolik kosinüs','Hyperbolic cosine',f(v('d'),dx)+fn('cosh',v('u'))+eq+prime('u')+fn('sinh',v('u')));
+const dEuler=rule('Euler operatörü','Euler operator',pow(x,n(2))+pow(v('D'),n(2))+y+eq+v('𝒟')+p(v('𝒟')+minus+n(1))+y);
 
 /* Integral rules. */
 const iPower=rule('Kuvvet kuralı','Power rule',integral(pow(x,v('n'))+dx)+eq+f(pow(x,v('n')+plus+n(1)),v('n')+plus+n(1))+plus+C+o(',')+v('n')+o('≠')+minus+n(1));
@@ -33,6 +37,9 @@ const iExp=rule('Üstel fonksiyon','Exponential function',integral(exp(x)+dx)+eq
 const iExpA=rule('Ölçekli üstel','Scaled exponential',integral(exp(v('a')+x)+dx)+eq+f(n(1),v('a'))+exp(v('a')+x)+plus+C+o(',')+v('a')+o('≠')+n(0));
 const iSin=rule('Sinüs','Sine',integral(fn('sin',x)+dx)+eq+minus+fn('cos',x)+plus+C);
 const iCos=rule('Kosinüs','Cosine',integral(fn('cos',x)+dx)+eq+fn('sin',x)+plus+C);
+const iSinh=rule('Hiperbolik sinüs','Hyperbolic sine',integral(fn('sinh',x)+dx)+eq+fn('cosh',x)+plus+C);
+const iCosh=rule('Hiperbolik kosinüs','Hyperbolic cosine',integral(fn('cosh',x)+dx)+eq+fn('sinh',x)+plus+C);
+const iInverseD=rule('Ters operatör','Inverse operator',pow(v('D'),minus+n(1))+fn('f',x)+eq+integral(fn('f',x)+dx));
 const iSub=rule('Değişken değiştirme','Substitution',integral(fn('f',fn('g',x))+prime('g')+p(x)+dx)+eq+integral(fn('f',v('u'))+v('d')+v('u')));
 const iParts=rule('Kısmi integrasyon','Integration by parts',integral(v('u')+v('d')+v('v'))+eq+v('u')+v('v')+minus+integral(v('v')+v('d')+v('u')));
 const iArctan=rule('Arktanjant integrali','Arctangent integral',integral(f(v('d')+v('u'),n(1)+plus+pow(v('u'),n(2))))+eq+fn('arctan',v('u'))+plus+C);
@@ -87,6 +94,18 @@ export const MATH_REFERENCE={
   '4.1':{
     derivative:[dPowerX,dExpChain,dSin,dCos,dProduct,dChain,dLinear,dOperator],
     integral:[iPower,iExp,iSin,iCos,iRepeated,iSub,iParts,iLinear]
+  },
+  '4.2':{
+    derivative:[dExpChain,dExpLambda,dSin,dCos,dSinh,dCosh,dProduct,dOperator],
+    integral:[iPower,iExp,iExpA,iSin,iCos,iSinh,iCosh,iRepeated]
+  },
+  '4.3':{
+    derivative:[dPowerX,dExpChain,dLn,dSin,dCos,dSinh,dCosh,dProduct,dOperator],
+    integral:[iPower,iReciprocal,iLogU,iExpA,iSin,iCos,iParts,iInverseD]
+  },
+  '4.5':{
+    derivative:[dPowerX,dExpChain,dExpLambda,dLn,dSin,dCos,dProduct,dChain,dOperator,dEuler],
+    integral:[iPower,iReciprocal,iLogU,iExpA,iSin,iCos,iSub,iParts,iInverseD,iLinear]
   }
 };
 

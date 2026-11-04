@@ -25,6 +25,7 @@ SYMBOLS = {
     'cdots': mo('⋯'), 'ldots': mo('…'), 'dots': mo('…'),
     'approx': mo('≈'), 'equiv': mo('≡'), 'sim': mo('∼'),
     'Longrightarrow': mo('⟹'), 'Rightarrow': mo('⇒'), 'iff': mo('⟺'),
+    'Longleftrightarrow': mo('⟺'), 'implies': mo('⟹'), 'impliedby': mo('⟸'),
     'int': mo('∫'), 'sum': mo('∑'), 'partial': mo('∂'), 'prime': mo('′'),
     'vert': mo('&#124;'), 'mid': mo('&#124;'),
     '{': mo('{'), '}': mo('}'), '%': mo('%'),
@@ -37,7 +38,9 @@ GREEK = {
     'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ', 'epsilon': 'ε',
     'zeta': 'ζ', 'eta': 'η', 'theta': 'θ', 'kappa': 'κ', 'lambda': 'λ',
     'mu': 'μ', 'nu': 'ν', 'xi': 'ξ', 'pi': 'π', 'rho': 'ρ', 'sigma': 'σ',
-    'tau': 'τ', 'phi': 'φ', 'chi': 'χ', 'psi': 'ψ', 'omega': 'ω',
+    'tau': 'τ', 'phi': 'φ', 'varphi': 'φ', 'chi': 'χ', 'psi': 'ψ', 'omega': 'ω',
+    'Phi': 'Φ', 'Psi': 'Ψ', 'Delta': 'Δ', 'Omega': 'Ω', 'Sigma': 'Σ', 'Gamma': 'Γ',
+    'Theta': 'Θ', 'Lambda': 'Λ', 'Pi': 'Π',
 }
 
 SPACES = {',': THIN, ';': QUAD, ':': QUAD, ' ': QUAD, '!': '',
@@ -164,6 +167,15 @@ class _Parser:
             return '<mfrac>' + self.group() + self.group() + '</mfrac>'
         if name == 'sqrt':
             return '<msqrt>' + self.group() + '</msqrt>'
+        if name == 'mathcal':
+            content = self.group()
+            if 'D' in content:
+                return mi('𝒟')
+            return content
+        if name in ('mathrm', 'operatorname', 'text', 'rm', 'mathbf'):
+            return self.group()
+        if name in ('tilde', 'bar', 'hat', 'vec', 'overline'):
+            return self.group()
         if name in SPACES:
             return SPACES[name]
         if name in IGNORED:
