@@ -32,6 +32,8 @@ const dLaplacePrime=rule('Türevin dönüşümü','Transform of derivative',LVar
 const dLaplaceSecond=rule('İkinci türevin dönüşümü','Second derivative transform',LVar+p(prime('f',2)+p(v('t')))+eq+pow(sVar,n(2))+FVar+p(sVar)+minus+sVar+fn('f',n(0))+minus+prime('f')+p(n(0)));
 const dLaplaceParam=rule('s bölgesinde türev','Differentiation in s',f(v('d'),v('d')+sVar)+FVar+p(sVar)+eq+minus+LVar+p(v('t')+fn('f',v('t'))));
 const dLaplaceShift=rule('Frekans kaydırma','Frequency shifting',LVar+p(exp(v('a')+v('t'))+fn('f',v('t')))+eq+FVar+p(sVar+minus+v('a')));
+const dHeavisideShift=rule('İkinci kaydırma teoremi','Second shifting theorem',LVar+p(fn('f',v('t')+minus+v('a'))+fn('H',v('t')+minus+v('a')))+eq+exp(minus+v('a')+sVar)+FVar+p(sVar));
+const dHeavisideDist=rule('Basamak türevi','Derivative of step',f(v('d'),v('d')+v('t'))+fn('H',v('t')+minus+v('a'))+eq+fn('δ',v('t')+minus+v('a')));
 
 /* Integral rules. */
 const iPower=rule('Kuvvet kuralı','Power rule',integral(pow(x,v('n'))+dx)+eq+f(pow(x,v('n')+plus+n(1)),v('n')+plus+n(1))+plus+C+o(',')+v('n')+o('≠')+minus+n(1));
@@ -58,6 +60,8 @@ const iLaplaceDef=rule('Laplace çekirdek integrali','Kernel integral',defIntegr
 const iLaplaceExp=rule('Üstel çekirdek integrali','Shifted kernel integral',defIntegral(n(0),v('∞'),exp(minus+p(sVar+minus+v('a'))+v('t'))+v('d')+v('t'))+eq+f(n(1),sVar+minus+v('a'))+o(',')+sVar+o('>')+v('a'));
 const iLaplaceSin=rule('Sinüs çekirdek integrali','Sine kernel integral',defIntegral(n(0),v('∞'),exp(minus+sVar+v('t'))+fn('sin',v('ω')+v('t'))+v('d')+v('t'))+eq+f(v('ω'),pow(sVar,n(2))+plus+pow(v('ω'),n(2))));
 const iLaplaceCos=rule('Kosinüs çekirdek integrali','Cosine kernel integral',defIntegral(n(0),v('∞'),exp(minus+sVar+v('t'))+fn('cos',v('ω')+v('t'))+v('d')+v('t'))+eq+f(sVar,pow(sVar,n(2))+plus+pow(v('ω'),n(2))));
+const iHeavisideStep=rule('Basamak çekirdek integrali','Delayed step integral',defIntegral(v('a'),v('∞'),exp(minus+sVar+v('t'))+v('d')+v('t'))+eq+f(exp(minus+v('a')+sVar),sVar));
+const iHeavisidePulse=rule('Darbe pencere integrali','Pulse window integral',defIntegral(v('a'),v('b'),exp(minus+sVar+v('t'))+v('d')+v('t'))+eq+f(exp(minus+v('a')+sVar)+minus+exp(minus+v('b')+sVar),sVar));
 
 export const MATH_REFERENCE={
   '1.1':{
@@ -119,6 +123,10 @@ export const MATH_REFERENCE={
   '6.1':{
     derivative:[dLaplacePrime,dLaplaceSecond,dLaplaceParam,dLaplaceShift,dProduct,dQuotient,dChain],
     integral:[iLaplaceDef,iLaplaceExp,iLaplaceSin,iLaplaceCos,iParts,iLinear]
+  },
+  '6.2':{
+    derivative:[dHeavisideShift,dHeavisideDist,dChain,dProduct,dQuotient,dLinear],
+    integral:[iHeavisideStep,iHeavisidePulse,iLaplaceDef,iParts,iLinear]
   }
 };
 
