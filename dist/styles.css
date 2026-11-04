@@ -143,3 +143,43 @@
   .sum-method-grid{grid-template-columns:1fr}
   .sum-matrix-grid{grid-template-columns:1fr}
 }
+
+/* Section-aware derivative and integral quick reference. */
+.math-reference-trigger{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 20px;padding:12px;border:1px solid #dce5d2;border-radius:8px;background:#f4f8ef;color:#3f5f46;text-align:left;transition:background .15s,border-color .15s}
+.math-reference-trigger:hover{background:#edf4e7;border-color:#c2d4b8}
+.math-reference-trigger-icon{flex:none;display:inline-flex;align-items:center;justify-content:center;width:31px;height:31px;border-radius:7px;background:#e2ecdb;color:#416a4b;font:18px var(--serif)}
+.math-reference-trigger strong{display:block;font-size:11px;line-height:1.4}
+.math-reference-trigger small{display:block;font-size:9px;line-height:1.4;color:#849175}
+.math-reference-trigger-arrow{margin-left:auto;color:#7e9578;font-size:14px}
+.math-reference-dialog{position:fixed;inset:0 0 0 auto;width:min(460px,100vw);max-width:100vw;height:100vh;max-height:100vh;height:100dvh;max-height:100dvh;margin:0;padding:0;border:0;background:transparent;color:var(--ink);overflow:hidden}
+.math-reference-dialog::backdrop{background:#1e332a66;backdrop-filter:blur(2px)}
+.math-reference-dialog[open]{animation:math-reference-in .22s ease}
+@keyframes math-reference-in{from{transform:translateX(28px);opacity:.55}to{transform:translateX(0);opacity:1}}
+.math-reference-sheet{display:flex;flex-direction:column;height:100%;background:#fbfcf8;border-left:1px solid #dbe4d2;box-shadow:-18px 0 45px #20362a1f}
+.math-reference-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:30px 28px 20px;border-bottom:1px solid #e2e8da;background:#f6f9f2}
+.math-reference-head h2{font:30px/1.15 var(--serif);margin:0 0 8px}
+.math-reference-head .eyebrow{margin-bottom:8px}
+.math-reference-head p:last-child{max-width:330px;margin:0;font-size:11px;line-height:1.8;color:#7b8870}
+.math-reference-close{flex:none;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid #d7e0cf;border-radius:50%;background:#fff;color:#5b7053;font-size:20px;line-height:1}
+.math-reference-close:hover{background:#edf3e7}
+.math-reference-body{display:grid;gap:28px;overflow-y:auto;padding:22px 28px 40px}
+.math-reference-group h3{display:flex;align-items:center;gap:9px;margin:0 0 12px;font:22px var(--serif);color:#2f4e37}
+.math-reference-group h3::before{content:'∂';display:inline-flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:7px;background:#e8f0e2;color:#4d7355;font:16px var(--serif)}
+.math-reference-group:last-child h3::before{content:'∫'}
+.math-reference-group ul{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.math-reference-group li{padding:12px 14px;border:1px solid #e2e8da;border-radius:8px;background:#fff}
+.math-reference-group li>span{display:block;margin-bottom:5px;font-size:10px;font-weight:650;letter-spacing:.4px;color:#829174}
+.math-reference-group math{display:block;max-width:100%;overflow-x:auto;padding:2px 0;font-size:19px}
+.math-reference-empty{font-size:11px;color:#849175}
+body.math-reference-open{overflow:hidden}
+@media(max-width:960px){
+  .reading-aside .math-reference-trigger{width:auto;flex:1 1 200px;margin:0}
+}
+@media(max-width:680px){
+  .reading-aside .math-reference-trigger{flex:1 1 100%;margin-bottom:4px}
+  .math-reference-dialog{width:100vw}
+  .math-reference-head{padding:24px 20px 17px}
+  .math-reference-head h2{font-size:26px}
+  .math-reference-body{padding:18px 20px 30px}
+  .math-reference-group math{font-size:18px}
+}

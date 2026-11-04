@@ -1,5 +1,6 @@
 import {createStudyGuide} from './core/study-guide.js';
 import {escapeHtml as escape} from './core/html.js';
+import {getMathReference} from './lessons/math-reference.js';
 import {createLabHost} from './core/lab-host.js';
 import {createLessonRepository} from './core/lesson-repository.js';
 import {marked} from './vendor/marked.js';
@@ -191,6 +192,13 @@ function applyStaticTranslations(){
   $('#exam-clinic-title').textContent=t('examClinicTitle');
 
   $('#in-this-lesson-label').textContent=t('inThisLesson');
+  $('#math-reference-open-title').textContent=t('mathReferenceOpen');
+  $('#math-reference-open-hint').textContent=t('mathReferenceOpenHint');
+  $('#math-reference-open').setAttribute('aria-label',t('mathReferenceOpen'));
+  $('#math-reference-title').textContent=t('mathReferenceTitle');
+  $('#math-reference-close').setAttribute('aria-label',t('mathReferenceClose'));
+  $('#math-reference-derivative-title').textContent=t('mathReferenceDerivative');
+  $('#math-reference-integral-title').textContent=t('mathReferenceIntegral');
   $('#lesson-complete-text').textContent=t('lessonCompletedCheck');
   $('#go-to-practice-btn').textContent=t('goToPracticeBtn');
 
@@ -224,6 +232,16 @@ function applyStaticTranslations(){
   $('#footer-motto').textContent=t('footerMotto');
 }
 
+function renderMathReference(){
+  const reference=getMathReference(currentLesson.section,lang);
+  const itemHtml=item=>`<li><span>${escape(item.label)}</span>${math(item.math)}</li>`;
+  const empty=`<li class="math-reference-empty">${escape(t('mathReferenceEmpty'))}</li>`;
+  $('#math-reference-eyebrow').textContent=t('mathReferenceEyebrow',currentLesson.section);
+  $('#math-reference-intro').textContent=t('mathReferenceIntro',currentLesson.section);
+  $('#math-reference-derivative').innerHTML=reference?reference.derivative.map(itemHtml).join(''):empty;
+  $('#math-reference-integral').innerHTML=reference?reference.integral.map(itemHtml).join(''):empty;
+}
+
 let loadedLessonKey=null;
 function applyActiveContext(){
   document.title=`Beyond the Textbook · ${currentLesson.title}`;
@@ -247,6 +265,7 @@ function applyActiveContext(){
   $('#heading-download').setAttribute('download',currentLesson.downloadName);
   $('#lesson-highlights').innerHTML=currentLesson.highlights.map(h=>`<p>${escape(h)}</p>`).join('');
   $('#lesson-source-note').innerHTML=`${escape(t('sourceBoxTitle'))}<br><strong>§${escape(currentLesson.section)} · ${escape(currentLesson.pages)}</strong><br>${escape(t('pdfPagesLabel',currentLesson.pdfPages))}`;
+  renderMathReference();
   $('#practice-disclaimer').textContent=t('practiceDisclaimer',currentLesson.questions.length,currentLesson.section);
   $('#notes-label').textContent=`§${currentLesson.section} · ${currentLesson.title.toLocaleUpperCase(localeCode())} · ${t('notesLabelSuffix')}`;
   $('#notes').placeholder=currentLesson.notesPlaceholder;
@@ -293,6 +312,35 @@ function setLang(nextLang){
 $('#lang-switch').addEventListener('click',e=>{
   const btn=e.target.closest('[data-lang]');
   if(btn)setLang(btn.dataset.lang);
+});
+
+const mathReferenceDialog=$('#math-reference-dialog');
+const mathReferenceTrigger=$('#math-reference-open');
+function closeMathReference(){
+  if(mathReferenceDialog.open)mathReferenceDialog.close();
+  else{
+    mathReferenceDialog.removeAttribute('open');
+    document.body.classList.remove('math-reference-open');
+    mathReferenceTrigger.setAttribute('aria-expanded','false');
+    mathReferenceTrigger.focus();
+  }
+}
+function openMathReference(){
+  if(mathReferenceDialog.open)return;
+  document.body.classList.add('math-reference-open');
+  mathReferenceTrigger.setAttribute('aria-expanded','true');
+  if(typeof mathReferenceDialog.showModal==='function')mathReferenceDialog.showModal();
+  else mathReferenceDialog.setAttribute('open','');
+  $('#math-reference-close').focus();
+}
+mathReferenceTrigger.setAttribute('aria-expanded','false');
+mathReferenceTrigger.addEventListener('click',openMathReference);
+$('#math-reference-close').addEventListener('click',closeMathReference);
+mathReferenceDialog.addEventListener('click',event=>{if(event.target===mathReferenceDialog)closeMathReference();});
+mathReferenceDialog.addEventListener('close',()=>{
+  document.body.classList.remove('math-reference-open');
+  mathReferenceTrigger.setAttribute('aria-expanded','false');
+  mathReferenceTrigger.focus();
 });
 
 function selectLesson(lessonId,targetView=null){

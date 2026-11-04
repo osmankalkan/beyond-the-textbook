@@ -1,0 +1,98 @@
+import {T, v, n, o, r, p, f, pow, sub, prime, eq, plus, minus, x, y, C, dx, dy, fn, exp, abs, integral} from '../study/math.js';
+import {pickLang} from '../i18n.js';
+
+const rule=(tr,en,math)=>({label:T(tr,en),math});
+const defIntegral=(a,b,body)=>`<msubsup>${o('∫')}${r(a)}${r(b)}</msubsup>${body}`;
+
+/* Derivative rules. Every fragment is inserted inside the app's <math><mrow> root. */
+const dPowerX=rule('Kuvvet kuralı','Power rule',f(v('d'),dx)+pow(x,v('n'))+eq+v('n')+pow(x,v('n')+minus+n(1)));
+const dPowerU=rule('Genelleştirilmiş kuvvet kuralı','Generalized power rule',f(v('d'),dx)+pow(v('u'),v('n'))+eq+v('n')+pow(v('u'),v('n')+minus+n(1))+prime('u'));
+const dExp=rule('Üstel fonksiyon','Exponential function',f(v('d'),dx)+exp(x)+eq+exp(x));
+const dExpChain=rule('Zincirli üstel','Exponential with chain rule',f(v('d'),dx)+exp(v('u'))+eq+exp(v('u'))+prime('u'));
+const dLn=rule('Logaritma','Logarithm',f(v('d'),dx)+fn('ln',v('u'))+eq+f(prime('u'),v('u')));
+const dSin=rule('Sinüs','Sine',f(v('d'),dx)+fn('sin',v('u'))+eq+prime('u')+fn('cos',v('u')));
+const dCos=rule('Kosinüs','Cosine',f(v('d'),dx)+fn('cos',v('u'))+eq+minus+prime('u')+fn('sin',v('u')));
+const dArctan=rule('Arktanjant','Arctangent',f(v('d'),dx)+fn('arctan',v('u'))+eq+f(prime('u'),n(1)+plus+pow(v('u'),n(2))));
+const dProduct=rule('Çarpım kuralı','Product rule',prime(p(v('u')+v('v')))+eq+prime('u')+v('v')+plus+v('u')+prime('v'));
+const dQuotient=rule('Bölüm kuralı','Quotient rule',prime(p(f(v('u'),v('v'))))+eq+f(prime('u')+v('v')+minus+v('u')+prime('v'),pow(v('v'),n(2))));
+const dChain=rule('Zincir kuralı','Chain rule',f(v('d')+y,v('d')+x)+eq+f(v('d')+y,v('d')+v('u'))+f(v('d')+v('u'),v('d')+x));
+const dLinear=rule('Doğrusallık','Linearity',prime(p(sub(v('c'),n(1))+v('u')+plus+sub(v('c'),n(2))+v('v')))+eq+sub(v('c'),n(1))+prime('u')+plus+sub(v('c'),n(2))+prime('v'));
+const dImplicit=rule('Kapalı türev','Implicit differentiation',fn('F',x+o(',')+y)+eq+n(0)+o('⟹')+prime('y')+eq+minus+f(sub(v('F'),x),sub(v('F'),y)));
+const dParametric=rule('Parametrik türev','Parametric derivative',f(v('d')+y,v('d')+x)+eq+f(f(v('d')+y,v('d')+v('t')),f(v('d')+x,v('d')+v('t'))));
+const dReciprocal=rule('Ters türev','Inverse derivative',f(v('d')+x,v('d')+y)+eq+f(n(1),f(v('d')+y,v('d')+x)));
+const dTotal=rule('Tam diferansiyel','Total differential',v('d')+v('u')+eq+sub(v('u'),x)+dx+plus+sub(v('u'),y)+dy);
+const dMixed=rule('Karışık kısmi türev','Mixed partial derivative',sub(v('u'),x+y)+eq+sub(v('u'),y+x));
+const dOperator=rule('D operatörü','The D operator',pow(v('D'),v('n'))+v('y')+eq+pow(v('y'),p(v('n'))));
+
+/* Integral rules. */
+const iPower=rule('Kuvvet kuralı','Power rule',integral(pow(x,v('n'))+dx)+eq+f(pow(x,v('n')+plus+n(1)),v('n')+plus+n(1))+plus+C+o(',')+v('n')+o('≠')+minus+n(1));
+const iReciprocal=rule('Ters fonksiyon','Reciprocal',integral(f(dx,x))+eq+fn('ln',abs(x))+plus+C);
+const iLogU=rule('Logaritmik integral','Logarithmic integral',integral(f(v('d')+v('u'),v('u')))+eq+fn('ln',abs(v('u')))+plus+C);
+const iShift=rule('Doğrusal payda','Linear denominator',integral(f(dx,x+minus+v('a')))+eq+fn('ln',abs(x+minus+v('a')))+plus+C);
+const iExp=rule('Üstel fonksiyon','Exponential function',integral(exp(x)+dx)+eq+exp(x)+plus+C);
+const iExpA=rule('Ölçekli üstel','Scaled exponential',integral(exp(v('a')+x)+dx)+eq+f(n(1),v('a'))+exp(v('a')+x)+plus+C+o(',')+v('a')+o('≠')+n(0));
+const iSin=rule('Sinüs','Sine',integral(fn('sin',x)+dx)+eq+minus+fn('cos',x)+plus+C);
+const iCos=rule('Kosinüs','Cosine',integral(fn('cos',x)+dx)+eq+fn('sin',x)+plus+C);
+const iSub=rule('Değişken değiştirme','Substitution',integral(fn('f',fn('g',x))+prime('g')+p(x)+dx)+eq+integral(fn('f',v('u'))+v('d')+v('u')));
+const iParts=rule('Kısmi integrasyon','Integration by parts',integral(v('u')+v('d')+v('v'))+eq+v('u')+v('v')+minus+integral(v('v')+v('d')+v('u')));
+const iArctan=rule('Arktanjant integrali','Arctangent integral',integral(f(v('d')+v('u'),n(1)+plus+pow(v('u'),n(2))))+eq+fn('arctan',v('u'))+plus+C);
+const iLinear=rule('Doğrusallık','Linearity',integral(p(sub(v('c'),n(1))+v('u')+plus+sub(v('c'),n(2))+v('v'))+dx)+eq+sub(v('c'),n(1))+integral(v('u')+dx)+plus+sub(v('c'),n(2))+integral(v('v')+dx));
+const iFTC=rule('Belirli integral','Definite integral',defIntegral(v('a'),v('b'),prime('F')+p(x)+dx)+eq+v('F')+p(v('b'))+minus+v('F')+p(v('a')));
+const iSeparable=rule('Ayrılabilir denklem','Separable equation',integral(f(v('d')+y,fn('g',y)))+eq+integral(fn('f',x)+dx));
+const iRepeated=rule('Ardışık integrasyon','Repeated integration',integral(pow(v('y'),p(v('n')))+dx)+eq+pow(v('y'),p(v('n')+minus+n(1)))+plus+C);
+const iPotential=rule('Potansiyel fonksiyon','Potential function',v('u')+p(x+o(',')+y)+eq+integral(fn('M',x+o(',')+y)+dx)+plus+fn('g',y));
+const iPartialFrac=rule('Basit kesirlere ayırma','Partial fractions',f(n(1),y+p(n(1)+minus+y))+eq+f(n(1),y)+plus+f(n(1),n(1)+minus+y));
+
+export const MATH_REFERENCE={
+  '1.1':{
+    derivative:[dPowerX,dExp,dSin,dCos,dLinear],
+    integral:[iPower,iExp,iSin,iCos,iLinear]
+  },
+  '1.2':{
+    derivative:[dPowerX,dExpChain,dLn,dSin,dCos,dProduct,dChain,dImplicit],
+    integral:[iPower,iReciprocal,iExp,iSin,iCos,iSub,iFTC]
+  },
+  '2.1':{
+    derivative:[dPowerX,dPowerU,dExpChain,dLn,dChain,dProduct,dArctan],
+    integral:[iPower,iReciprocal,iLogU,iExp,iSin,iCos,iSub,iArctan,iPartialFrac]
+  },
+  '2.2':{
+    derivative:[dPowerU,dProduct,dQuotient,dChain,dExpChain,dArctan,dImplicit],
+    integral:[iPower,iReciprocal,iLogU,iShift,iExp,iSub,iArctan,iPartialFrac]
+  },
+  '2.3':{
+    derivative:[dPowerX,dExpChain,dProduct,dQuotient,dChain,dTotal,dMixed],
+    integral:[iPower,iReciprocal,iLogU,iExp,iSub,iPotential]
+  },
+  '2.4':{
+    derivative:[dPowerX,dProduct,dQuotient,dChain,dExpChain,dLn],
+    integral:[iPower,iReciprocal,iLogU,iExp,iExpA,iSub,iParts,iLinear]
+  },
+  '2.5':{
+    derivative:[dPowerX,dProduct,dChain,dParametric,dReciprocal,dImplicit],
+    integral:[iPower,iReciprocal,iLogU,iExp,iSub,iParts,iArctan]
+  },
+  '2.6':{
+    derivative:[dPowerU,dProduct,dChain,dExpChain,dSin,dCos],
+    integral:[iPower,iReciprocal,iExp,iExpA,iSin,iCos,iSub,iRepeated]
+  },
+  '2.7':{
+    derivative:[dProduct,dQuotient,dChain,dExpChain,dLn,dArctan,dImplicit,dParametric],
+    integral:[iPower,iReciprocal,iLogU,iExp,iSub,iParts,iPartialFrac,iArctan,iFTC]
+  },
+  '3.1':{
+    derivative:[dPowerX,dExpChain,dLn,dChain,dLinear,dProduct],
+    integral:[iPower,iReciprocal,iLogU,iExpA,iSub,iFTC,iLinear]
+  },
+  '4.1':{
+    derivative:[dPowerX,dExpChain,dSin,dCos,dProduct,dChain,dLinear,dOperator],
+    integral:[iPower,iExp,iSin,iCos,iRepeated,iSub,iParts,iLinear]
+  }
+};
+
+export function getMathReference(section,lang='tr'){
+  const entry=MATH_REFERENCE[section];
+  if(!entry)return null;
+  const localize=list=>list.map(item=>({label:pickLang(item.label,lang),math:item.math}));
+  return {derivative:localize(entry.derivative),integral:localize(entry.integral)};
+}
