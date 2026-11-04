@@ -1,5 +1,5 @@
 import {createStudyGuide} from './core/study-guide.js';
-import {escapeHtml as escape} from './core/html.js';
+import {escapeHtml as escape, formatMathText} from './core/html.js';
 import {getMathReference} from './lessons/math-reference.js';
 import {createLabHost} from './core/lab-host.js';
 import {createLessonRepository} from './core/lesson-repository.js';
@@ -74,15 +74,15 @@ function renderExamClinicSection(){
   const bpHtml=blueprint.map(item=>`<div class="blueprint-card"><strong>${escape(item.step)}</strong><p>${escape(item.detail)}</p></div>`).join('');
   const clinicHtml=clinic.map((c,idx)=>`<article class="clinic-card">
     <span class="clinic-badge">${escape(c.badge)}</span>
-    <h4>${escape(c.title)}</h4>
-    <p class="clinic-statement">${escape(c.statement)}</p>
-    <div class="clinic-trap"><strong>${escape(t('examTrapPrefix'))}</strong> ${escape(c.trap)}</div>
+    <h4>${formatMathText(c.title)}</h4>
+    <p class="clinic-statement">${formatMathText(c.statement)}</p>
+    <div class="clinic-trap"><strong>${escape(t('examTrapPrefix'))}</strong> ${formatMathText(c.trap)}</div>
     <details class="clinic-steps" ${!currentLesson.studySupport&&idx===0?'open':''}>
       <summary>${escape(t('examStepsSummary',c.steps.length))}</summary>
       <div class="clinic-step-list">${c.steps.map(st=>`<div class="clinic-step">
-        <strong>${escape(st.label)}</strong>
+        <strong>${formatMathText(st.label)}</strong>
         ${math(st.math)}
-        <p>${escape(st.text)}</p>
+        <p>${formatMathText(st.text)}</p>
       </div>`).join('')}</div>
     </details>
   </article>`).join('');
@@ -873,14 +873,14 @@ $('#lesson-complete').addEventListener('change',e=>{
 function renderExercises(){
   const prog=currentProgress();
   const questions=currentLesson.questions;
-  $('#exercises').innerHTML=questions.map((q,i)=>`<form class="panel exercise" data-question="${i}"><div class="exercise-top"><span>${String(i+1).padStart(2,'0')} / ${escape(q.tag)}${q.difficulty?`<span class="difficulty-badge">${escape(q.difficulty)}</span>`:''}</span><span class="exercise-status ${prog.solved.includes(i)?'solved':''}">${escape(prog.solved.includes(i)?t('statusSolved'):t('statusUnsolved'))}</span></div><h3>${escape(q.title)}</h3><p>${escape(q.text)}</p>${q.choices?`<div role="radiogroup" aria-label="${escape(q.title)}">${q.choices.map((c,j)=>`<label class="choice"><input type="radio" name="answer-${i}" value="${j}" required>${escape(c)}</label>`).join('')}</div><button class="button primary" type="submit">${escape(t('checkChoiceBtn'))}</button>`:`<label for="answer-${i}">${escape(t('yourAnswerLabel',q.unit))}</label><div class="answer-line"><input id="answer-${i}" name="numeric" inputmode="decimal" placeholder="${escape(t('numericPlaceholder'))}" autocomplete="off" required aria-label="${escape(t('numericAria',q.title))}"><button class="button primary" type="submit">${escape(t('checkNumericBtn'))}</button></div>`}<p class="feedback" role="status" hidden></p><button class="text-button hint-button" type="button">${escape(t('openFirstHint'))}</button><ol class="hint-list"></ol>${q.solutionSummary?`<details class="solution-details"><summary>${escape(t('solutionSummaryLabel'))}</summary><p>${escape(q.solutionSummary)}</p></details>`:''}</form>`).join('');
+  $('#exercises').innerHTML=questions.map((q,i)=>`<form class="panel exercise" data-question="${i}"><div class="exercise-top"><span>${String(i+1).padStart(2,'0')} / ${escape(q.tag)}${q.difficulty?`<span class="difficulty-badge">${escape(q.difficulty)}</span>`:''}</span><span class="exercise-status ${prog.solved.includes(i)?'solved':''}">${escape(prog.solved.includes(i)?t('statusSolved'):t('statusUnsolved'))}</span></div><h3>${formatMathText(q.title)}</h3><p>${formatMathText(q.text)}</p>${q.choices?`<div role="radiogroup" aria-label="${escape(q.title)}">${q.choices.map((c,j)=>`<label class="choice"><input type="radio" name="answer-${i}" value="${j}" required>${formatMathText(c)}</label>`).join('')}</div><button class="button primary" type="submit">${escape(t('checkChoiceBtn'))}</button>`:`<label for="answer-${i}">${escape(t('yourAnswerLabel',q.unit))}</label><div class="answer-line"><input id="answer-${i}" name="numeric" inputmode="decimal" placeholder="${escape(t('numericPlaceholder'))}" autocomplete="off" required aria-label="${escape(t('numericAria',q.title))}"><button class="button primary" type="submit">${escape(t('checkNumericBtn'))}</button></div>`}<p class="feedback" role="status" hidden></p><button class="text-button hint-button" type="button">${escape(t('openFirstHint'))}</button><ol class="hint-list"></ol>${q.solutionSummary?`<details class="solution-details"><summary>${escape(t('solutionSummaryLabel'))}</summary><p>${formatMathText(q.solutionSummary)}</p></details>`:''}</form>`).join('');
 }
 $('#exercises').addEventListener('submit',e=>{
   e.preventDefault();const form=e.target,i=Number(form.dataset.question),q=currentLesson.questions[i];let answer;
   if(q.choices)answer=Number(form.querySelector('input[type=radio]:checked')?.value);
   else answer=Number(form.querySelector('input[name=numeric]').value.trim().replace(',','.'));
   const correct=Number.isFinite(answer)&&(q.choices?answer===q.answer:Math.abs(answer-q.answer)<=q.tolerance),feedback=form.querySelector('.feedback');
-  feedback.hidden=false;feedback.classList.toggle('wrong',!correct);feedback.textContent=correct?q.feedback:(currentLesson.presentation?.wrongFeedback||t('wrongFeedback'));
+  feedback.hidden=false;feedback.classList.toggle('wrong',!correct);feedback.innerHTML=formatMathText(correct?q.feedback:(currentLesson.presentation?.wrongFeedback||t('wrongFeedback')));
   if(correct){
     const prog=currentProgress();
     if(!prog.solved.includes(i))prog.solved.push(i);
@@ -893,7 +893,7 @@ $('#exercises').addEventListener('submit',e=>{
 $('#exercises').addEventListener('click',e=>{
   if(!e.target.matches('.hint-button'))return;
   const form=e.target.closest('form'),q=currentLesson.questions[Number(form.dataset.question)],list=form.querySelector('.hint-list'),n=list.children.length;
-  if(n<q.hints.length){const li=document.createElement('li');li.textContent=q.hints[n];list.append(li);}
+  if(n<q.hints.length){const li=document.createElement('li');li.innerHTML=formatMathText(q.hints[n]);list.append(li);}
   if(list.children.length===q.hints.length){e.target.textContent=t('allHintsOpen');e.target.disabled=true;}
   else e.target.textContent=t('openNextHint');
 });
@@ -956,7 +956,8 @@ async function loadLesson(){
     if(request!==lessonRequest||currentLesson.id!==lesson.id||lang!==selectedLanguage)return;
     const prepared=markdown.replace(/\$\$\s*([\s\S]*?)\s*\$\$/g,(_,latex)=>`<div class="formula">${formulas[latex.trim()]}<details><summary>${escape(t('latexSourceLabel'))}</summary><code>${escape(latex.trim())}</code></details></div>`);
     const typeset=prepared.replace(/\\\((.+?)\\\)/g,(whole,latex)=>inline&&inline[latex.trim()]?`<span class="imath">${inline[latex.trim()]}</span>`:whole);
-    $('#lesson-content').innerHTML=marked.parse(typeset);
+    const html=marked.parse(typeset);
+    $('#lesson-content').innerHTML=html.replace(/<table>([\s\S]*?)<\/table>/g,'<div class="table-wrap"><table>$1</table></div>');
     loadedLessonKey=targetKey;
   }catch(error){
     if(request!==lessonRequest||currentLesson.id!==lesson.id||lang!==selectedLanguage)return;
@@ -982,6 +983,9 @@ const labHost=createLabHost({
   'solvable':()=>import('./labs/solvable/controller.js'),
   'reduction':()=>import('./labs/reduction/controller.js'),
   'operator':()=>import('./labs/operator/controller.js'),
+  'complementary':()=>import('./labs/complementary/controller.js'),
+  'particular':()=>import('./labs/particular/controller.js'),
+  'linear-summary':()=>import('./labs/linear-summary/controller.js'),
   'summary':()=>import('./labs/summary/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });

@@ -73,11 +73,18 @@ export const generalLinearLesson = {
         'n. mertebe bir doğrusal adi diferansiyel denklemin genel biçimi hangisidir?',
         'Which is the general form of an n-th order linear ordinary differential equation?'
       ),
-      choices: [
-        'a_n(x)y^{(n)}+a_{n-1}(x)y^{(n-1)}+...+a_0(x)y=F(x)',
-        'y^{(n)}+y^2=F(x)',
-        'y^{(n)}=y^2'
-      ],
+      choices: text(
+        [
+          'a_n(x)y^{(n)} + a_{n-1}(x)y^{(n-1)} + ⋯ + a_0(x)y = F(x)',
+          'y^{(n)} + y^2 = F(x)',
+          'y^{(n)} = y^2'
+        ],
+        [
+          'a_n(x)y^{(n)} + a_{n-1}(x)y^{(n-1)} + ⋯ + a_0(x)y = F(x)',
+          'y^{(n)} + y^2 = F(x)',
+          'y^{(n)} = y^2'
+        ]
+      ),
       answer: 0,
       feedback: text(
         'Doğrusal denklemde y ve türevleri birinci kuvvette, katsayılar yalnız x’e bağlıdır. Diğer seçeneklerde y^2 terimi doğrusallığı bozar.',
@@ -95,11 +102,18 @@ export const generalLinearLesson = {
         'Aşağıdaki denklemlerden hangisi doğrusal değildir?',
         'Which of the following equations is nonlinear?'
       ),
-      choices: [
-        'y″+y^2=0',
-        'y″+xy′+y=0',
-        'x^2y″+y=cos x'
-      ],
+      choices: text(
+        [
+          'y″ + y² = 0',
+          'y″ + xy′ + y = 0',
+          'x² y″ + y = cos x'
+        ],
+        [
+          'y″ + y² = 0',
+          'y″ + xy′ + y = 0',
+          'x² y″ + y = cos x'
+        ]
+      ),
       answer: 0,
       feedback: text(
         'y^2 terimi bilinmeyenin kendisiyle çarpımıdır; doğrusallığı bozar. Diğer iki denklemde y ve türevleri birinci kuvvette, katsayılar yalnız x’e bağlıdır.',
@@ -114,36 +128,50 @@ export const generalLinearLesson = {
       title: text('D operatörü', 'The D operator'),
       tag: 'TANIM / DEFINITION',
       text: text(
-        'D=d/dx olduğuna göre D^2y neyi ifade eder?',
-        'If D=d/dx, what does D^2y represent?'
+        'D = d/dx olduğuna göre D²y neyi ifade eder?',
+        'If D = d/dx, what does D²y represent?'
       ),
-      choices: [
-        'y’nin x’e göre ikinci türevi, y″',
-        'y′ ifadesinin karesi, (y′)²',
-        'y ile y′ çarpımı'
-      ],
+      choices: text(
+        [
+          'y’nin x’e göre ikinci türevi, y″',
+          'y′ ifadesinin karesi, (y′)²',
+          'y ile y′ çarpımı'
+        ],
+        [
+          'The second derivative of y with respect to x, y″',
+          'The square of the first derivative, (y′)²',
+          'The product of y and y′'
+        ]
+      ),
       answer: 0,
       feedback: text(
-        'D^2y=D(Dy)=d/dx(dy/dx)=d²y/dx²=y″. D operatörü türev alma işlemidir; karesi türevin karesi değil, ikinci türevdir.',
-        'D^2y=D(Dy)=d/dx(dy/dx)=d²y/dx²=y″. The D operator differentiates; its square means the second derivative, not the square of the first derivative.'
+        'D²y = D(Dy) = d/dx(dy/dx) = d²y/dx² = y″. D operatörü türev alma işlemidir; karesi türevin karesi değil, ikinci türevdir.',
+        'D²y = D(Dy) = d/dx(dy/dx) = d²y/dx² = y″. The D operator differentiates; its square means the second derivative, not the square of the first derivative.'
       ),
       hints: text(
-        ['D^2, D’nin iki kez uygulanmasıdır.', 'D(Dy) ifadesini aç.'],
-        ['D^2 means applying D twice.', 'Expand D(Dy).']
+        ['D², D’nin iki kez uygulanmasıdır.', 'D(Dy) ifadesini aç.'],
+        ['D² means applying D twice.', 'Expand D(Dy).']
       )
     },
     {
       title: text('Örnek 4.1: operatör biçimi', 'Example 4.1: operator form'),
       tag: 'ÖRNEK 4.1 / EXAMPLE 4.1',
       text: text(
-        '6x²y″+2xy′−3y=x³e^{2x} denkleminin D operatörüyle yazımı hangisidir?',
-        'Which is the D-operator form of 6x²y″+2xy′−3y=x³e^{2x}?'
+        '6x²y″ + 2xy′ − 3y = x³ e²ˣ denkleminin D operatörüyle yazımı hangisidir?',
+        'Which is the D-operator form of 6x²y″ + 2xy′ − 3y = x³ e²ˣ?'
       ),
-      choices: [
-        '(6x²D²+2xD−3)y=x³e^{2x}',
-        '(6x²D+2x−3)y=x³e^{2x}',
-        '(6D²+2D−3)y=x³e^{2x}'
-      ],
+      choices: text(
+        [
+          '(6x²D² + 2xD − 3)y = x³ e²ˣ',
+          '(6x²D + 2x − 3)y = x³ e²ˣ',
+          '(6D² + 2D − 3)y = x³ e²ˣ'
+        ],
+        [
+          '(6x²D² + 2xD − 3)y = x³ e²ˣ',
+          '(6x²D + 2x − 3)y = x³ e²ˣ',
+          '(6D² + 2D − 3)y = x³ e²ˣ'
+        ]
+      ),
       answer: 0,
       feedback: text(
         'y″ yerine D², y′ yerine D yazılır; katsayılar x’e bağlı olduğu için D’nin solunda kalır. Bu, değişken katsayılı doğru operatör yazımıdır.',
@@ -161,11 +189,18 @@ export const generalLinearLesson = {
         '5·d³x/dt³ + 2·d²x/dt² − 7·dx/dt + 3x = sin 8t denkleminde D operatörü hangi değişkene göre tanımlanır?',
         'In 5·d³x/dt³ + 2·d²x/dt² − 7·dx/dt + 3x = sin 8t, with respect to which variable is D defined?'
       ),
-      choices: [
-        'D=d/dt, çünkü bağımsız değişken t’dir',
-        'D=d/dx, çünkü denklemde x görünüyor',
-        'D=d/dy, çünkü sağ taraf sin 8t'
-      ],
+      choices: text(
+        [
+          'D = d/dt, çünkü bağımsız değişken t’dir',
+          'D = d/dx, çünkü denklemde x görünüyor',
+          'D = d/dy, çünkü sağ taraf sin 8t'
+        ],
+        [
+          'D = d/dt, because the independent variable is t',
+          'D = d/dx, because x appears in the equation',
+          'D = d/dy, because the right side is sin 8t'
+        ]
+      ),
       answer: 0,
       feedback: text(
         'Bu denklemde t bağımsız, x bağımlı değişkendir. D her zaman bağımsız değişkene göre türev alır; bu yüzden D=d/dt alınır.',
@@ -183,11 +218,10 @@ export const generalLinearLesson = {
         'L[u]=F ve L[v]=0 ise L[u+v] nedir?',
         'If L[u]=F and L[v]=0, what is L[u+v]?'
       ),
-      choices: [
-        'F',
-        '0',
-        '2F'
-      ],
+      choices: text(
+        ['F', '0', '2F'],
+        ['F', '0', '2F']
+      ),
       answer: 0,
       feedback: text(
         'L doğrusal olduğundan L[u+v]=L[u]+L[v]=F+0=F. Homojen çözüm v, sağ tarafı değiştirmez; yalnız çözüm ailesini zenginleştirir.',
@@ -205,11 +239,18 @@ export const generalLinearLesson = {
         'n. mertebe bir doğrusal denklemin genel çözümünde n bağımsız sabit nerede bulunur?',
         'In the general solution of an n-th order linear equation, where do the n independent constants live?'
       ),
-      choices: [
-        'Tamamlayıcı çözüm y_C içinde',
-        'Özel çözüm y_P içinde',
-        'y_C ve y_P arasında eşit paylaşılır'
-      ],
+      choices: text(
+        [
+          'Tamamlayıcı çözüm y_C içinde',
+          'Özel çözüm y_P içinde',
+          'y_C ve y_P arasında eşit paylaşılır'
+        ],
+        [
+          'Inside the complementary solution y_C',
+          'Inside the particular solution y_P',
+          'Shared equally between y_C and y_P'
+        ]
+      ),
       answer: 0,
       feedback: text(
         'Bütün bağımsız sabitler homojen çözüm y_C’dedir. Özel çözüm y_P sağ tarafı taşır ve keyfi sabit içermez; başlangıç koşulları yalnız y_C’deki sabitleri belirler.',
@@ -224,18 +265,25 @@ export const generalLinearLesson = {
       title: text('Standart biçim ve tekil nokta', 'Standard form and singular points'),
       tag: 'TANIM / DEFINITION',
       text: text(
-        'a_n(x)y^{(n)}+...+a_0(x)y=F(x) denklemini standart biçime getirirken hangi noktalar dışlanır?',
-        'When putting a_n(x)y^{(n)}+...+a_0(x)y=F(x) into standard form, which points are excluded?'
+        'aₙ(x) y⁽ⁿ⁾ + ⋯ + a₀(x) y = F(x) denklemini standart biçime getirirken hangi noktalar dışlanır?',
+        'When putting aₙ(x) y⁽ⁿ⁾ + ⋯ + a₀(x) y = F(x) into standard form, which points are excluded?'
       ),
-      choices: [
-        'a_n(x)=0 olan noktalar',
-        'F(x)=0 olan noktalar',
-        'Yalnız x=0 noktası'
-      ],
+      choices: text(
+        [
+          'aₙ(x) = 0 olan noktalar',
+          'F(x) = 0 olan noktalar',
+          'Yalnız x = 0 noktası'
+        ],
+        [
+          'Points where aₙ(x) = 0',
+          'Points where F(x) = 0',
+          'Only the point x = 0'
+        ]
+      ),
       answer: 0,
       feedback: text(
-        'Standart biçim baş katsayıya bölünerek elde edilir; a_n(x)=0 olan noktalarda bölme tanımsızdır. Bu noktalar denklemin tekil noktalarıdır ve çözüm aralığı dışında kalır.',
-        'Standard form is obtained by dividing by the leading coefficient; division is undefined where a_n(x)=0. These are the singular points of the equation and lie outside the solution interval.'
+        'Standart biçim baş katsayıya bölünerek elde edilir; aₙ(x) = 0 olan noktalarda bölme tanımsızdır. Bu noktalar denklemin tekil noktalarıdır ve çözüm aralığı dışında kalır.',
+        'Standard form is obtained by dividing by the leading coefficient; division is undefined where aₙ(x) = 0. These are the singular points of the equation and lie outside the solution interval.'
       ),
       hints: text(
         ['Standart biçimde baş katsayı kaç olur?', 'Hangi ifadeye bölmek tanımsız olabilir?'],
