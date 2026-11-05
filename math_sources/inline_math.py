@@ -5,6 +5,8 @@ construct fails the build instead of reaching the reader. The output is plain
 presentation MathML with an explicit mrow root; the caller wraps it in <math>.
 """
 
+import re
+
 from .common import mi, mn, mo, row
 
 THIN = '<mspace width="0.1667em"/>'
@@ -22,7 +24,7 @@ SYMBOLS = {
     'to': mo('→'), 'mapsto': mo('↦'),
     'le': mo('≤'), 'leq': mo('≤'), 'ge': mo('≥'), 'geq': mo('≥'),
     'cdot': mo('⋅'), 'times': mo('×'),
-    'cdots': mo('⋯'), 'ldots': mo('…'), 'dots': mo('…'),
+    'cdots': mo('⋯'), 'ldots': mo('…'), 'dots': mo('…'), 'ddots': mo('⋱'), 'vdots': mo('⋮'),
     'approx': mo('≈'), 'equiv': mo('≡'), 'sim': mo('∼'),
     'Longrightarrow': mo('⟹'), 'Rightarrow': mo('⇒'), 'iff': mo('⟺'),
     'Longleftrightarrow': mo('⟺'), 'implies': mo('⟹'), 'impliedby': mo('⟸'),
@@ -33,7 +35,8 @@ SYMBOLS = {
 }
 
 FUNCTIONS = {'ln', 'log', 'exp', 'sin', 'cos', 'tan', 'sec', 'csc', 'cot',
-             'arcsin', 'arccos', 'arctan', 'sinh', 'cosh', 'tanh', 'lim'}
+             'arcsin', 'arccos', 'arctan', 'sinh', 'cosh', 'tanh', 'lim',
+             'det', 'diag'}
 
 GREEK = {
     'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ', 'epsilon': 'ε',
@@ -148,6 +151,36 @@ class _Parser:
             return value
         return self.atom()
 
+    def environment_name(self):
+        if self.at >= len(self.text) or self.text[self.at] != '{':
+            self.fail('expected an environment name')
+        end = self.text.find('}', self.at)
+        if end < 0:
+            self.fail('unclosed environment name')
+        name = self.text[self.at + 1:end]
+        self.at = end + 1
+        return name
+
+    def environment(self, name):
+        closing = '\\end{' + name + '}'
+        end = self.text.find(closing, self.at)
+        if end < 0:
+            self.fail(f'unclosed environment {name}')
+        raw = self.text[self.at:end]
+        self.at = end + len(closing)
+        rows = re.split(r'\\\\', raw)
+        table_rows = []
+        for line in rows:
+            cells = line.split('&')
+            rendered = ''.join('<mtd>' + render(cell.strip()) + '</mtd>' for cell in cells)
+            table_rows.append('<mtr>' + rendered + '</mtr>')
+        table = '<mtable>' + ''.join(table_rows) + '</mtable>'
+        if name == 'bmatrix':
+            return row(mo('['), table, mo(']'))
+        if name == 'pmatrix':
+            return row(mo('('), table, mo(')'))
+        return table
+
     def command(self):
         self.at += 1
         start = self.at
@@ -164,6 +197,10 @@ class _Parser:
             if char in '{}%':
                 return mo(char)
             self.fail(f'unsupported command \\{char}')
+        if name == 'begin':
+            return self.environment(self.environment_name())
+        if name == 'end':
+            self.fail('unexpected \\end')
         if name == 'frac':
             return '<mfrac>' + self.group() + self.group() + '</mfrac>'
         if name == 'sqrt':
@@ -175,10 +212,24 @@ class _Parser:
             if 'L' in content:
                 return mi('ℒ')
             return content
-        if name in ('mathrm', 'operatorname', 'text', 'rm', 'mathbf'):
+        if name == 'mathbb':
+            if self.at < len(self.text) and self.text[self.at] == '{':
+                end = self.text.find('}', self.at)
+                letter = self.text[self.at + 1:end]
+                self.at = end + 1
+            else:
+                letter = self.atom()
+            mapping = {'R': 'ℝ', 'C': 'ℂ', 'N': 'ℕ', 'Z': 'ℤ', 'Q': 'ℚ'}
+            return mi(mapping.get(letter, letter))
+        if name == 'mathbf':
+            return '<mstyle mathvariant="bold">' + self.group() + '</mstyle>'
+        if name in ('mathrm', 'operatorname', 'text', 'rm'):
             return self.group()
         if name in ('tilde', 'bar', 'hat', 'vec', 'overline'):
             return self.group()
+        if name in ('dot', 'ddot'):
+            mark = '˙' if name == 'dot' else '¨'
+            return '<mover accent="true">' + self.group() + mo(mark) + '</mover>'
         if name in SPACES:
             return SPACES[name]
         if name in IGNORED:
