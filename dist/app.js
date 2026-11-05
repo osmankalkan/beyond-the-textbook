@@ -988,16 +988,25 @@ const labHost=createLabHost({
   'linear-summary':()=>import('./labs/linear-summary/controller.js'),
   'laplace':()=>import('./labs/laplace/controller.js'),
   'heaviside':()=>import('./labs/heaviside/controller.js'),
+  'dirac':()=>import('./labs/dirac/controller.js'),
+  'inverse-laplace':()=>import('./labs/inverse-laplace/controller.js'),
+  'laplace-ode':()=>import('./labs/laplace-ode/controller.js'),
+  'laplace-applications':()=>import('./labs/laplace-applications/controller.js'),
+  'laplace-summary':()=>import('./labs/laplace-summary/controller.js'),
   'summary':()=>import('./labs/summary/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));
 async function activateLab(){
   const lesson=currentLesson,selectedLanguage=lang,isHeating=lesson.labFamily==='heating-cooling';
-  studyGuide.update({lesson,lang:selectedLanguage,t:(key,...args)=>ui(selectedLanguage,key,...args)});
   $('#heating-lab').hidden=!isHeating;
   $('#lesson-lab').hidden=isHeating;
   if(!isHeating)stop();
+  try{
+    studyGuide.update({lesson,lang:selectedLanguage,t:(key,...args)=>ui(selectedLanguage,key,...args)});
+  }catch(e){
+    console.error('Study guide update error:',e);
+  }
   const root=isHeating?$('#heating-lab'):$('#lesson-lab');
   if(!isHeating&&!root.childElementCount)root.innerHTML=`<p role="status">${escape(t('labLoading'))}</p>`;
   try{

@@ -34,6 +34,11 @@ const dLaplaceParam=rule('s bölgesinde türev','Differentiation in s',f(v('d'),
 const dLaplaceShift=rule('Frekans kaydırma','Frequency shifting',LVar+p(exp(v('a')+v('t'))+fn('f',v('t')))+eq+FVar+p(sVar+minus+v('a')));
 const dHeavisideShift=rule('İkinci kaydırma teoremi','Second shifting theorem',LVar+p(fn('f',v('t')+minus+v('a'))+fn('H',v('t')+minus+v('a')))+eq+exp(minus+v('a')+sVar)+FVar+p(sVar));
 const dHeavisideDist=rule('Basamak türevi','Derivative of step',f(v('d'),v('d')+v('t'))+fn('H',v('t')+minus+v('a'))+eq+fn('δ',v('t')+minus+v('a')));
+const dDiracLaplace=rule('Dirac delta dönüşümü','Dirac delta transform',LVar+p(fn('δ',v('t')+minus+v('a')))+eq+exp(minus+v('a')+sVar));
+const dDiracModulated=rule('Modüle darbe dönüşümü','Modulated impulse transform',LVar+p(fn('f',v('t'))+fn('δ',v('t')+minus+v('a')))+eq+exp(minus+v('a')+sVar)+fn('f',v('a')));
+const LinvVar=pow(LVar,minus+n(1));
+const dInverseLinear=rule('Ters Laplace doğrusallığı','Inverse Laplace linearity',LinvVar+p(sub(v('c'),n(1))+sub(FVar,n(1))+plus+sub(v('c'),n(2))+sub(FVar,n(2)))+eq+sub(v('c'),n(1))+sub(fn('f',v('t')),n(1))+plus+sub(v('c'),n(2))+sub(fn('f',v('t')),n(2)));
+const dInverseShift=rule('Ters frekans kaydırma','Inverse frequency shift',LinvVar+p(FVar+p(sVar+minus+v('a')))+eq+exp(v('a')+v('t'))+fn('f',v('t')));
 
 /* Integral rules. */
 const iPower=rule('Kuvvet kuralı','Power rule',integral(pow(x,v('n'))+dx)+eq+f(pow(x,v('n')+plus+n(1)),v('n')+plus+n(1))+plus+C+o(',')+v('n')+o('≠')+minus+n(1));
@@ -62,6 +67,10 @@ const iLaplaceSin=rule('Sinüs çekirdek integrali','Sine kernel integral',defIn
 const iLaplaceCos=rule('Kosinüs çekirdek integrali','Cosine kernel integral',defIntegral(n(0),v('∞'),exp(minus+sVar+v('t'))+fn('cos',v('ω')+v('t'))+v('d')+v('t'))+eq+f(sVar,pow(sVar,n(2))+plus+pow(v('ω'),n(2))));
 const iHeavisideStep=rule('Basamak çekirdek integrali','Delayed step integral',defIntegral(v('a'),v('∞'),exp(minus+sVar+v('t'))+v('d')+v('t'))+eq+f(exp(minus+v('a')+sVar),sVar));
 const iHeavisidePulse=rule('Darbe pencere integrali','Pulse window integral',defIntegral(v('a'),v('b'),exp(minus+sVar+v('t'))+v('d')+v('t'))+eq+f(exp(minus+v('a')+sVar)+minus+exp(minus+v('b')+sVar),sVar));
+const iDiracArea=rule('Dirac alan integrali','Dirac unit area',integral(fn('δ',v('t')+minus+v('a'))+v('d')+v('t'))+eq+n(1));
+const iDiracSifting=rule('Süzme özelliği integrali','Sifting property integral',integral(fn('g',v('t'))+fn('δ',v('t')+minus+v('a'))+v('d')+v('t'))+eq+fn('g',v('a')));
+const iInverseConvolution=rule('Konvolüsyon teoremi','Convolution theorem',LinvVar+p(FVar+p(sVar)+v('G')+p(sVar))+eq+defIntegral(n(0),v('t'),fn('f',v('u'))+fn('g',v('t')+minus+v('u'))+v('d')+v('u')));
+const iInversePartialFrac=rule('Kısmi kesir ayrışımı','Partial fraction decomposition',f(n(1),p(sVar+minus+v('a'))+p(sVar+minus+v('b')))+eq+f(n(1),v('a')+minus+v('b'))+p(f(n(1),sVar+minus+v('a'))+minus+f(n(1),sVar+minus+v('b'))));
 
 export const MATH_REFERENCE={
   '1.1':{
@@ -127,6 +136,26 @@ export const MATH_REFERENCE={
   '6.2':{
     derivative:[dHeavisideShift,dHeavisideDist,dChain,dProduct,dQuotient,dLinear],
     integral:[iHeavisideStep,iHeavisidePulse,iLaplaceDef,iParts,iLinear]
+  },
+  '6.3':{
+    derivative:[dDiracLaplace,dDiracModulated,dHeavisideDist,dChain,dLinear],
+    integral:[iDiracArea,iDiracSifting,iHeavisideStep,iLinear]
+  },
+  '6.4':{
+    derivative:[dInverseLinear,dInverseShift,dLaplaceParam,dChain,dLinear],
+    integral:[iInverseConvolution,iInversePartialFrac,iParts,iLinear]
+  },
+  '6.5':{
+    derivative:[dLaplacePrime,dLaplaceSecond,dDiracLaplace,dHeavisideShift,dChain,dLinear],
+    integral:[iInverseConvolution,iInversePartialFrac,iDiracSifting,iHeavisideStep,iLinear]
+  },
+  '6.6':{
+    derivative:[dLaplacePrime,dLaplaceSecond,dHeavisideShift,dDiracLaplace,dChain,dLinear],
+    integral:[iInverseConvolution,iDiracSifting,iHeavisideStep,iLaplaceDef,iLinear]
+  },
+  '6.7':{
+    derivative:[dLaplacePrime,dLaplaceSecond,dLaplaceParam,dLaplaceShift,dHeavisideShift,dDiracLaplace,dInverseLinear],
+    integral:[iLaplaceDef,iInverseConvolution,iInversePartialFrac,iDiracArea,iDiracSifting,iHeavisideStep,iLinear]
   }
 };
 

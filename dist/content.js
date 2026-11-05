@@ -11,6 +11,11 @@ import {particularLesson} from './lessons/xie-2010/4-3/content.js';
 import {linearSummaryLesson} from './lessons/xie-2010/4-5/content.js';
 import {laplaceLesson} from './lessons/xie-2010/6-1/content.js';
 import {heavisideLesson} from './lessons/xie-2010/6-2/content.js';
+import {diracLesson} from './lessons/xie-2010/6-3/content.js';
+import {inverseLaplaceLesson} from './lessons/xie-2010/6-4/content.js';
+import {laplaceOdeLesson} from './lessons/xie-2010/6-5/content.js';
+import {laplaceAppLesson} from './lessons/xie-2010/6-6/content.js';
+import {laplaceSummaryLesson} from './lessons/xie-2010/6-7/content.js';
 import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
@@ -953,7 +958,12 @@ export const BOOKS = [
       particularLesson,
       linearSummaryLesson,
       laplaceLesson,
-      heavisideLesson
+      heavisideLesson,
+      diracLesson,
+      inverseLaplaceLesson,
+      laplaceOdeLesson,
+      laplaceAppLesson,
+      laplaceSummaryLesson
     ],
     chapters: [
       [
