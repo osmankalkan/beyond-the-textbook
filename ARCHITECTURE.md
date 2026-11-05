@@ -4,7 +4,7 @@ Bu belge bütün ajanlar ve geliştiriciler için bağlayıcıdır. Kullanıcın
 
 ## Amaç ve kalite standardı
 
-Sistem, birden fazla kitabı Türkçe ve İngilizce ders notu, rehberli düşünme, deney, ayrıntılı sınav çözümü ve kişisel notlarla çalışılabilir hale getirir. Hazır dersler Xie §1.1, §1.2, §2.1, §2.2, §2.3, §2.4, §2.5 ve §3.1’dir. Diğer başlıklar içindekiler haritasıdır. §3.1 öğrenme derinliği referansıdır; arayüzü körlemesine kopyalamak kalite sayılmaz.
+Sistem, birden fazla kitabı Türkçe ve İngilizce ders notu, rehberli düşünme, deney, ayrıntılı sınav çözümü ve kişisel notlarla çalışılabilir hale getirir. Hazır dersler Xie §1.1, §1.2, §2.1–§2.7, §3.1, §4.1–§4.5 ve §6.1–§6.7’dir (toplam 21 ders). Diğer başlıklar içindekiler haritasıdır. §3.1 öğrenme derinliği referansıdır; arayüzü körlemesine kopyalamak kalite sayılmaz.
 
 Her yeni konu kaynak sayfalarından doğrulanır. Konuya uygun tahmin → gerekçe → türetim → deney → doğrulama → alıştırma akışı tasarlanır. Sınav kliniği ara işlemleri, varsayımları, hata tuzaklarını, çözüm aralığını ve puan anahtarını açıklar. Özgün uygulama soruları kitaptan veya gerçek sınavdan alınmış gibi sunulmaz. Her konu sonrası kullanıcı incelemesi beklenir.
 
@@ -33,7 +33,7 @@ Bağımlılık yönü görünüm → içerik/model/çekirdek şeklindedir. Mevcu
 
 Laboratuvar sözleşmesi `mount(root, context) → {update(context), destroy()}` biçimindedir; mount asenkron olabilir. Context ders, dil, çeviri/sayı biçimi, MathML yükleme ve iptal sinyalini sağlar. Her laboratuvar yalnız kendi kökünü ve olay aboneliklerini yönetir. destroy abonelikleri, animasyonları ve kaynakları temizler. Eski bir asenkron sonuç yeni dersin üstüne yazamaz. Dil değişimi parametreleri korur.
 
-Notlar ve ilerleme ders kimliği altında localStorage’da saklanır. Soru indeksleri mevcut çözümlerin anlamını korur; soru sırasını değiştirmek migrasyon gerektirir. §2.1’in ilk üç soru indeksi korunur; §2.2, §2.3, §2.4 ve §2.5 için önceki kullanıcı ilerlemesi yoktur. Rehber tahminleri, açık adımlar ve deney parametreleri oturum belleğindedir; yenilemede sıfırlanabilir. URL ders, dil ve görünümü ifade eder.
+Notlar ve ilerleme ders kimliği altında localStorage’da saklanır. Soru indeksleri mevcut çözümlerin anlamını korur; soru sırasını değiştirmek migrasyon gerektirir. §2.1’in ilk üç soru indeksi korunur; diğer yeni bölümler için önceki kullanıcı ilerlemesi yoktur. Rehber tahminleri, açık adımlar ve deney parametreleri oturum belleğindedir; yenilemede sıfırlanabilir. URL ders, dil ve görünümü ifade eder.
 
 ## Matematik ve iki dil
 

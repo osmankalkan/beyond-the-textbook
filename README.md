@@ -2,24 +2,33 @@
 
 A bilingual learning workspace for studying textbooks through notes, guided reasoning, interactive experiments, worked problems, and a personal notebook.
 
-Fourteen sections of Wei-Chau Xie's *Differential Equations for Engineers* are available in Turkish and English:
+Twenty-one sections of Wei-Chau Xie's *Differential Equations for Engineers* are available in Turkish and English:
 
-- **§1.1 — Motivating Examples:** six model walkthroughs, projectile and tank experiments, two guided derivations with predictions, two worked exam cases, and six checks.
-- **§1.2 — General Concepts and Definitions:** classification, families/conditions, existence/uniqueness, and ODE/PDE verification; two guided reasoning paths, two worked exam cases, and fourteen checks.
-- **§2.1 — Separation of Variables:** source Examples 2.1–2.3, guided integration and excluded branches, four analytic families with A/B comparison and maximal intervals, four fully worked midterm problems, and eleven checks.
-- **§2.2 — Transformation of Variables:** source Examples 2.4–2.12, homogeneous and special-term transformations, four analytic families with A/B comparison and lost-branch checks, four fully worked midterm problems, and eleven checks.
-- **§2.3 — Exact Differential Equations and Integrating Factors:** source Examples 2.13–2.29, the M_y=N_x test, μ(x)/μ(y), inspection and grouping factors, four level-curve families with A/B comparison, four fully worked midterm problems, and eleven checks.
-- **§2.4 — Linear First-Order and Bernoulli Equations:** source Examples 2.30–2.34, standard form y′+P(x)y=Q(x), the integrating factor μ=e^∫P dx, x-as-a-function-of-y problems, the Bernoulli substitution u=y^{1−n}, four analytic families with A/B comparison and branch checks, four fully worked midterm problems, and eleven checks.
-- **§2.5 — Equations Solvable for the Independent or Dependent Variable:** source Examples 2.35–2.39, the parameter p=y′, the routes y=f(x,p) and x=g(y,p), Clairaut equations with their line families and envelopes, singular solutions, four analytic families with A/B comparison and tangency checks, four fully worked midterm problems, and eleven checks.
-- **§2.6 — Simple Higher-Order Equations:** direct integration of y^(n)=f(x), missing-y reduction u=y^(k), missing-x reduction y″=u du/dy, three analytic families with A/B and residual checks, four fully worked midterm problems, and eleven checks.
-- **§2.7 — Summary: The Art of Choosing Methods:** the ten-method decision tree and reduction matrix, an interactive ten-card diagnostic simulator, two synthesis paths, four master-level clinic cases, and eleven checks.
-- **§3.1 — Heating and Cooling:** guided temperature experiments, A/B comparison, calibration, transient and steady-state analysis, an exam clinic, and eight checks.
-- **§4.1 — General Linear Ordinary Differential Equations:** linearity tests, the D operator and φ(D), the fundamental superposition theorem, the general solution y_C+y_P, a variable-coefficient noncommutation lab, four worked midterm cases, and twelve checks.
-- **§4.2 — Characteristic Equations and Homogeneous Solutions:** distinct real roots, hyperbolic pairing, damped complex conjugates, repeated roots (x^k e^{λx}), an interactive dual-curve A/B lab, four fully worked exam cases, and eleven checks.
-- **§4.3 — Nonhomogeneous Equations and Particular Solutions:** undetermined coefficients (Table 4.1), D-operator theorems (shift, series inversion), variation of parameters (Wronskian), an interactive total vs particular response lab, four worked exam cases, and twelve checks.
-- **§4.5 — Summary: Solving Linear Ordinary Differential Equations:** the complete Chapter 4 decision tree and reduction matrix (including Cauchy–Euler x=e^z), a 10-method interactive operator diagnostic simulator, four master-level clinic cases, and twelve checks.
+| Chapter | Section | Topic | Core Focus & Interactive Lab |
+| :--- | :--- | :--- | :--- |
+| **Ch 1** | **§1.1** | Motivating Examples | Projectile & tank dynamics, model building |
+| | **§1.2** | General Concepts | ODE/PDE classification, existence & uniqueness |
+| **Ch 2** | **§2.1** | Separation of Variables | Analytic families, maximal intervals, equilibria |
+| | **§2.2** | Transformation of Variables | Homogeneous & special substitutions |
+| | **§2.3** | Exact Differential Equations | Integrating factors μ(x), μ(y), level curves |
+| | **§2.4** | Linear & Bernoulli | Integrating factor μ = e^∫P, Bernoulli substitution |
+| | **§2.5** | Solvable for x or y | Clairaut envelopes, singular solutions |
+| | **§2.6** | Simple Higher-Order | Missing-y / missing-x reductions |
+| | **§2.7** | Summary: Method Selection | 10-method decision tree & diagnostic simulator |
+| **Ch 3** | **§3.1** | Heating and Cooling | Newton cooling, calibration, transient analysis |
+| **Ch 4** | **§4.1** | General Linear ODEs | Linearity tests, D-operator, superposition |
+| | **§4.2** | Homogeneous Solutions | Real, complex & repeated characteristic roots |
+| | **§4.3** | Nonhomogeneous Solutions | Undetermined coefficients, inverse D, Wronskian |
+| | **§4.5** | Summary: Linear ODEs | Cauchy–Euler, 10-method linear diagnostic |
+| **Ch 6** | **§6.1** | The Laplace Transform | Improper kernel integral, convergence abscissa s₀ |
+| | **§6.2** | Heaviside Step Function | Unit step H(t - a), pulse windows, 2nd shift theorem |
+| | **§6.3** | Dirac Delta Function | Instantaneous impulse limit, sifting property, spectrum |
+| | **§6.4** | Inverse Laplace Transform | Partial fractions, 1st shift, convolution theorem f * g |
+| | **§6.5** | Solving ODEs via Laplace | Algebraic IVP, ZIR/ZSR decomposition, RK4 check |
+| | **§6.6** | Engineering Applications | SDOF oscillator, shock blast, RLC circuit, beam deflection |
+| | **§6.7** | Summary: Laplace Methods | 10-method Laplace matrix & diagnostic simulator |
 
-Every developed lesson also has a section-aware quick-reference drawer in its reading aside. It opens the derivative and integral rules that the current lesson actually uses, in Turkish or English.
+Every developed lesson includes guided derivations with conceptual predictions, an interactive dual-curve SVG laboratory, four fully worked exam clinic problems (with trap analysis and scoring rubric), and a section-aware derivative/integral reference drawer in Turkish and English.
 
 Other sections remain a searchable contents map. Browser storage keeps per-lesson notes, progress, and language preference. No account is required.
 
@@ -31,4 +40,4 @@ Run `npm start`, then open the address printed in the terminal (normally http://
 
 The app uses native ES modules and no runtime dependencies. Lesson data lives under `dist/lessons/`, pure models under `dist/models/`, and lab controllers under `dist/labs/`. `dist/core/study-guide.js` renders topic-authored predictions and derivations; it does not own navigation or persistent progress. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
-Current review: Chapter 2 and Chapter 4 are fully developed to the §3.1 depth standard (§4.1, §4.2, §4.3, §4.5). See [the revision record](docs/QUALITY-REVISION.md). Recent developments remain local until explicitly requested for GitHub.
+Current review: Chapter 2, Chapter 4, and Chapter 6 are fully developed to the §3.1 depth standard (§6.1–§6.7). See [the revision record](docs/QUALITY-REVISION.md). Recent developments remain local until explicitly requested for GitHub.

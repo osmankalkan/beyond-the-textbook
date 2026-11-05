@@ -2,24 +2,20 @@
 
 5 Kasım 2026. Önce AGENTS.md ve ARCHITECTURE.md sözleşmelerini oku. README çalıştırma ve ders kapsamını, PROJE-DURUMU güncel durumu açıklar.
 
-Kullanıcı tüm geliştirilmiş konuların §3.1 derinliğinde olmasını istedi. §1.1, §1.2, §2.1–§2.7, §3.1, §4.1–§4.5 ve §6.1 hazır durumdaydı; kullanıcı "pushşa ve sonra 6.2 yi yap" talimatı verdi. Bölüm 6'nın ikinci dersi §6.2 Heaviside Unit Step Function eksiksiz tamamlanmıştır (Heaviside adımı ve pencere darbesi, parçalı fonksiyon gösterimi, ikinci kaydırma teoremi, eşleşmemiş üstel durumlar için 3 farklı türetim yolu ve Örnek 6.6–6.9 tam çözümleri).
+Kullanıcı tüm geliştirilmiş konuların §3.1 derinliğinde olmasını ve 6. bölümün tamamının bitirilmesini istedi ("6. bölümün hepsini detaylı bitir kaliteli bir şey cıkar ortaya"). Bölüm 6'nın tüm alt başlıkları (§6.1, §6.2, §6.3, §6.4, §6.5, §6.6, §6.7) eksiksiz, kaliteli ve derinlikli bir yapıyla tamamlanmıştır.
 
 Yeni rehber verileri konu study.js dosyalarında; ortak arayüz core/study-guide.js, MathML yardımcıları study/math.js içindedir.
-- §2.1 deneyinin saf modeli models/separation.js ve denetleyicisi labs/separation/controller.js içindedir.
-- §2.2 deneyinin saf modeli models/transformation.js ve denetleyicisi labs/transformation/controller.js içindedir.
-- §2.3 deneyinin saf modeli models/exactness.js ve denetleyicisi labs/exactness/controller.js içindedir.
-- §2.4 deneyinin saf modeli models/linear.js ve denetleyicisi labs/linear/controller.js içindedir.
-- §2.5 deneyinin saf modeli models/solvable.js ve denetleyicisi labs/solvable/controller.js içindedir.
-- §2.6 deneyinin saf modeli models/reduction.js ve denetleyicisi labs/reduction/controller.js içindedir.
-- §2.7 deneyinin saf modeli models/summary.js ve denetleyicisi labs/summary/controller.js içindedir (10 meydan okuma denklemli Teşhis Simülatörü ve 10 yöntemli Karar Ağacı & İndirgeme Matrisi).
-- §4.1 deneyinin saf modeli models/linear-operator.js ve denetleyicisi labs/operator/controller.js içindedir (üç operatör, sekiz test fonksiyonu, α/β süperpozisyon karşılaştırması ve homojen rozeti).
-- §4.2 deneyinin saf modeli models/complementary.js ve denetleyicisi labs/complementary/controller.js içindedir (dört analitik aile, çift eğrili A/B karşılaştırması, kök parametreleri ve geçersiz veri koruması).
-- §4.3 deneyinin saf modeli models/particular.js ve denetleyicisi labs/particular/controller.js içindedir (dört analitik aile, toplam vs özel çözüm ayrıştırması, rezonans ve logaritmik integral koruması).
-- §4.5 deneyinin saf modeli models/linear-summary.js ve denetleyicisi labs/linear-summary/controller.js içindedir (10 yöntemli lineer operatör karar matrisi ve 10 kartlı interaktif teşhis simülatörü).
-- §6.1 deneyinin saf modeli models/laplace.js ve denetleyicisi labs/laplace/controller.js içindedir (7 fonksiyon ailesi, zaman bölgesi e^{-st} çekirdek sönümü, s-bölgesi spektrum eğrisi ve s₀ asimptotu, Simpson sayısal integrasyonu vs analitik formül karşılaştırması).
-- §6.2 deneyinin saf modeli models/heaviside.js ve denetleyicisi labs/heaviside/controller.js içindedir (7 fonksiyon ailesi, zaman bölgesi Heaviside basamak ve çekirdek sönümü, s-bölgesi gecikmeli spektrum eğrisi ve s₀ asimptotu, Simpson sayısal integrasyonu vs analitik formül karşılaştırması).
+| Bölüm Grubu | Kapsam | Saf Matematik Modeli (`dist/models/`) | İnteraktif Laboratuvar (`dist/labs/`) |
+| :--- | :--- | :--- | :--- |
+| **Bölüm 1 & 3** | §1.1, §1.2, §3.1 | `concepts.js`, `cooling.js` | `concepts/`, `heating` (yerleşik) |
+| **Bölüm 2** | §2.1 – §2.7 | `separation.js`, `transformation.js`, `exactness.js`, `linear.js`, `solvable.js`, `reduction.js`, `summary.js` | `separation/`, `transformation/`, `exactness/`, `linear/`, `solvable/`, `reduction/`, `summary/` (10-kart Teşhis) |
+| **Bölüm 4** | §4.1 – §4.5 | `linear-operator.js`, `complementary.js`, `particular.js`, `linear-summary.js` | `operator/`, `complementary/`, `particular/`, `linear-summary/` (10-kart Operatör) |
+| **Bölüm 6** | §6.1 – §6.7 | `laplace.js`, `heaviside.js`, `dirac.js`, `inverse-laplace.js`, `laplace-ode.js`, `laplace-applications.js`, `laplace-summary.js` | `laplace/`, `heaviside/`, `dirac/`, `inverse-laplace/`, `laplace-ode/`, `laplace-applications/`, `laplace-summary/` (10-kart Laplace) |
 - Bölüme özel türev/integral hızlı başvuru verisi lessons/math-reference.js içindedir; app.js yalnız seçili bölümün kayıtlarını sağdan açılan yerel `<dialog>` içine basar. Arayüz etiketleri i18n.js, görünüm stilleri styles.css içindedir.
 
-97 test geçmektedir. §6.2'nin 24 blok ve 47 satır içi formülü build_math.py hattında üretilmekte ve MathML açık mrow kökleri tam denetlenmektedir.
+136 test geçmektedir. Bölüm 6'daki tüm derslerin 24'er display bloğu ve onlarca satır içi formülü build_math.py hattında üretilmekte ve MathML açık mrow kökleri tam denetlenmektedir.
+- Bölüm 6 laboratuvar denetleyicileri (§6.2, §6.3, §6.4, §6.5, §6.6, §6.7) standart `.sep-lab` mimarisine, `<svg class="cx-chart">` çizim modeline ve tam çift dilli i18n sistemine kavuşturulmuştur. `[object Object]` grafik hatası ve stillendirilmemiş kontrol paneli sorunu tamamen giderilmiştir.
+- `dist/core/study-guide.js` içine `loc()` güvenli unwrap fonksiyonu eklenerek hem ham metin hem yerelleştirilmiş `{tr, en}` nesneleri hem de seçim şıklarındaki yapı farklılıkları (prompt vs question, text vs isCorrect) esnek biçimde karşılanmıştır; `app.js` `activateLab()` fonksiyonunda eski laboratuvar elemanlarının gizlenme sırası ve hata yakalaması sağlamlaştırılmıştır.
+- Bölüm 6 ders anlatımlarının tümüne (§6.1–§6.7) hem Türkçe hem İngilizce Markdown dosyalarında öğrenmeyi kolaylaştıran, sıkıcılığı kıran ve pratik sınav refleksleri kazandıran `> **ZİHİN MODELİ:**` ve `> **PRATİK İPUCU:**` blokları eklenmiştir. Bu bloklar LaTeX token sayılarını değiştirmemek için temiz Unicode matematik notasyonuyla biçimlendirilmiştir.
 
 Kaynak ve arşivler Git dışında tutulur. Hosting ayarlarını değiştirme; LLM henüz yoktur. Kullanıcı yeni adım seçene kadar yeni konuya geçme. Kullanıcı açıkça istemedikçe commit/push yapma.
