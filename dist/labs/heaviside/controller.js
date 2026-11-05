@@ -94,426 +94,326 @@ const FAMILY_CONFIGS = {
   }
 };
 
-export function mount(container, options = {}) {
-  let lang = options.lang === 'en' ? 'en' : 'tr';
-  let t = options.t || (k => k);
+export function mount(root, initial = {}) {
+  let context = initial;
+  const events = new AbortController();
 
-  let currentFamily = 'step';
-  let sVal = 1.5;
-  let tHorizon = 12.0;
-  let delayA = 2.0;
-  let extraParam = 1.0; // b for pulse, k for exp, omega for sin
+  let state = {
+    family: 'step',
+    a: 2.0,
+    s: 1.5,
+    T: 12.0,
+    extra: 1.0
+  };
 
-  let abortController = new AbortController();
-
-  function renderSkeleton() {
-    container.innerHTML = `
-      <div class="lab-shell heaviside-workbench" style="display:flex; flex-direction:column; gap:1.25rem;">
-        <header class="workbench-header" style="border-bottom:1px solid var(--border-color, #e2e8f0); padding-bottom:0.75rem;">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem;">
-            <div>
-              <span class="badge" style="font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--primary, #0284c7);">
-                ${t('heavisideEyebrow')}
-              </span>
-              <h3 style="margin:0.25rem 0 0; font-size:1.25rem; font-weight:700;">
-                ${t('heavisideTitle')}
-              </h3>
-              <p style="margin:0.25rem 0 0; font-size:0.875rem; color:var(--text-muted, #64748b);">
-                ${t('heavisideSubtitle')}
-              </p>
-            </div>
-            <div class="preset-buttons" style="display:flex; gap:0.5rem;">
-              <button type="button" class="btn btn-sm btn-outline" id="preset-standard">
-                ${t('heavisidePresetStandard')}
-              </button>
-              <button type="button" class="btn btn-sm btn-outline" id="preset-unmatched">
-                ${t('heavisidePresetUnmatched')}
-              </button>
-            </div>
-          </div>
-        </header>
-
-        <!-- Controls Bar -->
-        <div class="workbench-controls" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; background:var(--bg-subtle, #f8fafc); padding:1rem; border-radius:0.5rem; border:1px solid var(--border-color, #e2e8f0);">
-          <div>
-            <label for="heaviside-family-select" style="display:block; font-size:0.8125rem; font-weight:600; margin-bottom:0.25rem;">
-              ${t('heavisideFamily')}
-            </label>
-            <select id="heaviside-family-select" class="form-select" style="width:100%; padding:0.375rem 0.5rem; font-size:0.875rem; border-radius:0.375rem; border:1px solid var(--border-color, #cbd5e1);">
-              ${heavisideFamilies().map(f => `
-                <option value="${f}" ${f === currentFamily ? 'selected' : ''}>
-                  ${esc(FAMILY_CONFIGS[f].name[lang])}
-                </option>
-              `).join('')}
-            </select>
-          </div>
-
-          <div>
-            <div style="display:flex; justify-content:space-between; font-size:0.8125rem; font-weight:600; margin-bottom:0.25rem;">
-              <label for="heaviside-delay-slider">${t('heavisideDelayA')}</label>
-              <span id="heaviside-delay-val" style="font-family:monospace; color:var(--primary, #0284c7);">a = ${delayA.toFixed(1)}</span>
-            </div>
-            <input type="range" id="heaviside-delay-slider" min="0.5" max="5.0" step="0.25" value="${delayA}" style="width:100%;">
-          </div>
-
-          <div>
-            <div style="display:flex; justify-content:space-between; font-size:0.8125rem; font-weight:600; margin-bottom:0.25rem;">
-              <label for="heaviside-s-slider">${t('heavisideParamS')}</label>
-              <span id="heaviside-s-val" style="font-family:monospace; color:var(--primary, #0284c7);">s = ${sVal.toFixed(2)}</span>
-            </div>
-            <input type="range" id="heaviside-s-slider" min="0.1" max="4.0" step="0.05" value="${sVal}" style="width:100%;">
-          </div>
-
-          <div>
-            <div style="display:flex; justify-content:space-between; font-size:0.8125rem; font-weight:600; margin-bottom:0.25rem;">
-              <label for="heaviside-horizon-slider">${t('heavisideHorizonT')}</label>
-              <span id="heaviside-horizon-val" style="font-family:monospace; color:var(--text-muted, #64748b);">T = ${tHorizon.toFixed(0)}</span>
-            </div>
-            <input type="range" id="heaviside-horizon-slider" min="4" max="25" step="1" value="${tHorizon}" style="width:100%;">
-          </div>
-
-          <div id="heaviside-extra-wrapper" style="display:none;">
-            <div style="display:flex; justify-content:space-between; font-size:0.8125rem; font-weight:600; margin-bottom:0.25rem;">
-              <label for="heaviside-extra-slider" id="heaviside-extra-label">${t('heavisideModelParam')}</label>
-              <span id="heaviside-extra-val" style="font-family:monospace; color:var(--primary, #0284c7);"></span>
-            </div>
-            <input type="range" id="heaviside-extra-slider" style="width:100%;">
-          </div>
-        </div>
-
-        <!-- Formula and Analytical Insight Card -->
-        <div class="workbench-formula-card" style="display:flex; align-items:center; justify-content:space-between; background:var(--card-bg, #ffffff); border:1px solid var(--border-color, #e2e8f0); border-left:4px solid var(--primary, #0284c7); padding:0.75rem 1rem; border-radius:0.375rem; flex-wrap:wrap; gap:1rem;">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
-            <span style="font-size:0.8125rem; font-weight:700; color:var(--text-muted, #64748b); text-transform:uppercase;">
-              ${t('heavisideFormulaHeader')}:
-            </span>
-            <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" style="font-size:1.1rem; color:var(--text, #0f172a);">
-              <mrow id="heaviside-math-target"></mrow>
-            </math>
-          </div>
-          <div id="heaviside-convergence-badge" class="badge" style="font-size:0.75rem; font-weight:700; padding:0.25rem 0.5rem; border-radius:0.25rem;"></div>
-        </div>
-
-        <!-- Dual Plots Grid -->
-        <div class="workbench-plots-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.25rem;">
-          <!-- Left: Time Domain Kernel & Switching Plot -->
-          <div class="plot-box" style="background:var(--card-bg, #ffffff); border:1px solid var(--border-color, #e2e8f0); border-radius:0.5rem; padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <h4 style="margin:0; font-size:0.9375rem; font-weight:600;">
-                ${t('heavisideTimePlotAria')}
-              </h4>
-              <div style="display:flex; gap:0.75rem; font-size:0.75rem;">
-                <span style="display:flex; align-items:center; gap:0.25rem; color:#0284c7;">
-                  <span style="width:10px; height:2px; background:#0284c7; display:inline-block;"></span> f(t)
-                </span>
-                <span style="display:flex; align-items:center; gap:0.25rem; color:#94a3b8;">
-                  <span style="width:10px; height:2px; background:#94a3b8; display:inline-block;"></span> e⁻ˢᵗ
-                </span>
-                <span style="display:flex; align-items:center; gap:0.25rem; color:#10b981;">
-                  <span style="width:10px; height:2px; background:#10b981; display:inline-block;"></span> e⁻ˢᵗ f(t)
-                </span>
-              </div>
-            </div>
-            <div id="heaviside-time-plot" style="width:100%; height:260px;"></div>
-            <p id="heaviside-note-text" style="margin:0; font-size:0.8125rem; color:var(--text-muted, #64748b); line-height:1.4;"></p>
-          </div>
-
-          <!-- Right: s-Domain Laplace Spectrum Plot -->
-          <div class="plot-box" style="background:var(--card-bg, #ffffff); border:1px solid var(--border-color, #e2e8f0); border-radius:0.5rem; padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <h4 style="margin:0; font-size:0.9375rem; font-weight:600;">
-                ${t('heavisideSpectrumPlotAria')}
-              </h4>
-              <span id="heaviside-asymptote-label" style="font-size:0.75rem; font-weight:600; color:#ef4444;"></span>
-            </div>
-            <div id="heaviside-spectrum-plot" style="width:100%; height:260px;"></div>
-            <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:var(--text-muted, #64748b);">
-              <span>${t('heavisideDelayAttenuation')}: <strong id="heaviside-delay-factor" style="color:var(--text, #0f172a); font-family:monospace;"></strong></span>
-              <span>${t('heavisideKernelDecayHeader')}: <strong id="heaviside-horizon-factor" style="color:var(--text, #0f172a); font-family:monospace;"></strong></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Metrics Readout Row -->
-        <div class="workbench-metrics" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.75rem;">
-          <div class="metric-card" style="background:var(--card-bg, #ffffff); border:1px solid var(--border-color, #e2e8f0); border-radius:0.375rem; padding:0.75rem; text-align:center;">
-            <span style="display:block; font-size:0.75rem; color:var(--text-muted, #64748b); font-weight:600;">
-              ${t('heavisideExactLabel')}
-            </span>
-            <span id="metric-exact" style="font-size:1.25rem; font-weight:700; color:var(--primary, #0284c7); font-family:monospace;">--</span>
-            <span style="display:block; font-size:0.6875rem; color:var(--text-muted, #94a3b8); margin-top:0.25rem;">
-              ${t('heavisideExactSub')}
-            </span>
-          </div>
-
-          <div class="metric-card" style="background:var(--card-bg, #ffffff); border:1px solid var(--border-color, #e2e8f0); border-radius:0.375rem; padding:0.75rem; text-align:center;">
-            <span style="display:block; font-size:0.75rem; color:var(--text-muted, #64748b); font-weight:600;">
-              ${t('heavisideNumericalLabel')}
-            </span>
-            <span id="metric-num" style="font-size:1.25rem; font-weight:700; color:#10b981; font-family:monospace;">--</span>
-            <span style="display:block; font-size:0.6875rem; color:var(--text-muted, #94a3b8); margin-top:0.25rem;">
-              ${t('heavisideNumericalSub')}
-            </span>
-          </div>
-
-          <div class="metric-card" style="background:var(--card-bg, #ffffff); border:1px solid var(--border-color, #e2e8f0); border-radius:0.375rem; padding:0.75rem; text-align:center;">
-            <span style="display:block; font-size:0.75rem; color:var(--text-muted, #64748b); font-weight:600;">
-              ${t('heavisideErrorLabel')}
-            </span>
-            <span id="metric-error" style="font-size:1.25rem; font-weight:700; color:#8b5cf6; font-family:monospace;">--</span>
-            <span style="display:block; font-size:0.6875rem; color:var(--text-muted, #94a3b8); margin-top:0.25rem;">
-              ${t('heavisideErrorSub')}
-            </span>
-          </div>
-
-          <div class="metric-card" style="background:var(--card-bg, #ffffff); border:1px solid var(--border-color, #e2e8f0); border-radius:0.375rem; padding:0.75rem; text-align:center;">
-            <span style="display:block; font-size:0.75rem; color:var(--text-muted, #64748b); font-weight:600;">
-              ${t('heavisideDecayLabel')}
-            </span>
-            <span id="metric-decay" style="font-size:1.25rem; font-weight:700; color:#64748b; font-family:monospace;">--</span>
-            <span style="display:block; font-size:0.6875rem; color:var(--text-muted, #94a3b8); margin-top:0.25rem;">
-              ${t('heavisideDecaySub')}
-            </span>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  renderSkeleton();
-
-  const familySelect = container.querySelector('#heaviside-family-select');
-  const delaySlider = container.querySelector('#heaviside-delay-slider');
-  const delayValText = container.querySelector('#heaviside-delay-val');
-  const sSlider = container.querySelector('#heaviside-s-slider');
-  const sValText = container.querySelector('#heaviside-s-val');
-  const horizonSlider = container.querySelector('#heaviside-horizon-slider');
-  const horizonValText = container.querySelector('#heaviside-horizon-val');
-
-  const extraWrapper = container.querySelector('#heaviside-extra-wrapper');
-  const extraLabel = container.querySelector('#heaviside-extra-label');
-  const extraSlider = container.querySelector('#heaviside-extra-slider');
-  const extraValText = container.querySelector('#heaviside-extra-val');
-
-  const mathTarget = container.querySelector('#heaviside-math-target');
-  const convBadge = container.querySelector('#heaviside-convergence-badge');
-  const noteText = container.querySelector('#heaviside-note-text');
-  const asymptoteLabel = container.querySelector('#heaviside-asymptote-label');
-  const delayFactorText = container.querySelector('#heaviside-delay-factor');
-  const horizonFactorText = container.querySelector('#heaviside-horizon-factor');
-
-  const metricExact = container.querySelector('#metric-exact');
-  const metricNum = container.querySelector('#metric-num');
-  const metricError = container.querySelector('#metric-error');
-  const metricDecay = container.querySelector('#metric-decay');
-
-  const timePlotEl = container.querySelector('#heaviside-time-plot');
-  const spectrumPlotEl = container.querySelector('#heaviside-spectrum-plot');
+  const fmt = (val, digits = 2) => (context.format ? context.format(val, digits) : Number(val).toFixed(digits));
+  const t = key => (context.t ? context.t(key) : key);
 
   function getParams() {
-    const config = FAMILY_CONFIGS[currentFamily];
-    const params = { a: delayA };
-    if (config.paramName) {
-      params[config.paramName] = extraParam;
+    const cfg = FAMILY_CONFIGS[state.family];
+    const params = { a: state.a };
+    if (cfg.paramName) {
+      params[cfg.paramName] = state.extra;
     }
     return params;
   }
 
-  function syncExtraSlider() {
-    const config = FAMILY_CONFIGS[currentFamily];
-    if (config.paramName) {
-      extraWrapper.style.display = 'block';
-      extraLabel.textContent = `${config.paramName} (${t('heavisideModelParam')}):`;
-      extraSlider.min = config.paramMin;
-      extraSlider.max = config.paramMax;
-      extraSlider.step = config.paramStep;
-      if (extraParam < config.paramMin || extraParam > config.paramMax) {
-        extraParam = config.paramMin + (config.paramMax - config.paramMin) / 2;
-      }
-      extraSlider.value = extraParam;
-      extraValText.textContent = `${config.paramName} = ${extraParam.toFixed(2)}`;
-    } else {
-      extraWrapper.style.display = 'none';
-    }
+  function render() {
+    const lang = context.lang || 'tr';
+    const cfg = FAMILY_CONFIGS[state.family] || FAMILY_CONFIGS.step;
+    const params = getParams();
+    const s0 = heavisideConvergenceAbscissa(state.family, params);
+    const isConv = state.s > s0;
+
+    root.innerHTML = `
+      <section class="sep-lab heaviside-lab">
+        <header class="cx-header">
+          <p class="eyebrow">${esc(t('heavisideEyebrow'))}</p>
+          <h2>${esc(t('heavisideTitle'))}</h2>
+          <p>${esc(t('heavisideSubtitle'))}</p>
+        </header>
+
+        <div class="panel sep-experiment">
+          <div class="sep-toolbar">
+            <div>
+              <label for="heaviside-family">${esc(t('heavisideFamily'))}</label>
+              <select id="heaviside-family">
+                ${heavisideFamilies().map(f => `
+                  <option value="${esc(f)}" ${f === state.family ? 'selected' : ''}>
+                    ${esc(FAMILY_CONFIGS[f].name[lang] || FAMILY_CONFIGS[f].name.tr)}
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+            <span class="op-badge ${isConv ? 'badge-ok' : 'badge-warn'}">
+              s₀ = ${fmt(s0, 1)} (${isConv ? t('heavisideConvergent') : t('heavisideDivergent')})
+            </span>
+          </div>
+
+          <div class="sep-grid">
+            <div class="sep-controls">
+              <div class="sep-control">
+                <label for="heaviside-a">
+                  ${esc(t('heavisideDelayA'))} (a)
+                  <output data-output="a">${fmt(state.a, 2)}</output>
+                </label>
+                <input id="heaviside-a" data-input="a" type="range" min="0.5" max="5.0" step="0.25" value="${state.a}">
+              </div>
+
+              <div class="sep-control">
+                <label for="heaviside-s">
+                  ${esc(t('heavisideParamS'))} (s)
+                  <output data-output="s">${fmt(state.s, 2)}</output>
+                </label>
+                <input id="heaviside-s" data-input="s" type="range" min="0.1" max="4.0" step="0.05" value="${state.s}">
+              </div>
+
+              <div class="sep-control">
+                <label for="heaviside-T">
+                  ${esc(t('heavisideHorizonT'))} (T)
+                  <output data-output="T">${fmt(state.T, 0)}</output>
+                </label>
+                <input id="heaviside-T" data-input="T" type="range" min="4" max="25" step="1" value="${state.T}">
+              </div>
+
+              ${cfg.paramName ? `
+                <div class="sep-control">
+                  <label for="heaviside-extra">
+                    ${esc(t('heavisideModelParam'))} (${cfg.paramName})
+                    <output data-output="extra">${fmt(state.extra, 2)}</output>
+                  </label>
+                  <input id="heaviside-extra" data-input="extra" type="range" min="${cfg.paramMin}" max="${cfg.paramMax}" step="${cfg.paramStep}" value="${state.extra}">
+                </div>
+              ` : ''}
+
+              <div class="sep-presets">
+                <button type="button" class="button secondary" data-preset="standard">${esc(t('heavisidePresetStandard'))}</button>
+                <button type="button" class="button secondary" data-preset="unmatched">${esc(t('heavisidePresetUnmatched'))}</button>
+              </div>
+
+              <p class="family-note">${esc(cfg.note[lang] || cfg.note.tr)}</p>
+            </div>
+
+            <div class="sep-plot-wrap">
+              <div class="sep-legend">
+                <span><i style="background:#0284c7"></i>f(t)</span>
+                <span class="sep-b"><i style="background:#94a3b8;border-top:2px dashed #94a3b8"></i>e⁻ˢᵗ</span>
+                <span><i style="background:#10b981"></i>e⁻ˢᵗ f(t)</span>
+              </div>
+              <svg class="cx-chart" id="heaviside-time-plot" role="img" viewBox="0 0 740 280" aria-label="${esc(t('heavisideTimePlotAria'))}"></svg>
+
+              <div class="sep-legend" style="margin-top:22px;">
+                <span><i style="background:#6366f1"></i>F(s)</span>
+                <span class="sep-b"><i style="background:#ef4444;border-top:2px dashed #ef4444"></i>s₀ ${esc(t('heavisideConvergent'))}</span>
+              </div>
+              <svg class="cx-chart" id="heaviside-spectrum-plot" role="img" viewBox="0 0 740 240" aria-label="${esc(t('heavisideSpectrumPlotAria'))}"></svg>
+
+              <div class="sep-metrics" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="sep-interpret">
+            <div>
+              <p class="eyebrow">${esc(t('heavisideFormulaHeader'))}</p>
+              <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                <mrow>${cfg.method}</mrow>
+              </math>
+              <p>${esc(cfg.note[lang] || cfg.note.tr)}</p>
+            </div>
+            <div>
+              <p class="eyebrow">${esc(t('heavisideKernelDecayHeader'))}</p>
+              <p>${esc(t('laplaceKernelDecayDesc'))}</p>
+              <p class="small text-muted">${esc(t('heavisideDelayAttenuation'))}: e⁻ᵃˢ = ${Math.exp(-state.a * state.s).toFixed(4)}</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="cx-topic-footer">
+          <p>${esc(t('laplaceFooterPrompt'))}</p>
+          <a class="button primary" href="#practice">${esc(t('laplaceGoToClinic'))}</a>
+        </footer>
+      </section>
+    `;
+
+    draw();
   }
 
-  function refreshPlots() {
-    const cfg = FAMILY_CONFIGS[currentFamily];
+  function draw() {
     const params = getParams();
+    const cfg = FAMILY_CONFIGS[state.family];
 
-    // 1. Math Formula and Notes
-    mathTarget.innerHTML = cfg.method;
-    noteText.textContent = cfg.note[lang];
+    // 1. Output values
+    const outA = root.querySelector('[data-output="a"]');
+    if (outA) outA.textContent = fmt(state.a, 2);
+    const outS = root.querySelector('[data-output="s"]');
+    if (outS) outS.textContent = fmt(state.s, 2);
+    const outT = root.querySelector('[data-output="T"]');
+    if (outT) outT.textContent = fmt(state.T, 0);
+    const outExtra = root.querySelector('[data-output="extra"]');
+    if (outExtra && cfg.paramName) outExtra.textContent = fmt(state.extra, 2);
 
     // 2. Metrics
-    const m = heavisideMetrics(currentFamily, sVal, tHorizon, params);
-
-    if (m.isConvergent) {
-      convBadge.textContent = t('heavisideConvergent');
-      convBadge.style.background = '#dcfce7';
-      convBadge.style.color = '#15803d';
-      metricExact.textContent = Number.isFinite(m.exactValue) ? m.exactValue.toFixed(4) : '--';
-      metricError.textContent = Number.isFinite(m.relativeError)
-        ? (m.relativeError < 0.0001 ? '< 0.01%' : `${(m.relativeError * 100).toFixed(2)}%`)
-        : '--';
-    } else {
-      convBadge.textContent = `${t('heavisideDivergent')} (s ≤ ${m.s0.toFixed(1)})`;
-      convBadge.style.background = '#fee2e2';
-      convBadge.style.color = '#b91c1c';
-      metricExact.textContent = 'NaN';
-      metricError.textContent = '∞';
+    const m = heavisideMetrics(state.family, state.s, state.T, params);
+    const metricsBox = root.querySelector('.sep-metrics');
+    if (metricsBox) {
+      metricsBox.innerHTML = `
+        <article class="metric">
+          <p class="eyebrow">${esc(t('heavisideExactLabel'))}</p>
+          <strong>${m.isConvergent && Number.isFinite(m.exactValue) ? fmt(m.exactValue, 4) : '—'}</strong>
+          <p>${esc(t('heavisideExactSub'))}</p>
+        </article>
+        <article class="metric">
+          <p class="eyebrow">${esc(t('heavisideNumericalLabel'))}</p>
+          <strong>${fmt(m.numericalValue, 4)}</strong>
+          <p>${esc(t('heavisideNumericalSub'))}</p>
+        </article>
+        <article class="metric">
+          <p class="eyebrow">${esc(t('heavisideErrorLabel'))}</p>
+          <strong>${m.isConvergent && Number.isFinite(m.relativeError) ? `${(m.relativeError * 100).toFixed(2)}%` : '—'}</strong>
+          <p>${esc(t('heavisideErrorSub'))}</p>
+        </article>
+        <article class="metric">
+          <p class="eyebrow">${esc(t('heavisideDecayLabel'))}</p>
+          <strong>${m.horizonDamping < 1e-4 ? '< 0.0001' : fmt(m.horizonDamping, 4)}</strong>
+          <p>${esc(t('heavisideDecaySub'))}</p>
+        </article>
+      `;
     }
 
-    metricNum.textContent = Number.isFinite(m.numericalValue) ? m.numericalValue.toFixed(4) : '--';
-    metricDecay.textContent = m.horizonDamping < 1e-4 ? '< 0.0001' : m.horizonDamping.toFixed(4);
-
-    delayFactorText.textContent = m.delayFactor.toFixed(4);
-    horizonFactorText.textContent = m.horizonDamping < 1e-4 ? '< 10⁻⁴' : m.horizonDamping.toFixed(4);
-    asymptoteLabel.textContent = m.s0 > 0 ? `Asimptot: s₀ = ${m.s0.toFixed(1)}` : `s₀ = 0`;
-
-    // 3. Time Domain Curves Plot
-    const { fCurve, kernelCurve, integrandCurve } = heavisideTimeCurves(currentFamily, sVal, tHorizon, params, 140);
-
-    const fSeries = fCurve.map(pt => [pt.t, pt.value]);
-    const kSeries = kernelCurve.map(pt => [pt.t, pt.value]);
-    const iSeries = integrandCurve.map(pt => [pt.t, pt.value]);
-
+    // 3. Time Domain Plot
+    const { fCurve, kernelCurve, integrandCurve } = heavisideTimeCurves(state.family, state.s, state.T, params, 150);
     let maxF = 1.5;
     for (const pt of fCurve) {
-      if (Math.abs(pt.value) > maxF && Math.abs(pt.value) < 15) {
-        maxF = Math.abs(pt.value);
-      }
+      if (Math.abs(pt.value) > maxF && Math.abs(pt.value) < 15) maxF = Math.abs(pt.value);
     }
+    const yMaxLeft = Math.min(maxF * 1.25, 8.0);
 
-    cartesianPlot(timePlotEl, {
-      xDomain: [0, tHorizon],
-      yDomain: [-0.2, Math.min(maxF * 1.25, 8.0)],
-      series: [
-        { points: fSeries, stroke: '#0284c7', strokeWidth: 2.2, label: 'f(t)' },
-        { points: kSeries, stroke: '#94a3b8', strokeWidth: 1.5, strokeDasharray: '4 4', label: 'e⁻ˢᵗ' },
-        { points: iSeries, stroke: '#10b981', strokeWidth: 2.0, label: 'e⁻ˢᵗ f(t)' }
-      ],
-      annotations: [
-        { type: 'line', x: delayA, stroke: '#f59e0b', strokeDasharray: '2 2', label: `t = a (${delayA.toFixed(1)})` }
-      ],
-      xAxisLabel: 't',
-      yAxisLabel: 'f(t), e⁻ˢᵗ'
+    const plotLeft = cartesianPlot({
+      width: 740,
+      height: 280,
+      xMin: 0,
+      xMax: state.T,
+      yMin: -0.2,
+      yMax: yMaxLeft,
+      format: v => fmt(v, 1),
+      xLabel: 't',
+      yLabel: 'f(t), e⁻ˢᵗ',
+      id: 'heaviside-time'
     });
 
-    // 4. s-Domain Spectrum Plot
-    const sMaxLimit = 4.0;
-    const { curve } = heavisideSpectrumCurve(currentFamily, 0.0, sMaxLimit, params, 60);
-    const specSeries = curve.map(pt => [pt.s, pt.value]);
+    const ptsF = fCurve.map(pt => [pt.t, pt.value]);
+    const ptsK = kernelCurve.map(pt => [pt.t, pt.value]);
+    const ptsI = integrandCurve.map(pt => [pt.t, pt.value]);
 
+    const svgLeft = root.querySelector('#heaviside-time-plot');
+    if (svgLeft) {
+      svgLeft.innerHTML = `
+        ${plotLeft.markup}
+        <g clip-path="url(#${plotLeft.clipId})">
+          ${plotLeft.line(ptsK, '#94a3b8', 'stroke-width="1.8" stroke-dasharray="4 4"')}
+          ${plotLeft.line(ptsI, '#10b981', 'stroke-width="2.2"')}
+          ${plotLeft.line(ptsF, '#0284c7', 'stroke-width="2.6"')}
+          <line x1="${plotLeft.x(state.a)}" y1="${plotLeft.top}" x2="${plotLeft.x(state.a)}" y2="${plotLeft.height - plotLeft.bottom}" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="3 3"/>
+        </g>
+      `;
+    }
+
+    // 4. Spectrum Plot
+    const sMaxLimit = 4.0;
+    const { curve } = heavisideSpectrumCurve(state.family, 0.05, sMaxLimit, params, 70);
     let maxY = 3.0;
     for (const pt of curve) {
       if (pt.value > maxY && pt.value < 20) maxY = pt.value;
     }
 
-    const annotations = [];
-    if (m.s0 > 0) {
-      annotations.push({ type: 'line', x: m.s0, stroke: '#ef4444', strokeDasharray: '3 3', label: `s₀=${m.s0}` });
-    }
-    if (m.isConvergent && Number.isFinite(m.exactValue)) {
-      annotations.push({ type: 'point', x: sVal, y: m.exactValue, fill: '#0284c7', radius: 5, label: `F(${sVal.toFixed(2)})` });
-    }
-
-    cartesianPlot(spectrumPlotEl, {
-      xDomain: [0, sMaxLimit],
-      yDomain: [-0.1, Math.min(maxY * 1.15, 12)],
-      series: [
-        { points: specSeries, stroke: '#6366f1', strokeWidth: 2.2, label: 'F(s)' }
-      ],
-      annotations,
-      xAxisLabel: 's',
-      yAxisLabel: 'F(s)'
+    const plotRight = cartesianPlot({
+      width: 740,
+      height: 240,
+      xMin: 0,
+      xMax: sMaxLimit,
+      yMin: -0.1,
+      yMax: Math.min(maxY * 1.15, 12),
+      format: v => fmt(v, 1),
+      xLabel: 's',
+      yLabel: 'F(s)',
+      id: 'heaviside-spectrum'
     });
+
+    const ptsSpec = curve.filter(pt => Number.isFinite(pt.value)).map(pt => [pt.s, pt.value]);
+
+    const svgRight = root.querySelector('#heaviside-spectrum-plot');
+    if (svgRight) {
+      let extraMarkup = '';
+      if (m.s0 > 0 && m.s0 < sMaxLimit) {
+        extraMarkup += `<line x1="${plotRight.x(m.s0)}" y1="${plotRight.top}" x2="${plotRight.x(m.s0)}" y2="${plotRight.height - plotRight.bottom}" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 4"/>`;
+      }
+      if (m.isConvergent && Number.isFinite(m.exactValue) && state.s <= sMaxLimit && m.exactValue <= maxY * 1.15) {
+        extraMarkup += plotRight.point(state.s, m.exactValue, '#6366f1');
+      }
+
+      svgRight.innerHTML = `
+        ${plotRight.markup}
+        <g clip-path="url(#${plotRight.clipId})">
+          ${plotRight.line(ptsSpec, '#6366f1', 'stroke-width="2.5"')}
+          ${extraMarkup}
+        </g>
+      `;
+    }
   }
 
-  syncExtraSlider();
-  refreshPlots();
+  // Delegated Event Listeners
+  root.addEventListener('input', event => {
+    const id = event.target.dataset.input;
+    if (!id) return;
+    const val = parseFloat(event.target.value);
+    if (id === 'a') state.a = val;
+    if (id === 's') state.s = val;
+    if (id === 'T') state.T = val;
+    if (id === 'extra') state.extra = val;
+    draw();
+  }, { signal: events.signal });
 
-  // Event Listeners
-  familySelect.addEventListener('change', () => {
-    currentFamily = familySelect.value;
-    syncExtraSlider();
-    refreshPlots();
-  }, { signal: abortController.signal });
+  root.addEventListener('change', event => {
+    if (event.target.id === 'heaviside-family') {
+      state.family = event.target.value;
+      const cfg = FAMILY_CONFIGS[state.family];
+      if (cfg.paramName) {
+        state.extra = (cfg.paramMin + cfg.paramMax) / 2;
+      }
+      render();
+      root.querySelector('#heaviside-family')?.focus();
+    }
+  }, { signal: events.signal });
 
-  delaySlider.addEventListener('input', () => {
-    delayA = Number.parseFloat(delaySlider.value);
-    delayValText.textContent = `a = ${delayA.toFixed(2)}`;
-    refreshPlots();
-  }, { signal: abortController.signal });
+  root.addEventListener('click', event => {
+    const button = event.target.closest('[data-preset]');
+    if (!button) return;
+    if (button.dataset.preset === 'standard') {
+      state.family = 'step';
+      state.a = 2.0;
+      state.s = 1.5;
+      state.T = 12.0;
+    } else if (button.dataset.preset === 'unmatched') {
+      state.family = 'unmatched-exp';
+      state.a = 1.5;
+      state.extra = 0.5;
+      state.s = 2.0;
+      state.T = 14.0;
+    }
+    render();
+    root.querySelector(`[data-preset="${button.dataset.preset}"]`)?.focus();
+  }, { signal: events.signal });
 
-  sSlider.addEventListener('input', () => {
-    sVal = Number.parseFloat(sSlider.value);
-    sValText.textContent = `s = ${sVal.toFixed(2)}`;
-    refreshPlots();
-  }, { signal: abortController.signal });
-
-  horizonSlider.addEventListener('input', () => {
-    tHorizon = Number.parseFloat(horizonSlider.value);
-    horizonValText.textContent = `T = ${tHorizon.toFixed(0)}`;
-    refreshPlots();
-  }, { signal: abortController.signal });
-
-  extraSlider.addEventListener('input', () => {
-    extraParam = Number.parseFloat(extraSlider.value);
-    const cfg = FAMILY_CONFIGS[currentFamily];
-    extraValText.textContent = `${cfg.paramName} = ${extraParam.toFixed(2)}`;
-    refreshPlots();
-  }, { signal: abortController.signal });
-
-  const presetStandard = container.querySelector('#preset-standard');
-  const presetUnmatched = container.querySelector('#preset-unmatched');
-
-  presetStandard.addEventListener('click', () => {
-    currentFamily = 'step';
-    familySelect.value = currentFamily;
-    delayA = 2.0;
-    delaySlider.value = delayA;
-    delayValText.textContent = `a = ${delayA.toFixed(2)}`;
-    sVal = 1.5;
-    sSlider.value = sVal;
-    sValText.textContent = `s = ${sVal.toFixed(2)}`;
-    tHorizon = 12.0;
-    horizonSlider.value = tHorizon;
-    horizonValText.textContent = `T = ${tHorizon.toFixed(0)}`;
-    syncExtraSlider();
-    refreshPlots();
-  }, { signal: abortController.signal });
-
-  presetUnmatched.addEventListener('click', () => {
-    currentFamily = 'unmatched-exp';
-    familySelect.value = currentFamily;
-    delayA = 1.5;
-    delaySlider.value = delayA;
-    delayValText.textContent = `a = ${delayA.toFixed(2)}`;
-    extraParam = 0.5; // k = 0.5
-    sVal = 2.0;
-    sSlider.value = sVal;
-    sValText.textContent = `s = ${sVal.toFixed(2)}`;
-    tHorizon = 14.0;
-    horizonSlider.value = tHorizon;
-    horizonValText.textContent = `T = ${tHorizon.toFixed(0)}`;
-    syncExtraSlider();
-    refreshPlots();
-  }, { signal: abortController.signal });
+  render();
 
   return {
-    update(newOptions = {}) {
-      if (newOptions.lang && newOptions.lang !== lang) {
-        lang = newOptions.lang;
-        t = newOptions.t || (k => k);
-        renderSkeleton();
-        // re-bind elements if needed or simple refresh
-      }
-      refreshPlots();
+    update(next) {
+      context = next;
+      render();
     },
     destroy() {
-      abortController.abort();
-      container.innerHTML = '';
+      events.abort();
+      root.replaceChildren();
     }
   };
 }
