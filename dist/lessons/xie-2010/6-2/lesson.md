@@ -74,6 +74,8 @@ Farklı zaman aralıklarında \(f_1(t), f_2(t), \dots, f_n(t)\) formülleriyle t
 
 $$ f(t) = f_1(t) + [f_2(t) - f_1(t)] H(t - t_1) + [f_3(t) - f_2(t)] H(t - t_2) + \cdots + [f_n(t) - f_{n-1}(t)] H(t - t_{n-1}) $$
 
+> **ZİHİN MODELİ (IŞIK ANAHTARI MANTIĞI):** Parçalı fonksiyon yazarken her H(*t* − *tₖ*) terimini bir elektrik anahtarı gibi düşün: *t* = *tₖ* anında eski fonksiyonun şalteri kapanır (−*fₖ*), yenisininki açılır (+*fₖ*₊₁). Tüm zaman eksenini tek satırda kontrol etmenin sırrı budur!
+
 ### 4.3 Örnek 6.6: Basamaklı Merdiven Fonksiyonu
 
 \(0 < t < 1\) aralığında \(1\), \(1 < t < 2\) aralığında \(2\), \(t > 2\) için \(0\) olan merdiven darbesi:
@@ -109,6 +111,8 @@ $$ t = (t - 2) + 2 \quad \Longrightarrow \quad t H(t - 2) = (t - 2)H(t - 2) + 2H
 Buradan 2. kaydırma teoremi doğrudan işletilir:
 
 $$ \mathcal{L}\{t H(t - 2)\} = e^{-2s}\mathcal{L}\{t\} + 2e^{-2s}\mathcal{L}\{1\} = e^{-2s}\left(\frac{1}{s^2} + \frac{2}{s}\right), \qquad s > 0 $$
+
+> **PRATİK İPUCU (SINAV KISAYOLU):** Sınavda *t*ⁿ H(*t* − *a*) gördüğünde integralle vakit kaybetme! Hemen *t* = (*t* − *a*) + *a* yaz. 2. kaydırma teoremi sayesinde integral almadan doğrudan sonuca ulaşırsın!
 
 ### 5.2 Örnek 6.8: Eşleşmeyen Üstel \(e^{at}H(t - b)\)
 

@@ -24,6 +24,8 @@ The parameter \(s_0\) is known as the **exponential order** (or **abscissa of co
 - For \(f(t) = e^{at}\) and \(e^{at}\sin\omega t\), the order is \(s_0 = a\) (converges for \(s > a\)).
 - However, \(f(t) = e^{t^2}\) is not of exponential order; its Laplace transform does not exist for any real \(s\).
 
+> **MENTAL MODEL (WHAT DOES LAPLACE ACTUALLY DO?):** Differentiation in time becomes simple multiplication by *s* in frequency. Just as logarithms turn multiplication into addition, Laplace reduces differential equations into elementary algebra.
+
 ---
 
 ## 2. Elementary Transforms (Example 6.1)
@@ -144,6 +146,8 @@ The base transforms are \(\mathcal{L}\{\cos\omega t\} = s/(s^2+\omega^2)\) and \
 $$ \mathcal{L}\{e^{at} \cos\omega t\} = \frac{s-a}{(s-a)^2+\omega^2}, \qquad \mathcal{L}\{e^{at} \sin\omega t\} = \frac{\omega}{(s-a)^2+\omega^2}, \qquad s > a $$
 
 Notice that the numerator \(s\) must also be replaced by \((s - a)\).
+
+> **QUICK TIP (SINE OR COSINE IN SECONDS?):** Look at the numerator: if it contains the variable *s*, it is co**s**ine (*s* / (*s*² + ω²)); if it has only the constant frequency, it is sine (ω / (*s*² + ω²)). With exponential damping (*e*ᵃᵗ), every *s* shifts immediately to (*s* − *a*)!
 
 ### 4.3 Example 6.4: Resonant Terms (\(t\sin t\) and \(t^2\sin t\))
 

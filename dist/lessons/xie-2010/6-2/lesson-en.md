@@ -74,6 +74,8 @@ A function defined by piecewise segments \(f_1(t), f_2(t), \dots, f_n(t)\) acros
 
 $$ f(t) = f_1(t) + [f_2(t) - f_1(t)] H(t - t_1) + [f_3(t) - f_2(t)] H(t - t_2) + \cdots + [f_n(t) - f_{n-1}(t)] H(t - t_{n-1}) $$
 
+> **MENTAL MODEL (THE LIGHT-SWITCH ANALOGY):** Think of each H(*t* − *tₖ*) as an electric toggle switch: at instant *t* = *tₖ*, the old signal turns off (−*fₖ*) and the new signal switches on (+*fₖ*₊₁). That is the secret to encoding an entire piecewise timeline in a single line!
+
 ### 4.3 Example 6.6: Stepped Staircase Signal
 
 A staircase signal equal to \(1\) on \(0 < t < 1\), \(2\) on \(1 < t < 2\), and \(0\) for \(t > 2\):
@@ -109,6 +111,8 @@ $$ t = (t - 2) + 2 \quad \Longrightarrow \quad t H(t - 2) = (t - 2)H(t - 2) + 2H
 Applying the Second Shifting Theorem directly:
 
 $$ \mathcal{L}\{t H(t - 2)\} = e^{-2s}\mathcal{L}\{t\} + 2e^{-2s}\mathcal{L}\{1\} = e^{-2s}\left(\frac{1}{s^2} + \frac{2}{s}\right), \qquad s > 0 $$
+
+> **QUICK TIP (EXAM SHORTCUT):** When facing *t*ⁿ H(*t* − *a*) on an exam, never waste time integrating! Simply rewrite *t* = (*t* − *a*) + *a*. The 2nd shifting theorem yields the answer directly without any calculus!
 
 ### 5.2 Example 6.8: Unmatched Exponential \(e^{at}H(t - b)\)
 

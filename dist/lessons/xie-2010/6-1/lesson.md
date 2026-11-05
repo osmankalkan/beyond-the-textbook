@@ -24,6 +24,8 @@ Buradaki \(s_0\) değerine **üstel mertebe** (veya **yakınsama apsisi**) denir
 - \(f(t) = e^{at}\) ve \(e^{at}\sin\omega t\) için \(s_0 = a\)'dır (\(s > a\) yakınsar).
 - Ancak \(f(t) = e^{t^2}\) üstel mertebeden değildir; hiçbir gerçel \(s\) için Laplace dönüşümü var olmaz.
 
+> **ZİHİN MODELİ (LAPLACE NEYİ DEĞİŞTİRİR?):** Zaman domenindeki türev alma işlemi, frekans domeninde *s* ile basit bir çarpmaya dönüşür. Tıpkı logaritmanın çarpmayı toplamaya dönüştürmesi gibi, Laplace da diferansiyel denklemleri temel lise cebirine indirger.
+
 ---
 
 ## 2. Temel Fonksiyonların Dönüşümleri (Örnek 6.1)
@@ -144,6 +146,8 @@ Temel trigonometrik dönüşümler \(\mathcal{L}\{\cos\omega t\} = s/(s^2+\omega
 $$ \mathcal{L}\{e^{at} \cos\omega t\} = \frac{s-a}{(s-a)^2+\omega^2}, \qquad \mathcal{L}\{e^{at} \sin\omega t\} = \frac{\omega}{(s-a)^2+\omega^2}, \qquad s > a $$
 
 Paydaki \(s\) teriminin de \((s - a)\) olduğuna dikkat edilmelidir.
+
+> **PRATİK İPUCU (SİNÜS MÜ KOSİNÜS MÜ?):** Sınavda paya bakarak saniyeler içinde ayırt et: Payda *s* değişkeni varsa ko**s**inüs (*s* / (*s*² + ω²)), yalnızca sabit sayı varsa sinüs (ω / (*s*² + ω²)). Üstel sönüm (*e*ᵃᵗ) geldiğinde formüldeki her *s* derhal (*s* − *a*) ile ötelenir!
 
 ### 4.3 Örnek 6.4: Rezonans Terimleri (\(t\sin t\) ve \(t^2\sin t\))
 
