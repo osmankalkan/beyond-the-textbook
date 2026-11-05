@@ -10,6 +10,7 @@ export const sub=(a,b)=>`<msub>${r(a)}${r(b)}</msub>`;
 export const f=(a,b)=>`<mfrac>${r(a)}${r(b)}</mfrac>`;
 export const fn=(a,b)=>`<mi mathvariant="normal">${a}</mi>`+p(b);
 export const exp=s=>pow(v('e'),s);
+export const dot=(a,k=1)=>'<mover accent="true">'+a+o(k===1?'˙':'¨')+'</mover>';
 export const prime=(a,k=1)=>pow(String(a).startsWith('<')?a:v(a),o('′'.repeat(k)));
 export const eq=o('='),plus=o('+'),minus=o('−'),x=v('x'),y=v('y'),t=v('t'),C=v('C');
 export const integral=s=>o('∫')+s;

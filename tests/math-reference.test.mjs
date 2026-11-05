@@ -5,7 +5,7 @@ import {getMathReference, MATH_REFERENCE} from '../dist/lessons/math-reference.j
 import {getLesson} from '../dist/content.js';
 import {ui} from '../dist/i18n.js';
 
-const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1','4.2','4.3','4.5','6.1','6.2','6.3','6.4','6.5','6.6','6.7'];
+const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1','4.2','4.3','4.5','6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1'];
 const wrap=fragment=>`<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>${fragment}</mrow></math>`;
 
 function assertBalancedMarkup(markup,label){
@@ -62,6 +62,12 @@ test('Rules follow the mathematical focus of each lesson',()=>{
   assert.ok(has('6.3','integral','Sifting property integral'));
   assert.ok(has('6.4','derivative','Inverse frequency shift'));
   assert.ok(has('6.4','integral','Convolution theorem'));
+  assert.ok(has('7.1','derivative','Radial acceleration'));
+  assert.ok(has('7.1','derivative','Angular acceleration'));
+  assert.ok(has('7.1','derivative','State derivative'));
+  assert.ok(has('7.1','integral','Impulse–momentum'));
+  assert.ok(has('7.1','integral','State transition integral'));
+  assert.ok(has('7.1','integral','Duhamel integral'));
   assert.ok(!has('2.3','derivative','Parametric derivative'));
   assert.ok(!has('1.1','derivative','The D operator'));
 });

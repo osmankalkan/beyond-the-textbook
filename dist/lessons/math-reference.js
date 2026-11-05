@@ -1,4 +1,4 @@
-import {T, v, n, o, r, p, f, pow, sub, prime, eq, plus, minus, x, y, C, dx, dy, fn, exp, abs, integral} from '../study/math.js';
+import {T, v, n, o, r, p, f, pow, sub, prime, eq, plus, minus, x, y, C, dx, dy, fn, exp, abs, integral, dot} from '../study/math.js';
 import {pickLang} from '../i18n.js';
 
 const rule=(tr,en,math)=>({label:T(tr,en),math});
@@ -71,6 +71,20 @@ const iDiracArea=rule('Dirac alan integrali','Dirac unit area',integral(fn('δ',
 const iDiracSifting=rule('Süzme özelliği integrali','Sifting property integral',integral(fn('g',v('t'))+fn('δ',v('t')+minus+v('a'))+v('d')+v('t'))+eq+fn('g',v('a')));
 const iInverseConvolution=rule('Konvolüsyon teoremi','Convolution theorem',LinvVar+p(FVar+p(sVar)+v('G')+p(sVar))+eq+defIntegral(n(0),v('t'),fn('f',v('u'))+fn('g',v('t')+minus+v('u'))+v('d')+v('u')));
 const iInversePartialFrac=rule('Kısmi kesir ayrışımı','Partial fraction decomposition',f(n(1),p(sVar+minus+v('a'))+p(sVar+minus+v('b')))+eq+f(n(1),v('a')+minus+v('b'))+p(f(n(1),sVar+minus+v('a'))+minus+f(n(1),sVar+minus+v('b'))));
+
+/* Section 7.1: particle motion in a plane and a multi-story shear building. */
+const dNewtonRect=rule('Dikdörtgen koordinatlarda Newton','Newton in rectangular coordinates',v('m')+dot(x,2)+eq+sub(v('F'),x)+p(x+o(',')+y+o(',')+v('t')));
+const dRadialAccel=rule('Radyal ivme','Radial acceleration',sub(v('a'),v('r'))+eq+dot(v('r'),2)+minus+v('r')+pow(dot(v('θ')),n(2)));
+const dAngularAccel=rule('Açısal ivme','Angular acceleration',sub(v('a'),v('θ'))+eq+n(2)+dot(v('r'))+dot(v('θ'))+plus+v('r')+dot(v('θ'),2));
+const dPolarChain=rule('Kutupsal zincir kuralı','Polar chain rule',x+eq+v('r')+fn('cos',v('θ'))+o('⟹')+dot(x)+eq+dot(v('r'))+fn('cos',v('θ'))+minus+v('r')+dot(v('θ'))+fn('sin',v('θ')));
+const dStateDerivative=rule('Durum türevi','State derivative',dot(v('y'))+eq+v('A')+p(v('t'))+v('y')+plus+v('B')+v('f')+p(v('t')));
+const dPolarBalance=rule('Radyal kuvvet dengesi','Radial force balance',v('m')+p(dot(v('r'),2)+minus+v('r')+pow(dot(v('θ')),n(2)))+eq+sub(v('F'),v('r')));
+const iImpulse=rule('İtki–momentum','Impulse–momentum',integral(v('F')+v('d')+v('t'))+eq+v('m')+sub(v('v'),n(2))+minus+v('m')+sub(v('v'),n(1)));
+const iAngularImpulse=rule('Açısal itki','Angular impulse',integral(v('M')+v('d')+v('t'))+eq+sub(v('L'),n(2))+minus+sub(v('L'),n(1)));
+const iWorkEnergy=rule('İş–enerji','Work–energy',integral(v('F')+v('d')+x)+eq+f(n(1),n(2))+v('m')+pow(sub(v('v'),n(2)),n(2))+minus+f(n(1),n(2))+v('m')+pow(sub(v('v'),n(1)),n(2)));
+const iPolarArea=rule('Kutupsal alan','Polar area',v('A')+eq+f(n(1),n(2))+integral(pow(v('r'),n(2))+v('d')+v('θ')));
+const iStateTransition=rule('Durum geçiş integrali','State transition integral',v('y')+p(v('t'))+eq+exp(v('A')+v('t'))+v('y')+p(n(0))+plus+defIntegral(n(0),v('t'),exp(v('A')+p(v('t')+minus+v('τ')))+v('B')+v('F')+p(v('τ'))+v('d')+v('τ')));
+const iDuhamel=rule('Duhamel integrali','Duhamel integral',x+p(v('t'))+eq+defIntegral(n(0),v('t'),v('h')+p(v('t')+minus+v('τ'))+v('F')+p(v('τ'))+v('d')+v('τ')));
 
 export const MATH_REFERENCE={
   '1.1':{
@@ -156,6 +170,10 @@ export const MATH_REFERENCE={
   '6.7':{
     derivative:[dLaplacePrime,dLaplaceSecond,dLaplaceParam,dLaplaceShift,dHeavisideShift,dDiracLaplace,dInverseLinear],
     integral:[iLaplaceDef,iInverseConvolution,iInversePartialFrac,iDiracArea,iDiracSifting,iHeavisideStep,iLinear]
+  },
+  '7.1':{
+    derivative:[dNewtonRect,dRadialAccel,dAngularAccel,dPolarChain,dStateDerivative,dPolarBalance],
+    integral:[iImpulse,iAngularImpulse,iWorkEnergy,iPolarArea,iStateTransition,iDuhamel]
   }
 };
 
