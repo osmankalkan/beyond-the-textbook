@@ -113,6 +113,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 1: e^{3t} sin 4t Dönüşümü',
       en: 'Card 1: e^{3t} sin 4t Transform'
     },
+    equation: "ℒ{ e³ᵗ sin 4t }",
     latex: '\\mathcal{L}\\{e^{3t} \\sin 4t\\}',
     description: {
       tr: 'Üstel çarpanla modüle edilmiş sinüzoidal dalganın Laplace dönüşümü.',
@@ -130,6 +131,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 2: (t² − 4) H(t − 2) Basamak Dönüşümü',
       en: 'Card 2: (t² − 4) H(t − 2) Step Transform'
     },
+    equation: "ℒ{ (t² − 4) H(t − 2) }",
     latex: '\\mathcal{L}\\{(t^2 - 4) H(t - 2)\\}',
     description: {
       tr: 't = 2 anında devreye giren kuadratik polinomun 2. kaydırma ile dönüşümü.',
@@ -147,6 +149,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 3: Dirac Delta Süzme İntegrali',
       en: 'Card 3: Dirac Delta Sifting Integral'
     },
+    equation: "∫₀^∞ (3t² + 5) δ(t − 4) dt",
     latex: '\\int_0^\\infty (3t^2 + 5) \\delta(t - 4) dt',
     description: {
       tr: 'Dirac delta darbesi içeren belirli integralin süzme özelliği ile hesabı.',
@@ -164,6 +167,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 4: s / (s² + 9)² Rezonans Tersi',
       en: 'Card 4: s / (s² + 9)² Resonant Inversion'
     },
+    equation: "ℒ⁻¹{ s / (s² + 9)² }",
     latex: '\\mathcal{L}^{-1}\\left\\{\\frac{s}{(s^2 + 9)^2}\\right\\}',
     description: {
       tr: 'Katlı kuadratik paydaya sahip rezonans kesrinin ters dönüşümü.',
@@ -181,6 +185,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 5: (2s + 5) / [(s − 1)(s² + 4)] Kesir Ayrışımı',
       en: 'Card 5: (2s + 5) / [(s − 1)(s² + 4)] Inversion'
     },
+    equation: "ℒ⁻¹{ (2s + 5) / [(s − 1)(s² + 4)] }",
     latex: '\\mathcal{L}^{-1}\\left\\{\\frac{2s + 5}{(s - 1)(s^2 + 4)}\\right\\}',
     description: {
       tr: 'Reel ve kuadratik karmaşık kutuplar içeren rasyonel transfer fonksiyonu.',
@@ -198,6 +203,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 6: y\'\' + 4y\' + 13y = 0 Başlangıç Değer Problemi',
       en: 'Card 6: y\'\' + 4y\' + 13y = 0 IVP'
     },
+    equation: "y'' + 4y' + 13y = 0   [y(0)=2, y'(0)=−4]",
     latex: "y'' + 4y' + 13y = 0, \\quad y(0)=2, \\, y'(0)=-4",
     description: {
       tr: 'Sönümlü serbest titreşim IVP probleminin Laplace ile çözümü.',
@@ -215,6 +221,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 7: y\'\' + 9y = 18 H(t − π) Süreksiz Basamak IVP',
       en: 'Card 7: y\'\' + 9y = 18 H(t − π) Discontinuous Step IVP'
     },
+    equation: "y'' + 9y = 18 H(t − π)   [y(0)=0, y'(0)=0]",
     latex: "y'' + 9y = 18 H(t - \\pi), \\quad y(0)=0, \\, y'(0)=0",
     description: {
       tr: 't = π anında sıçrayan basamak zorlaması altında salınıcı.',
@@ -232,6 +239,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 8: y\'\' + 2y\' + y = 6 δ(t − 3) Dirac Darbesi',
       en: 'Card 8: y\'\' + 2y\' + y = 6 δ(t − 3) Dirac Impulse'
     },
+    equation: "y'' + 2y' + y = 6 δ(t − 3)   [y(0)=0, y'(0)=0]",
     latex: "y'' + 2y' + y = 6 \\delta(t - 3), \\quad y(0)=0, \\, y'(0)=0",
     description: {
       tr: 'Kritik sönümlü sistemin t = 3 anındaki Dirac itkisine tepkisi.',
@@ -249,6 +257,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 9: Periyodik Kare Dalga Laplace Dönüşümü',
       en: 'Card 9: Periodic Square Wave Transform'
     },
+    equation: "ℒ{ v_square(t) },   T = 2",
     latex: "\\mathcal{L}\\{v_{\\text{square}}(t)\\}, \\quad T = 2",
     description: {
       tr: 'Periyodu T = 2 olan kare dalganın periyodik Laplace formülüyle dönüştürülmesi.',
@@ -266,6 +275,7 @@ export const CHALLENGE_CARDS = [
       tr: 'Kart 10: SDOF Yapı Rampa Yüklemesi',
       en: 'Card 10: SDOF Structure Ramp Loading'
     },
+    equation: "m x'' + k x = (F₀/t₁)[t − (t − t₁)H(t − t₁)]",
     latex: "m x'' + k x = \\frac{F_0}{t_1}[t - (t - t_1)H(t - t_1)]",
     description: {
       tr: 'Yapı dinamiğinde rampa yükü altındaki tek serbestlik dereceli bina modeli.',

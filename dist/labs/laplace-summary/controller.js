@@ -90,7 +90,7 @@ export function mount(root, initial = {}) {
             <span class="chapter-pill">${esc(card.title[lang] || card.title.tr)}</span>
           </div>
           <div class="sum-eq-display">
-            <code>${esc(card.latex)}</code>
+            <code>${esc(card.equation || card.latex)}</code>
           </div>
           <p class="sum-prompt">${esc(card.description[lang] || card.description.tr)}</p>
           <p class="sum-subprompt"><strong>${esc(tr('Bu problem için en uygun Laplace kuralı / yöntemi hangisidir?', 'Which Laplace rule / method is optimal for this problem?'))}</strong></p>

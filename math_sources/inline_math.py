@@ -20,7 +20,7 @@ OPERATORS = {
 
 SYMBOLS = {
     'pi': mi('π'), 'infty': mi('∞'), 'e': mi('e'),
-    'neq': mo('≠'), 'pm': mo('±'), 'mp': mo('∓'),
+    'neq': mo('≠'), 'ne': mo('≠'), 'pm': mo('±'), 'mp': mo('∓'),
     'to': mo('→'), 'mapsto': mo('↦'),
     'le': mo('≤'), 'leq': mo('≤'), 'ge': mo('≥'), 'geq': mo('≥'),
     'cdot': mo('⋅'), 'times': mo('×'),
@@ -36,7 +36,7 @@ SYMBOLS = {
 
 FUNCTIONS = {'ln', 'log', 'exp', 'sin', 'cos', 'tan', 'sec', 'csc', 'cot',
              'arcsin', 'arccos', 'arctan', 'sinh', 'cosh', 'tanh', 'lim',
-             'det', 'diag'}
+             'det', 'diag', 'deg', 'rank', 'tr'}
 
 GREEK = {
     'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ', 'epsilon': 'ε',
