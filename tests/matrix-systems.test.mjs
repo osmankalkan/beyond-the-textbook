@@ -188,12 +188,26 @@ test('Section 7.4 has bilingual formulas, two study paths, four clinic cases and
   assert.match(readFileSync('dist/labs/matrix-systems/controller.js', 'utf8'), /export function mount/);
 });
 
-test('Section 7.4 keeps prose free of raw LaTeX leaked into text', () => {
+test('Section 7.4 renders every inline formula and keeps prose free of raw LaTeX', () => {
   const tr = getLesson('xie-2010:7.4', 'tr').lesson;
   const en = getLesson('xie-2010:7.4', 'en').lesson;
+
+  assert.equal(tr.inlinePath, 'lessons/xie-2010/7-4/inline.json');
+  const tokens = path => [...readFileSync('dist/' + path, 'utf8').matchAll(/\\\((.+?)\\\)/g)].map(m => m[1].trim());
+  const trTokens = tokens(tr.lessonPath);
+  const enTokens = tokens(en.lessonPath);
+  assert.deepEqual(new Set(trTokens), new Set(enTokens));
+
+  const inlineMap = JSON.parse(readFileSync('dist/' + tr.inlinePath, 'utf8'));
+  for (const token of [...trTokens, ...enTokens]) {
+    assert.ok(inlineMap[token], `missing inline math for: ${token}`);
+    assert.match(inlineMap[token], /<math[^>]*><mrow>/);
+  }
 
   for (const path of [tr.lessonPath, en.lessonPath]) {
     const raw = readFileSync('dist/' + path, 'utf8').replace(/\$\$[\s\S]*?\$\$/g, '').replace(/\\\(.+?\\\)/g, '');
     assert.doesNotMatch(raw, /\\frac|\\mathcal|\\int|\\sum|\\cdot|\\to\b/);
+    assert.doesNotMatch(raw, /\$[^$\n]+\$/);
+    assert.doesNotMatch(raw, /\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/);
   }
 });
