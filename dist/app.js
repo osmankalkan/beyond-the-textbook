@@ -994,6 +994,7 @@ const labHost=createLabHost({
   'laplace-applications':()=>import('./labs/laplace-applications/controller.js'),
   'laplace-summary':()=>import('./labs/laplace-summary/controller.js'),
   'systems':()=>import('./labs/systems/controller.js'),
+  'operator-systems':()=>import('./labs/operator-systems/controller.js'),
   'summary':()=>import('./labs/summary/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js')
 });

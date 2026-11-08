@@ -5,7 +5,7 @@ import {getMathReference, MATH_REFERENCE} from '../dist/lessons/math-reference.j
 import {getLesson} from '../dist/content.js';
 import {ui} from '../dist/i18n.js';
 
-const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1','4.2','4.3','4.5','6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1'];
+const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1','4.2','4.3','4.5','6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2'];
 const wrap=fragment=>`<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>${fragment}</mrow></math>`;
 
 function assertBalancedMarkup(markup,label){
@@ -68,6 +68,12 @@ test('Rules follow the mathematical focus of each lesson',()=>{
   assert.ok(has('7.1','integral','Impulse–momentum'));
   assert.ok(has('7.1','integral','State transition integral'));
   assert.ok(has('7.1','integral','Duhamel integral'));
+  assert.ok(has('7.2','derivative','Operator determinant'));
+  assert.ok(has('7.2','derivative',"Cramer's rule with operators"));
+  assert.ok(has('7.2','derivative','Exponential shift rule'));
+  assert.ok(has('7.2','derivative','Resonance operator rule'));
+  assert.ok(has('7.2','integral','Variation of parameters integral'));
+  assert.ok(has('7.2','integral','Inverse operator integral'));
   assert.ok(!has('2.3','derivative','Parametric derivative'));
   assert.ok(!has('1.1','derivative','The D operator'));
 });

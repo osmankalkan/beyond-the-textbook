@@ -86,6 +86,14 @@ const iPolarArea=rule('Kutupsal alan','Polar area',v('A')+eq+f(n(1),n(2))+integr
 const iStateTransition=rule('Durum geçiş integrali','State transition integral',v('y')+p(v('t'))+eq+exp(v('A')+v('t'))+v('y')+p(n(0))+plus+defIntegral(n(0),v('t'),exp(v('A')+p(v('t')+minus+v('τ')))+v('B')+v('F')+p(v('τ'))+v('d')+v('τ')));
 const iDuhamel=rule('Duhamel integrali','Duhamel integral',x+p(v('t'))+eq+defIntegral(n(0),v('t'),v('h')+p(v('t')+minus+v('τ'))+v('F')+p(v('τ'))+v('d')+v('τ')));
 
+/* Section 7.2: operator method for linear differential systems. */
+const dOperatorDet=rule('Operatör determinantı','Operator determinant',fn('φ',v('D'))+eq+fn('det',o('[')+v('φ')+sub(v('i'),v('j'))+p(v('D'))+o(']')));
+const dCramerOperator=rule('Operatörlü Cramer kuralı',"Cramer's rule with operators",sub(x,v('P'))+p(v('t'))+eq+f(n(1),fn('φ',v('D')))+sub(v('Δ'),x)+p(v('t')));
+const dOperatorShift=rule('Üstel kaydırma kuralı','Exponential shift rule',f(n(1),fn('P',v('D')))+p(exp(v('a')+v('t'))+fn('g',v('t')))+eq+exp(v('a')+v('t'))+f(n(1),fn('P',v('D')+plus+v('a')))+fn('g',v('t')));
+const dOperatorResonance=rule('Rezonans operatör kuralı','Resonance operator rule',f(n(1),pow(v('D'),n(2))+plus+pow(v('ω'),n(2)))+fn('sin',v('ω')+v('t'))+eq+minus+f(v('t'),n(2)+v('ω'))+fn('cos',v('ω')+v('t')));
+const iParamVariation=rule('Parametre değişimi integrali','Variation of parameters integral',sub(v('c'),v('i'))+p(v('t'))+eq+integral(f(sub(v('Δ'),v('i'))+p(v('t')),v('Δ')+p(v('t')))+v('d')+v('t')));
+const iInverseOpIntegral=rule('Ters operatör integrali','Inverse operator integral',f(n(1),v('D'))+fn('f',v('t'))+eq+defIntegral(n(0),v('t'),fn('f',v('τ'))+v('d')+v('τ')));
+
 export const MATH_REFERENCE={
   '1.1':{
     derivative:[dPowerX,dExp,dSin,dCos,dLinear],
@@ -174,6 +182,10 @@ export const MATH_REFERENCE={
   '7.1':{
     derivative:[dNewtonRect,dRadialAccel,dAngularAccel,dPolarChain,dStateDerivative,dPolarBalance],
     integral:[iImpulse,iAngularImpulse,iWorkEnergy,iPolarArea,iStateTransition,iDuhamel]
+  },
+  '7.2':{
+    derivative:[dOperatorDet,dCramerOperator,dOperatorShift,dOperatorResonance,dOperator,dLinear],
+    integral:[iParamVariation,iInverseOpIntegral,iInverseD,iParts,iLinear]
   }
 };
 

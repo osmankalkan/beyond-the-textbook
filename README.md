@@ -28,6 +28,7 @@ Twenty-two sections of Wei-Chau Xie's *Differential Equations for Engineers* are
 | | **§6.6** | Engineering Applications | SDOF oscillator, shock blast, RLC circuit, beam deflection |
 | | **§6.7** | Summary: Laplace Methods | 10-method Laplace matrix & diagnostic simulator |
 | **Ch 7** | **§7.1** | Introduction: Systems of ODEs | Particle motion, polar kinematics, shear-building M/C/K, state space |
+| | **§7.2** | The Method of Operator | Operator determinant φ(D), constant elimination, Cramer's rule, resonance |
 
 Every developed lesson includes guided derivations with conceptual predictions, an interactive dual-curve SVG laboratory, four fully worked exam clinic problems (with trap analysis and scoring rubric), and a section-aware derivative/integral reference drawer in Turkish and English.
 
@@ -41,4 +42,4 @@ Run `npm start`, then open the address printed in the terminal (normally http://
 
 The app uses native ES modules and no runtime dependencies. Lesson data lives under `dist/lessons/`, pure models under `dist/models/`, and lab controllers under `dist/labs/`. `dist/core/study-guide.js` renders topic-authored predictions and derivations; it does not own navigation or persistent progress. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
-Current review: Chapter 2, Chapter 4, and Chapter 6 are fully developed to the §3.1 depth standard (§6.1–§6.7), and Chapter 7 has started with §7.1. See [the revision record](docs/QUALITY-REVISION.md). Recent developments remain local until explicitly requested for GitHub.
+Current review: Chapter 2, Chapter 4, and Chapter 6 are fully developed to the §3.1 depth standard (§6.1–§6.7), and Chapter 7 development continues with §7.1 and §7.2. See [the revision record](docs/QUALITY-REVISION.md). Recent developments remain local until explicitly requested for GitHub.
