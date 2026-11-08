@@ -94,6 +94,10 @@ const dOperatorResonance=rule('Rezonans operatör kuralı','Resonance operator r
 const iParamVariation=rule('Parametre değişimi integrali','Variation of parameters integral',sub(v('c'),v('i'))+p(v('t'))+eq+integral(f(sub(v('Δ'),v('i'))+p(v('t')),v('Δ')+p(v('t')))+v('d')+v('t')));
 const iInverseOpIntegral=rule('Ters operatör integrali','Inverse operator integral',f(n(1),v('D'))+fn('f',v('t'))+eq+defIntegral(n(0),v('t'),fn('f',v('τ'))+v('d')+v('τ')));
 
+/* Section 7.3: Laplace transform method for systems of linear differential equations. */
+const dLaplaceSystemCramer=rule('s bölgesinde Cramer kuralı',"Cramer's rule in s-domain",sub(v('X'),v('i'))+p(sVar)+eq+f(sub(v('Δ'),v('i'))+p(sVar),v('Δ')+p(sVar)));
+const dLaplaceResolvent=rule('Rezolvent matrisi','Resolvent matrix',fn('Φ',sVar)+eq+pow(sVar+v('I')+minus+v('A'),minus+n(1)));
+
 export const MATH_REFERENCE={
   '1.1':{
     derivative:[dPowerX,dExp,dSin,dCos,dLinear],
@@ -186,6 +190,10 @@ export const MATH_REFERENCE={
   '7.2':{
     derivative:[dOperatorDet,dCramerOperator,dOperatorShift,dOperatorResonance,dOperator,dLinear],
     integral:[iParamVariation,iInverseOpIntegral,iInverseD,iParts,iLinear]
+  },
+  '7.3':{
+    derivative:[dLaplacePrime,dLaplaceSecond,dHeavisideShift,dLaplaceSystemCramer,dLaplaceResolvent,dLinear],
+    integral:[iInverseConvolution,iInversePartialFrac,iHeavisideStep,iStateTransition,iLaplaceDef,iLinear]
   }
 };
 

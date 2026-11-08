@@ -18,6 +18,7 @@ import {laplaceAppLesson} from './lessons/xie-2010/6-6/content.js';
 import {laplaceSummaryLesson} from './lessons/xie-2010/6-7/content.js';
 import {systemsLesson} from './lessons/xie-2010/7-1/content.js';
 import {operatorSystemsLesson} from './lessons/xie-2010/7-2/content.js';
+import {laplaceSystemsLesson} from './lessons/xie-2010/7-3/content.js';
 import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
@@ -967,7 +968,8 @@ export const BOOKS = [
       laplaceAppLesson,
       laplaceSummaryLesson,
       systemsLesson,
-      operatorSystemsLesson
+      operatorSystemsLesson,
+      laplaceSystemsLesson
     ],
     chapters: [
       [
