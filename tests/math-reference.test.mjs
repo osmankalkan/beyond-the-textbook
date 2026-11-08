@@ -5,7 +5,7 @@ import {getMathReference, MATH_REFERENCE} from '../dist/lessons/math-reference.j
 import {getLesson} from '../dist/content.js';
 import {ui} from '../dist/i18n.js';
 
-const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1','4.2','4.3','4.5','6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3'];
+const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1','4.2','4.3','4.5','6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3','7.4'];
 const wrap=fragment=>`<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>${fragment}</mrow></math>`;
 
 function assertBalancedMarkup(markup,label){
@@ -77,6 +77,10 @@ test('Rules follow the mathematical focus of each lesson',()=>{
   assert.ok(has('7.3','derivative',"Cramer's rule in s-domain"));
   assert.ok(has('7.3','derivative','Resolvent matrix'));
   assert.ok(has('7.3','integral','State transition integral'));
+  assert.ok(has('7.4','derivative','Characteristic equation'));
+  assert.ok(has('7.4','derivative','Eigenvector condition'));
+  assert.ok(has('7.4','derivative','Generalized eigenvector chain'));
+  assert.ok(has('7.4','integral','Matrix variation of parameters'));
   assert.ok(!has('2.3','derivative','Parametric derivative'));
   assert.ok(!has('1.1','derivative','The D operator'));
 });

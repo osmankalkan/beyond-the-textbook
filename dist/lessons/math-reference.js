@@ -98,6 +98,15 @@ const iInverseOpIntegral=rule('Ters operatör integrali','Inverse operator integ
 const dLaplaceSystemCramer=rule('s bölgesinde Cramer kuralı',"Cramer's rule in s-domain",sub(v('X'),v('i'))+p(sVar)+eq+f(sub(v('Δ'),v('i'))+p(sVar),v('Δ')+p(sVar)));
 const dLaplaceResolvent=rule('Rezolvent matrisi','Resolvent matrix',fn('Φ',sVar)+eq+pow(sVar+v('I')+minus+v('A'),minus+n(1)));
 
+/* Section 7.4: Matrix method for systems of linear differential equations. */
+const dMatrixCharEq=rule('Karakteristik denklem','Characteristic equation',fn('det',v('A')+minus+v('λ')+v('I'))+eq+n(0));
+const dEigenCondition=rule('Özvektör koşulu','Eigenvector condition',v('A')+v('v')+eq+v('λ')+v('v'));
+const dJordanChain=rule('Genelleştirilmiş özvektör zinciri','Generalized eigenvector chain',p(v('A')+minus+v('λ')+v('I'))+sub(v('v'),n(2))+eq+sub(v('v'),n(1)));
+const dFundamentalMatrixEq=rule('Temel matris diferansiyel denklemi','Fundamental matrix equation',dot(v('X'))+p(v('t'))+eq+v('A')+v('X')+p(v('t')));
+const iMatrixVariation=rule('Matris parametre değişimi','Matrix variation of parameters',sub(x,v('P'))+p(v('t'))+eq+v('X')+p(v('t'))+integral(pow(v('X'),minus+n(1))+p(v('t'))+v('f')+p(v('t'))+v('d')+v('t')));
+const iTanIntegral=rule('Tanjant integrali','Tangent integral',integral(fn('tan',v('t'))+v('d')+v('t'))+eq+minus+fn('ln',abs(fn('cos',v('t')))));
+const iModalTransform=rule('Modal koordinat dönüşümü','Modal transformation',x+p(v('t'))+eq+v('Φ')+v('q')+p(v('t')));
+
 export const MATH_REFERENCE={
   '1.1':{
     derivative:[dPowerX,dExp,dSin,dCos,dLinear],
@@ -194,6 +203,10 @@ export const MATH_REFERENCE={
   '7.3':{
     derivative:[dLaplacePrime,dLaplaceSecond,dHeavisideShift,dLaplaceSystemCramer,dLaplaceResolvent,dLinear],
     integral:[iInverseConvolution,iInversePartialFrac,iHeavisideStep,iStateTransition,iLaplaceDef,iLinear]
+  },
+  '7.4':{
+    derivative:[dMatrixCharEq,dEigenCondition,dJordanChain,dFundamentalMatrixEq,dLinear],
+    integral:[iMatrixVariation,iTanIntegral,iModalTransform,iLinear]
   }
 };
 

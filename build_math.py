@@ -47,6 +47,7 @@ AUTO_BLOCK_SETS = [
     ('lessons/xie-2010/7-1/lesson.md', 'lessons/xie-2010/7-1/lesson-en.md', 'lessons/xie-2010/7-1/math.json'),
     ('lessons/xie-2010/7-2/lesson.md', 'lessons/xie-2010/7-2/lesson-en.md', 'lessons/xie-2010/7-2/math.json'),
     ('lessons/xie-2010/7-3/lesson.md', 'lessons/xie-2010/7-3/lesson-en.md', 'lessons/xie-2010/7-3/math.json'),
+    ('lessons/xie-2010/7-4/lesson.md', 'lessons/xie-2010/7-4/lesson-en.md', 'lessons/xie-2010/7-4/math.json'),
 ]
 
 # Optional named formula registries let activities use IDs rather than JSON order.
@@ -159,6 +160,11 @@ INLINE_SETS = {
     'lessons/xie-2010/7-3/lesson.md': (
         'lessons/xie-2010/7-3/lesson-en.md',
         'lessons/xie-2010/7-3/inline.json',
+        None,
+    ),
+    'lessons/xie-2010/7-4/lesson.md': (
+        'lessons/xie-2010/7-4/lesson-en.md',
+        'lessons/xie-2010/7-4/inline.json',
         None,
     )
 }
