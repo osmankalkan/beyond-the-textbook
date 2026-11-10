@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Heating and Cooling · Focus</title>
+<link rel="stylesheet" href="tokens.css">
+<script>
+/* Resolve saved appearance before the first paint. */
+try {
+ const s=JSON.parse(localStorage.getItem('btt-focus-preview')||'{}');
+ const dark=s.theme==='dark'||((!s.theme||s.theme==='auto')&&matchMedia('(prefers-color-scheme: dark)').matches);
+ document.documentElement.dataset.theme=dark?'dark':'light';
+ if([17,18,20,22].includes(s.fontSize))document.documentElement.style.setProperty('--font-size',s.fontSize+'px');
+} catch {}
+</script>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">İçeriğe geç / Skip to content</a>
+<div class="reading-track" aria-hidden="true"><span id="reading-progress"></span></div>
+<header><a href="#home" class="brand">Beyond the Textbook</a><div class="tools">
+<button id="modules-toggle" aria-controls="modules" aria-expanded="false"></button>
+<button id="focus-toggle" aria-pressed="false"></button>
+<button id="language" aria-label="English / Türkçe">EN</button>
+</div></header>
+<div class="layout">
+<aside id="modules" hidden></aside>
+<main id="content" tabindex="-1"></main>
+</div>
+<button id="exit-focus" hidden></button>
+<p id="storage-status" role="status"></p>
+</body></html>

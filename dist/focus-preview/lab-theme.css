@@ -1,0 +1,130 @@
+/* Opt-in presentation layer. The existing application owns every lab controller. */
+html[data-ui="focus"] {
+ --paper:var(--surface);--ink:var(--text);--muted:var(--muted-ink);--line:var(--border);
+ --green:var(--primary-ink);--soft:var(--primary-soft);--orange:var(--accent);
+ --serif:var(--heading);--sans:var(--body);
+ body{font:400 16px/1.65 var(--sans);background:var(--bg);color:var(--text)}
+ :is(button,a,input,textarea,select,summary):focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+ .sidebar{width:216px;padding:28px 20px;background:var(--surface);border-right:1px solid var(--border);box-shadow:none}
+ .brand{font:500 19px/1.3 var(--serif);gap:0}.brand-mark{display:none}.brand-second{font:inherit;display:inline}.brand-second::before{content:" "}
+ .book{margin:32px 0 24px;padding:0 0 24px;border-bottom:1px solid var(--border)}
+ .book-cover{display:none!important}.book-name{font-size:14px;color:var(--text)}.book small{font-size:12px;color:var(--muted-ink)}
+ .nav-label,.eyebrow,.panel-kicker{font-size:11px;letter-spacing:.06em;color:var(--muted-ink);font-weight:500}
+ #sidebar-nav a{font-size:14px;padding:10px 12px;color:var(--muted-ink);border-radius:6px;gap:0}
+ #sidebar-nav a>span:first-child{display:none}#sidebar-nav a.active{background:var(--primary-soft);color:var(--primary-ink)}
+ .nav-dot,.green-dot,.metric-symbol,.discovery-icon{display:none}
+ .journey{margin-top:32px}.journey p,.journey small,.sidebar-footer{font-size:12px;color:var(--muted-ink)}
+ .progress-track{height:3px;background:var(--surface-alt)}.progress-track span{background:var(--accent)}
+ .workspace{margin-left:216px}.topbar{min-height:64px;height:auto;padding:12px 32px;background:var(--bg);border-color:var(--border);flex-wrap:wrap;gap:12px}
+ .breadcrumb{font-size:12px;color:var(--muted-ink);gap:8px}.search-link{font-size:13px;color:var(--muted-ink)}
+ .topbar-actions{flex-wrap:wrap}.lang-btn{font-size:12px;min-height:36px;color:var(--muted-ink)}
+ .lang-btn.selected{background:var(--primary-soft);color:var(--primary-ink)}
+ main{max-width:1440px;padding:32px;margin:auto}
+ .page-heading{align-items:center;margin-bottom:24px}
+ h1{font:500 clamp(30px,3.4vw,44px)/1.15 var(--serif);color:var(--text);letter-spacing:-.025em}
+ h1>span{display:none}.page-description{font-size:15px;line-height:1.65;max-width:65ch;color:var(--muted-ink)}
+ .page-heading .eyebrow{font-size:11px;letter-spacing:.04em}
+ .chapter-pill{background:transparent;color:var(--primary-ink);border:0;padding:0;font-size:11px}
+ .button,.text-button,.icon-button,.segmented button,.mini-tabs button{font:500 13px/1.5 var(--sans);min-height:40px;border-radius:6px}
+ .button.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+ .button.secondary,.icon-button{background:var(--surface);color:var(--text);border-color:var(--border)}
+ .text-button{color:var(--primary-ink)}.download{margin:0}
+ .study-path-pills{display:flex;gap:24px;border-bottom:1px solid var(--border)}
+ .study-pill{display:block;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;padding:12px 0;color:var(--muted-ink);font-weight:500}
+ .study-pill.selected,.study-pill:hover{background:transparent;border-color:var(--primary);color:var(--primary-ink)}
+ .study-pill small{display:none}
+ .lab-toolbar{margin:24px 0 16px;gap:16px;align-items:center;flex-wrap:wrap}
+ .segmented{background:var(--surface-alt);border:0;border-radius:8px;padding:4px}
+ .segmented button{color:var(--muted-ink);font-size:13px;padding:8px 12px;white-space:normal}
+ .segmented button span{font-size:13px}.segmented button.selected{background:var(--surface);color:var(--text);box-shadow:none}
+ .compare-toggle,.source-tag{font-size:12px;color:var(--muted-ink)}
+ .lab-grid{grid-template-columns:minmax(220px,25%) minmax(0,1fr);gap:24px;align-items:stretch}
+ .panel,.plot-panel,.controls-panel,.metric,.chapter-card,.exercise,.library-book,.library-lesson-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:none;color:var(--text)}
+ .controls-panel{display:block;padding:20px}
+ #physical-illustration{display:none}
+ .panel-kicker{padding-bottom:12px;border-bottom:1px solid var(--border)}.panel-kicker>span:last-child{display:none}
+ #controls{display:block}.control{margin:24px 0}
+ .control label{font-size:13px;color:var(--muted-ink);line-height:1.5}
+ .control output{font-size:16px;color:var(--text)}.control output small{color:var(--muted-ink);font-size:12px}
+ .control .range-ends{font-size:11px;color:var(--muted-ink)}
+ input[type="range"]{accent-color:var(--primary);min-height:24px}
+ input[type="checkbox"],input[type="radio"]{accent-color:var(--primary);width:16px;height:16px}
+ .preset-button{font-size:12px!important;margin-top:0}
+ .plot-panel{padding:24px;min-width:0}.plot-heading h2{font:500 25px/1.2 var(--serif);color:var(--text)}
+ .plot-heading .eyebrow{font-size:11px}.legend{font-size:12px;color:var(--muted-ink);gap:16px}
+ #chart text{fill:var(--muted-ink);font-size:12px}
+ #chart line[stroke="#edf0e7"],#chart line[stroke="#f2f4ed"]{stroke:var(--border)}
+ #chart path[stroke="#477d55"]{stroke:var(--primary-ink)}
+ #chart circle[fill="#477d55"]{fill:var(--primary-ink);stroke:var(--surface)}
+ #chart rect[fill="#edf3e8"]{fill:var(--primary-soft);stroke:var(--border)}
+ .timeline{margin-top:16px}.timeline output{font-size:13px;color:var(--text)}
+ .play-button{background:var(--surface-alt);color:var(--primary-ink);width:36px;height:36px;border-color:var(--border)}
+ .chart-options{font-size:12px;border-color:var(--border);flex-wrap:wrap}
+ .chart-options label,.chart-options .text-button{font-size:12px;color:var(--muted-ink)}
+ .metrics{gap:0;margin:24px 0;border-block:1px solid var(--border)}
+ .metric{border:0;border-radius:0;background:transparent;padding:16px 24px}
+ .metric+.metric{border-left:1px solid var(--border)}
+ .metric .eyebrow{font-size:11px}.metric strong{font:400 28px var(--serif);color:var(--text)}
+ .metric strong small,.metric>p:last-child{font-size:12px;color:var(--muted-ink)}
+ .instant-inspector,.compare-summary{background:var(--surface-alt);border:0;padding:20px;font-size:14px;color:var(--text)}
+ .instant-inspector :is(p,small,span),.compare-summary :is(p,small,span){color:var(--muted-ink);font-size:13px}
+ .below-grid{grid-template-columns:1fr;gap:24px}
+ .guided-workbench{gap:24px;margin-top:32px}
+ .discovery-panel,.equation-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px}
+ .discovery-panel h3,.calibration-panel h3,.stepper-panel h3,.exam-clinic-panel h3{font:500 26px/1.3 var(--serif);color:var(--text)}
+ .discovery-panel :is(p,details summary),.equation-panel p:not(.eyebrow),.calibration-desc{font-size:16px;line-height:1.7;color:var(--muted-ink)}
+ .discovery-panel .eyebrow,.equation-panel .eyebrow{font-size:11px;color:var(--muted-ink)}
+ .calibration-panel,.stepper-panel,.exam-clinic-panel{padding:24px}
+ .calibration-grid label{font-size:13px;color:var(--muted-ink)}
+ input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),textarea,select{background:var(--surface);color:var(--text);border-color:var(--border);font-size:16px;border-radius:6px}
+ .cal-result,.prediction-feedback,.stepper-item,.term-card{background:var(--surface-alt);color:var(--text);border-color:var(--border);font-size:15px}
+ .stepper-item p,.stepper-item li,.term-card p{font-size:15px;line-height:1.7;color:var(--muted-ink)}
+ .equation-panel math{color:var(--text)}
+ .reading-layout{grid-template-columns:minmax(0,720px) minmax(180px,1fr);gap:32px}
+ .prose{font-size:18px;line-height:1.7;padding:32px;color:var(--text)}
+ .prose :is(p,li){font-size:18px;line-height:1.7;color:var(--text)}.prose :is(h1,h2,h3,strong){color:var(--text)}
+ .formula{background:var(--surface-alt);border:0}.reading-aside{font-size:14px;color:var(--muted-ink)}
+ .exercise :is(p,label),.exercise .feedback{font-size:16px;color:var(--text)}
+ .exercise .choice{background:var(--surface-alt);border-color:var(--border)}
+ .source-note,.exercise .feedback,.exercise .feedback.wrong{background:var(--surface-alt);color:var(--text)}
+ .page-footer,.lab-footnote{font-size:12px;color:var(--muted-ink)}
+ .focus-shell-control{font-size:12px;padding:6px 10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text);min-height:36px}
+ body.lab-focus .sidebar,body.lab-focus .breadcrumb,body.lab-focus .page-heading,body.lab-focus .page-footer{display:none}
+ body.lab-focus .workspace{margin-left:0}
+ @media(max-width:1000px){.sidebar{width:190px}.workspace{margin-left:190px}main{padding:24px}.lab-grid{grid-template-columns:1fr}.controls-panel{display:block}#controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}.reading-layout{grid-template-columns:1fr}.metric{padding:16px}}
+ @media(max-width:680px){.workspace{margin-left:0}.sidebar{width:240px}.topbar{padding:12px 16px}.topbar-actions{margin-left:auto;gap:8px}.breadcrumb,.search-link{display:none}main{padding:24px 16px}.page-heading{display:block}.download{display:none}.page-heading .eyebrow{max-width:none}.page-description{max-width:none;font-size:14px}.study-path-pills{gap:12px;flex-wrap:wrap}.study-pill{font-size:13px}.segmented{width:100%;display:flex}.segmented button{flex:1}.source-tag{max-width:none}.plot-panel{padding:16px}.metrics{grid-template-columns:1fr}.metric+.metric{border-left:0;border-top:1px solid var(--border)}.control label{font-size:13px}.control output{font-size:15px}.prose{padding:20px}.stepper-header,.exam-clinic-header{flex-wrap:wrap}.calibration-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.prediction-line input{width:100%}}
+ @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+}
+html[data-ui="focus"] {
+ main :is(.below-grid,.guided-workbench,.panel,.equation-panel,.stepper-item,.exam-clinic-item,.cal-result,.term-anatomy){min-width:0}
+ main math[display="block"],.equation-panel math,.cal-result math,.stepper-item math{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:8px}
+ .panel-kicker span,.segmented button span,.chart-options #chart-note{color:var(--muted-ink)}
+ .compare-toggle{background:var(--surface);border-color:var(--border)}
+ .control label{display:flex;flex-wrap:wrap;gap:8px}.control output{margin-left:auto}
+ .control input[type="range"]{width:100%}
+ .stepper-item,.exam-case,.exam-problem,.term-item,.cal-result,.exam-blueprint>div{background:var(--surface-alt);border-color:var(--border);color:var(--text)}
+ .compare-controls{border-color:var(--border)}
+ .compare-controls .compare-heading{color:var(--primary-ink)}
+}
+html[data-ui="focus"] .lab-math-scroll{display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle}
+html[data-ui="focus"] .lab-math-scroll.block{display:block}
+html[data-ui="focus"] {
+ .stepper-list{grid-template-columns:minmax(0,1fr)}
+ .step-item{min-width:0;max-width:100%;background:var(--surface-alt);border-color:var(--border);color:var(--text)}
+ .step-item :is(h4,p,.step-why){color:var(--text);font-size:15px;line-height:1.7}
+}
+html[data-ui="focus"] {
+ .work-clock{border-block:1px solid var(--border);padding:12px 0;margin-bottom:24px;color:var(--text)}
+ .work-clock summary{font-size:13px;font-weight:500;cursor:pointer;min-height:32px;align-content:center;color:var(--muted-ink)}
+ .clock-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:8px}
+ .clock-controls label{display:flex;align-items:center;gap:8px;font-size:13px}
+ .clock-controls select{padding:8px;min-height:40px}
+ .clock-controls button{min-height:40px;padding:8px 16px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);font-size:13px}
+ .clock-controls [data-start]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+ .clock-value{font:400 28px/1.2 var(--sans);font-variant-numeric:tabular-nums;min-width:88px}
+ .work-clock [data-status]{font-size:14px;margin:8px 0 0}
+ .work-clock [data-status]:empty{display:none}
+ .clock-sound{color:var(--muted-ink)}
+ @media(max-width:680px){.clock-controls{gap:12px}.clock-controls>label:first-child{width:100%}.clock-sound{width:100%}}
+}
+html[data-ui="focus"] .prose :is(p,li){font-size:var(--font-size)}

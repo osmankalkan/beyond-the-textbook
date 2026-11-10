@@ -20,3 +20,5 @@ Yeni rehber verileri konu study.js dosyalarında; ortak arayüz core/study-guide
 - Bölüm 6 ders anlatımlarının tümüne (§6.1–§6.7) ve §7.1'e hem Türkçe hem İngilizce Markdown dosyalarında öğrenmeyi kolaylaştıran, sıkıcılığı kıran ve pratik sınav refleksleri kazandıran `> **ZİHİN MODELİ:**` ve `> **PRATİK İPUCU:**` blokları eklenmiştir. Bu bloklar LaTeX token sayılarını değiştirmemek için temiz Unicode matematik notasyonuyla biçimlendirilmiştir.
 
 Kaynak ve arşivler Git dışında tutulur. Hosting ayarlarını değiştirme; LLM henüz yoktur. Kullanıcı yeni adım seçene kadar yeni konuya geçme. Kullanıcı açıkça istemedikçe commit/push yapma.
+
+10 Kasım 2026: Kullanıcı birleşik arayüzü proje için onayladı. index.html artık varsayılan olarak focus/notebook görünümünü açar. Paylaşılan tokenlar ve görünüm denetleyicisi dist/focus-preview/ içindedir; klasör adı geçmiş önizleme aşamasından kalmıştır. Yayın/commit için ayrıca kullanıcı talimatı gerekir.

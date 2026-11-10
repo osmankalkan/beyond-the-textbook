@@ -1,0 +1,44 @@
+/* Notebook typography and margins around the existing experimental workbench. */
+html[data-ui="focus"][data-layout="notebook"] {
+ --heading:Georgia,'Times New Roman',serif;
+ --radius:8px;
+ .sidebar{background:var(--surface-alt);border-right:1px solid var(--border)}
+ .book{border-radius:0}.brand{font-size:20px;line-height:1.35}
+ .sidebar nav a{border-radius:0;border-left:2px solid transparent}
+ .sidebar nav a.active{border-left-color:var(--primary-ink);background:transparent}
+ .topbar{background:var(--bg);border-bottom:0}
+ main{padding-top:16px;max-width:1320px}
+ .page-heading{padding:24px 0 32px;border-block:1px solid var(--border);margin-bottom:16px}
+ h1{font-weight:400;font-size:clamp(36px,4vw,56px);letter-spacing:-.04em}
+ .page-description{max-width:60ch;font-size:16px;line-height:1.7}
+ .study-path-pills{gap:32px}.study-pill{padding-block:16px;font-size:14px}
+ .lab-grid{background:var(--surface);border:1px solid var(--border);border-radius:8px;gap:0;grid-template-columns:minmax(215px,25%) minmax(0,1fr)}
+ .controls-panel{border:0;border-right:1px solid var(--border);border-radius:8px 0 0 8px;background:transparent;padding:24px}
+ .plot-panel{border:0;border-radius:0 8px 8px 0;background:transparent;padding:24px 32px}
+ .plot-heading h2{font-size:28px;font-weight:400}
+ .panel-kicker{color:var(--muted-ink)}
+ .metric strong{font-size:30px}.metrics{margin-top:0;border-top:0}
+ .guided-workbench{max-width:860px;margin:40px auto 0;gap:32px}
+ .discovery-panel,.equation-panel,.calibration-panel,.stepper-panel,.exam-clinic-panel{border:0;border-top:1px solid var(--border);border-radius:0;background:transparent;padding:32px 0}
+ .discovery-panel h3,.calibration-panel h3,.stepper-panel h3,.exam-clinic-panel h3{font-size:30px;font-weight:400}
+ .equation-panel #equation{background:var(--surface-alt);border-left:2px solid var(--primary);padding:16px 24px;margin-block:16px}
+ .step-item{border-radius:6px}
+ .reading-layout{grid-template-columns:minmax(0,720px) minmax(160px,1fr)}
+ .prose{background:var(--surface);border:0;border-radius:0;padding:40px}
+ .prose h1{font-size:36px}.prose h2{font-size:29px;font-weight:400}
+ .reading-aside{border-left:1px solid var(--border);padding-left:24px}
+ .formula{border-radius:0;border-left:2px solid var(--primary)}
+ @media(max-width:1000px){
+  .lab-grid{grid-template-columns:1fr}
+  .controls-panel{border-right:0;border-bottom:1px solid var(--border);padding:20px}
+  .plot-panel{padding:24px}
+  .reading-layout{grid-template-columns:1fr}.reading-aside{border-left:0;padding-left:0}
+ }
+ @media(max-width:680px){
+  main{padding-top:8px}.page-heading{padding:24px 0}.page-description{font-size:15px}
+  .study-path-pills{gap:14px}.study-pill{font-size:13px}
+  .controls-panel,.plot-panel{padding:16px}
+  .guided-workbench{margin-top:24px}.prose{padding:24px 16px}
+  .discovery-panel,.equation-panel,.calibration-panel,.stepper-panel,.exam-clinic-panel{padding-block:24px}
+ }
+}

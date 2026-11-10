@@ -1,0 +1,11 @@
+// Stable question IDs keep prototype progress independent of the main course.
+export const questions = [
+ {id:'difference',topic:['Sıcaklık farkı','Temperature difference'],prompt:['20 °C ortamda cisim 100 °C’den 60 °C’ye 20 dakikada soğuyor. 40. dakikada sıcaklığı kaç °C olur?','In a 20 °C room a body cools from 100 °C to 60 °C in 20 minutes. What is its temperature at 40 minutes?'],choices:['30 °C','40 °C','50 °C'],answer:1,hint:['Ortama göre fark 80 → 40 → 20 olur.','The difference from ambient changes 80 → 40 → 20.'],why:['Ortamla fark iki kez yarılanır. 20 °C ortam + 20 °C fark = 40 °C.','The difference halves twice. 20 °C ambient + 20 °C difference = 40 °C.']},
+ {id:'time',topic:['Toplam ve kalan süre','Total and remaining time'],prompt:['Aynı cisim 30 °C’ye toplam 60 dakikada ulaşıyor. 20. dakikadaki ölçümden sonra kaç dakika daha gerekir?','The same body reaches 30 °C after 60 minutes in total. How much longer is needed after the observation at minute 20?'],choices:['20','40','60'],answer:1,hint:['Toplam süreden geçen süreyi çıkar.','Subtract elapsed time from total time.'],why:['60 − 20 = 40 dakika daha gerekir.','60 − 20 = 40 more minutes are needed.']},
+ {id:'equilibrium',topic:['Denge çözümü','Equilibrium solution'],prompt:['Cisim ortamla aynı sıcaklıktaysa dT/dt nedir?','If the body and ambient temperatures are equal, what is dT/dt?'],choices:['0','−k','k'],answer:0,hint:['T − Tₘ = 0 değerini modele koy.','Substitute T − Tₘ = 0 into the model.'],why:['Sıcaklık farkı sıfırdır, dolayısıyla değişim hızı sıfır olur.','The temperature difference is zero, so its rate of change is zero.']}
+];
+export const cards = [
+ {q:['Newton modelinde üstel olarak azalan nedir?','What decays exponentially in Newton’s model?'],a:['Ortamla sıcaklık farkı, T − Tₘ.','The temperature difference from ambient, T − Tₘ.']},
+ {q:['Yarılanma süresi nedir?','What is the half-life?'],a:['ln(2) / k. Burada k > 0.','ln(2) / k, where k > 0.']},
+ {q:['Ortam sıcaklığına tam olarak ne zaman ulaşılır?','When is ambient temperature reached exactly?'],a:['Başlangıçta dengede olmayan cisim için modelde sonlu zamanda ulaşılmaz.','For a body initially out of equilibrium, this model never reaches it in finite time.']}
+];
