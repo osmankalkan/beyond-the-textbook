@@ -107,6 +107,11 @@ const iMatrixVariation=rule('Matris parametre değişimi','Matrix variation of p
 const iTanIntegral=rule('Tanjant integrali','Tangent integral',integral(fn('tan',v('t'))+v('d')+v('t'))+eq+minus+fn('ln',abs(fn('cos',v('t')))));
 const iModalTransform=rule('Modal koordinat dönüşümü','Modal transformation',x+p(v('t'))+eq+v('Φ')+v('q')+p(v('t')));
 
+/* §4.4 is taught within §4.5; keep its substitution and domain explicit. */
+const dEulerFirst=rule('Euler dönüşümü: z = ln x, x > 0; 𝒟 = d/dz','Euler substitution: z = ln x, x > 0; 𝒟 = d/dz',x+prime('y')+eq+v('𝒟')+y);
+const dEulerThird=rule('Euler üçüncü türev dönüşümü (x > 0)','Euler third derivative transformation (x > 0)',pow(x,n(3))+prime('y',3)+eq+v('𝒟')+p(v('𝒟')+minus+n(1))+p(v('𝒟')+minus+n(2))+y);
+const iEulerSub=rule('Logaritmik değişkenle integral (x > 0, z = ln x)','Integration in the logarithmic variable (x > 0, z = ln x)',integral(fn('g',fn('ln',x))+f(dx,x))+eq+integral(fn('g',v('z'))+v('d')+v('z')));
+
 export const MATH_REFERENCE={
   '1.1':{
     derivative:[dPowerX,dExp,dSin,dCos,dLinear],
@@ -160,9 +165,13 @@ export const MATH_REFERENCE={
     derivative:[dPowerX,dExpChain,dLn,dSin,dCos,dSinh,dCosh,dProduct,dOperator],
     integral:[iPower,iReciprocal,iLogU,iExpA,iSin,iCos,iParts,iInverseD]
   },
+  '4.4':{
+    derivative:[dPowerX,dLn,dChain,dProduct,dEulerFirst,dEuler,dEulerThird],
+    integral:[iPower,iReciprocal,iEulerSub,iExpA,iParts,iRepeated]
+  },
   '4.5':{
-    derivative:[dPowerX,dExpChain,dExpLambda,dLn,dSin,dCos,dProduct,dChain,dOperator,dEuler],
-    integral:[iPower,iReciprocal,iLogU,iExpA,iSin,iCos,iSub,iParts,iInverseD,iLinear]
+    derivative:[dPowerX,dExpChain,dExpLambda,dLn,dSin,dCos,dProduct,dChain,dOperator,dEulerFirst,dEuler,dEulerThird],
+    integral:[iPower,iReciprocal,iLogU,iExpA,iSin,iCos,iSub,iParts,iInverseD,iLinear,iEulerSub]
   },
   '6.1':{
     derivative:[dLaplacePrime,dLaplaceSecond,dLaplaceParam,dLaplaceShift,dProduct,dQuotient,dChain],
@@ -207,6 +216,10 @@ export const MATH_REFERENCE={
   '7.4':{
     derivative:[dMatrixCharEq,dEigenCondition,dJordanChain,dFundamentalMatrixEq,dLinear],
     integral:[iMatrixVariation,iTanIntegral,iModalTransform,iLinear]
+  },
+  '7.5':{
+    derivative:[dProduct,dExpChain,dSin,dCos,dOperatorDet,dCramerOperator,dLaplacePrime,dLaplaceSecond,dHeavisideShift,dDiracLaplace,dJordanChain,dFundamentalMatrixEq],
+    integral:[iExpA,iParts,iInversePartialFrac,iInverseConvolution,iMatrixVariation,iStateTransition]
   }
 };
 

@@ -2,10 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {getMathReference, MATH_REFERENCE} from '../dist/lessons/math-reference.js';
-import {getLesson} from '../dist/content.js';
+import {getLesson, BOOKS} from '../dist/content.js';
 import {ui} from '../dist/i18n.js';
 
-const developedSections=['1.1','1.2','2.1','2.2','2.3','2.4','2.5','2.6','2.7','3.1','4.1','4.2','4.3','4.5','6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3','7.4'];
+const developedSections=BOOKS.find(book=>book.id==='xie-2010').lessons.map(lesson=>lesson.section);
+const referenceSections=[...developedSections,'4.4'];
 const wrap=fragment=>`<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>${fragment}</mrow></math>`;
 
 function assertBalancedMarkup(markup,label){
@@ -22,7 +23,7 @@ function assertBalancedMarkup(markup,label){
 }
 
 test('Every developed section has section-specific derivative and integral rules',()=>{
-  for(const section of developedSections){
+  for(const section of referenceSections){
     const reference=getMathReference(section,'tr');
     assert.ok(reference,`missing reference for §${section}`);
     assert.ok(reference.derivative.length>=4,`§${section} needs enough derivative rules`);
@@ -53,7 +54,16 @@ test('Rules follow the mathematical focus of each lesson',()=>{
   assert.ok(has('4.1','integral','Linearity'));
   assert.ok(has('4.2','derivative','Hyperbolic cosine'));
   assert.ok(has('4.3','integral','Inverse operator'));
+  for(const section of ['4.4','4.5']){
+    assert.ok(has(section,'derivative','Euler third derivative transformation (x > 0)'));
+    assert.ok(has(section,'integral','Integration in the logarithmic variable (x > 0, z = ln x)'));
+  }
   assert.ok(has('4.5','derivative','Euler operator'));
+  assert.ok(has('7.5','derivative','Transform of derivative'));
+  assert.ok(has('7.5','derivative',"Cramer's rule with operators"));
+  assert.ok(has('7.5','derivative','Generalized eigenvector chain'));
+  assert.ok(has('7.5','integral','Matrix variation of parameters'));
+  assert.ok(has('7.5','integral','Convolution theorem'));
   assert.ok(has('6.1','derivative','Transform of derivative'));
   assert.ok(has('6.1','integral','Kernel integral'));
   assert.ok(has('6.2','derivative','Second shifting theorem'));
@@ -86,7 +96,7 @@ test('Rules follow the mathematical focus of each lesson',()=>{
 });
 
 test('Reference labels are bilingual while formulas stay identical',()=>{
-  for(const section of developedSections){
+  for(const section of referenceSections){
     const tr=getMathReference(section,'tr'),en=getMathReference(section,'en');
     for(const kind of ['derivative','integral']){
       assert.equal(tr[kind].length,en[kind].length);

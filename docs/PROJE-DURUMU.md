@@ -22,3 +22,9 @@ Her hazır dersin okuma kenar çubuğunda bölüme özel bir “Türev & integra
 Hesap veya LLM entegrasyonu yoktur. Notlar/ilerleme yerel tarayıcıda ders kimliğine göre tutulur. Kaynak PDF dağıtım ve Git dışıdır. npm start yerel adresi bildirir; port 4317 doluysa sonraki port kullanılır.
 
 GitHub: https://github.com/osmankalkan/beyond-the-textbook . Yapılan son geliştirmeler yereldedir; kullanıcı açıkça istemedikçe commit/push yapılmaz ve kullanıcı incelemesi beklenir.
+
+## 10 Kasım 2026 — varsayılan çalışma arayüzü
+Onaylanan Ders Defteri/laboratuvar birleşimi artık parametresiz açılışta varsayılandır. Renk tokenları, görünüm katmanları ve ortak çalışma araçları dist/focus-preview/ altındadır. Kronometre, 25/5 sayaç, isteğe bağlı bitiş sesi, açık/koyu tema, yazı boyutu ve odak modu gerçek ders uygulamasına bağlanmıştır. Sayaç aynı sayfadaki ders/görünüm geçişlerinde çalışır; tam yenilemede sıfırlanır. Önceki arayüz ?ui=classic ile açılabilir. Ders verileri ve mevcut ilerleme kayıtları aynı uygulama tarafından yönetilir.
+
+## 10 Kasım 2026 — türev ve integral başvuru kapsamı
+§7.5 için operatör, Laplace ve matris yöntemlerini kapsayan çift dilli başvuru listesi eklendi. §4.4 Euler kuralları ayrı veri kaydı olarak tanımlandı ve konunun işlendiği §4.5 paneline de eklendi; §4.4 katalogda bağımsız bir hazır ders değildir. Euler dönüşümünde x > 0 koşulu, birinci/ikinci/üçüncü türev ve logaritmik integral değişkeni belirtilir. Kapsam testi artık hazır dersleri doğrudan katalogdan alır; 179 test geçer. §7.5 İngilizce masaüstü ve §4.5 Türkçe 390px panel açılışı kontrol edildi.
