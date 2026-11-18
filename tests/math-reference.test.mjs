@@ -5,8 +5,8 @@ import {getMathReference, MATH_REFERENCE} from '../dist/lessons/math-reference.j
 import {getLesson, BOOKS} from '../dist/content.js';
 import {ui} from '../dist/i18n.js';
 
-const developedSections=BOOKS.find(book=>book.id==='xie-2010').lessons.map(lesson=>lesson.section);
-const referenceSections=[...developedSections,'4.4'];
+const developedSections=BOOKS.flatMap(book=>book.lessons.map(lesson=>lesson.section));
+const referenceSections=[...new Set([...developedSections,'4.4'])];
 const wrap=fragment=>`<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>${fragment}</mrow></math>`;
 
 function assertBalancedMarkup(markup,label){
@@ -138,7 +138,9 @@ test('Lesson markup, app wiring and UI labels expose the reference drawer',()=>{
     assert.match(ui(lang,'mathReferenceEyebrow','3.1'),/§3\.1/);
     assert.match(ui(lang,'mathReferenceIntro','3.1'),/§3\.1/);
   }
-  for(const section of developedSections){
-    assert.equal(getLesson(`xie-2010:${section}`,'tr').lesson.section,section);
+  for(const book of BOOKS){
+    for(const lesson of book.lessons){
+      assert.equal(getLesson(lesson.id,'tr').lesson.section,lesson.section);
+    }
   }
 });

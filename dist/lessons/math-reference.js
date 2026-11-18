@@ -112,6 +112,18 @@ const dEulerFirst=rule('Euler dönüşümü: z = ln x, x > 0; 𝒟 = d/dz','Eule
 const dEulerThird=rule('Euler üçüncü türev dönüşümü (x > 0)','Euler third derivative transformation (x > 0)',pow(x,n(3))+prime('y',3)+eq+v('𝒟')+p(v('𝒟')+minus+n(1))+p(v('𝒟')+minus+n(2))+y);
 const iEulerSub=rule('Logaritmik değişkenle integral (x > 0, z = ln x)','Integration in the logarithmic variable (x > 0, z = ln x)',integral(fn('g',fn('ln',x))+f(dx,x))+eq+integral(fn('g',v('z'))+v('d')+v('z')));
 
+/* Kurose & Ross §1.4: Packet delay, store-and-forward pipelining, BDP, and throughput relations. */
+const dNetTrans=rule('İletim gecikmesi (L bit, R bps)','Transmission delay (L bits, R bps)',sub(v('d'),v('trans'))+eq+f(v('L'),v('R')));
+const dNetProp=rule('Yayılma gecikmesi (d metre, v m/sn)','Propagation delay (d meters, v m/s)',sub(v('d'),v('prop'))+eq+f(v('d'),v('v')));
+const dNetNodal=rule('Toplam düğüm gecikmesi','Total nodal delay',sub(v('d'),v('nodal'))+eq+sub(v('d'),v('proc'))+plus+sub(v('d'),v('queue'))+plus+sub(v('d'),v('trans'))+plus+sub(v('d'),v('prop')));
+const dNetBdp=rule('Bant genişliği–gecikme çarpımı (BDP)','Bandwidth-delay product (BDP)',v('BDP')+eq+v('R')+o('·')+sub(v('d'),v('prop'))+eq+v('R')+o('·')+f(v('d'),v('v')));
+const dNetBitWidth=rule('Bir bitin kablodaki fiziksel boyu','Physical spatial width of one bit',sub(v('w'),v('bit'))+eq+f(v('v'),v('R')));
+const iNetSingleHop=rule('N özdeş bağlantıda tek paket (Denklem 1.2)','Single packet across N identical links (Equation 1.2)',sub(v('d'),v('end'))+eq+v('N')+p(sub(v('d'),v('proc'))+plus+f(v('L'),v('R'))+plus+f(v('d'),v('v'))));
+const iNetPipeline=rule('N özdeş bağlantıda P paket boru hattı (Pipelining)','Pipelining P packets across N identical links',sub(v('d'),v('end'))+p(v('P')+o(',')+v('N'))+eq+p(v('N')+plus+v('P')+minus+n(1))+f(v('L'),v('R'))+plus+v('N')+f(v('d'),v('v')));
+const iNetQueueBurst=rule('Darboğaz yönlendiricide p. paketin kuyruk beklemesi (R₁ > R₂)','Queuing delay of packet p at bottleneck router (R₁ > R₂)',sub(v('d'),v('queue')+o(',')+v('p'))+eq+p(v('p')+minus+n(1))+p(f(v('L'),sub(v('R'),n(2)))+minus+f(v('L'),sub(v('R'),n(1)))));
+const iNetThroughput=rule('Darboğaz bağlantı ve uçtan uca verim','Bottleneck link and end-to-end throughput',sub(v('R'),v('end'))+eq+fn('min',sub(v('R'),n(1))+o(',')+sub(v('R'),n(2))+o(',')+o('…')+o(',')+sub(v('R'),v('N'))));
+const iNetTrafficIntensity=rule('Trafik yoğunluğu ve kararlı kuyruk koşulu','Traffic intensity and stable queue condition',v('I')+eq+f(v('L')+v('a'),v('R'))+o('<')+n(1));
+
 export const MATH_REFERENCE={
   '1.1':{
     derivative:[dPowerX,dExp,dSin,dCos,dLinear],
@@ -120,6 +132,10 @@ export const MATH_REFERENCE={
   '1.2':{
     derivative:[dPowerX,dExpChain,dLn,dSin,dCos,dProduct,dChain,dImplicit],
     integral:[iPower,iReciprocal,iExp,iSin,iCos,iSub,iFTC]
+  },
+  '1.4':{
+    derivative:[dNetTrans,dNetProp,dNetNodal,dNetBdp,dNetBitWidth],
+    integral:[iNetSingleHop,iNetPipeline,iNetQueueBurst,iNetThroughput,iNetTrafficIntensity]
   },
   '2.1':{
     derivative:[dPowerX,dPowerU,dExpChain,dLn,dChain,dProduct,dArctan],
