@@ -2,7 +2,7 @@
 
 A bilingual learning workspace for studying textbooks through notes, guided reasoning, interactive experiments, worked problems, and a personal notebook.
 
-Twenty-six sections of Wei-Chau Xie's *Differential Equations for Engineers* are available in Turkish and English:
+Twenty-six sections of Wei-Chau Xie's *Differential Equations for Engineers* and the first section (§1.4 / §1.3.1) of James F. Kurose & Keith W. Ross's *Computer Networking: A Top-Down Approach* (8th Edition) are available in Turkish and English:
 
 | Chapter | Section | Topic | Core Focus & Interactive Lab |
 | :--- | :--- | :--- | :--- |
@@ -32,6 +32,7 @@ Twenty-six sections of Wei-Chau Xie's *Differential Equations for Engineers* are
 | | **§7.3** | Method of Laplace Transform | Initial condition absorption, s-domain Cramer, ZIR/ZSR, delayed forcing |
 | | **§7.4** | The Matrix Method | Eigenvalue spectrum, invariant rays, defective matrices, fundamental matrix inversion, sec(t) forcing |
 | | **§7.5** | Summary: Linear Systems | Operator, Laplace & Matrix synthesis, 60-s triage, 10 diagnostic cards, comparison matrix |
+| **Kurose & Ross Ch 1** | **§1.4 (§1.3.1)** | Transmission, Propagation & Store-and-Forward | L/R vs d/v, store-and-forward pipelining, BDP, bottleneck queuing, discrete-event & space-time simulator |
 
 Every developed lesson includes guided derivations with conceptual predictions, an interactive dual-curve SVG laboratory, four fully worked exam clinic problems (with trap analysis and scoring rubric), and a section-aware derivative/integral reference drawer in Turkish and English.
 

@@ -4,7 +4,7 @@ Bu belge bütün ajanlar ve geliştiriciler için bağlayıcıdır. Kullanıcın
 
 ## Amaç ve kalite standardı
 
-Sistem, birden fazla kitabı Türkçe ve İngilizce ders notu, rehberli düşünme, deney, ayrıntılı sınav çözümü ve kişisel notlarla çalışılabilir hale getirir. Hazır dersler Xie §1.1, §1.2, §2.1–§2.7, §3.1, §4.1–§4.5, §6.1–§6.7 ve §7.1–§7.5’tir (toplam 26 ders). Diğer başlıklar içindekiler haritasıdır. §3.1 öğrenme derinliği referansıdır; arayüzü körlemesine kopyalamak kalite sayılmaz.
+Sistem, birden fazla kitabı Türkçe ve İngilizce ders notu, rehberli düşünme, deney, ayrıntılı sınav çözümü ve kişisel notlarla çalışılabilir hale getirir. Hazır dersler Xie §1.1, §1.2, §2.1–§2.7, §3.1, §4.1–§4.5, §6.1–§6.7 ve §7.1–§7.5 (26 ders) ile Kurose & Ross (8. Baskı) §1.4 (§1.3.1 store-and-forward ile birlikte, 1 ders) olmak üzere toplam 27 derstir. Diğer başlıklar içindekiler haritasıdır. §3.1 öğrenme derinliği referansıdır; arayüzü körlemesine kopyalamak kalite sayılmaz.
 
 Her yeni konu kaynak sayfalarından doğrulanır. Konuya uygun tahmin → gerekçe → türetim → deney → doğrulama → alıştırma akışı tasarlanır. Sınav kliniği ara işlemleri, varsayımları, hata tuzaklarını, çözüm aralığını ve puan anahtarını açıklar. Özgün uygulama soruları kitaptan veya gerçek sınavdan alınmış gibi sunulmaz. Her konu sonrası kullanıcı incelemesi beklenir.
 
