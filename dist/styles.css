@@ -193,3 +193,26 @@ body.math-reference-open{overflow:hidden}
 .prose .lesson-figure svg{display:block;width:100%;height:auto;border-radius:8px;background:#fbfcf8;border:1px solid #dce5d2}
 .prose .lesson-figure figcaption{margin-top:12px;font-size:13px;line-height:1.55;color:#5d6c53}
 .prose .lesson-figure figcaption strong{color:#2f593b}
+.library-book{transition:border-color .18s,box-shadow .18s}
+.library-book.is-current-book{border-color:#8eb07c}
+.library-book.is-expanded{border-color:#28694d;box-shadow:0 6px 22px #23393112}
+.library-book-header[data-toggle-book]{cursor:pointer;user-select:none;border-radius:8px;padding:6px;margin:-6px;transition:background .15s}
+.library-book-header[data-toggle-book]:hover{background:#f4f7ef}
+.library-book-eyebrow-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.library-book-eyebrow-row .eyebrow{margin-bottom:0}
+.library-active-book-pill{font-size:9px;font-weight:700;letter-spacing:.7px;color:#245b42;background:#dcead4;padding:3px 8px;border-radius:12px}
+.library-book-cta{display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex:none}
+.library-book-contents{display:grid;gap:20px;border-top:1px solid var(--line);padding-top:20px;margin-top:4px}
+.library-contents-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.library-contents-toolbar .eyebrow{margin:0}
+.library-chapter-groups{display:grid;gap:18px}
+.library-chapter-group{display:grid;gap:10px;padding:16px 18px;border:1px solid #e1e8d7;border-radius:9px;background:#f7f9f3}
+.library-chapter-group-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.library-chapter-group-head strong{font-size:13px;color:#2c4735}
+.library-chapter-group-head small{margin-left:auto;font-size:10px;font-weight:600;color:#627b56}
+.library-chapter-group .library-lessons{border-top:0;padding-top:4px}
+.library-upcoming-box{padding:16px 18px;border:1px dashed #cfd9c2;border-radius:9px;background:#fafbf7}
+.library-upcoming-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:10px}
+.library-upcoming-chip{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px;border:1px solid #e3eadb;border-radius:7px;background:#fff}
+.library-upcoming-chip strong{font-size:12px;color:#334e3a;line-height:1.4}
+@media(max-width:680px){.library-book-header{flex-direction:column}.library-book-cta{width:100%;flex-direction:row;justify-content:space-between;align-items:center}}

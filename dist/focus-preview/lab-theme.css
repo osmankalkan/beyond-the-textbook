@@ -149,3 +149,12 @@ html[data-ui="focus"] {
  @media(max-width:680px){.clock-controls{gap:12px}.clock-controls>label:first-child{width:100%}.clock-sound{width:100%}}
 }
 html[data-ui="focus"] .prose :is(p,li){font-size:var(--font-size)}
+html[data-ui="focus"] {
+ .library-book-header[data-toggle-book]:hover{background:var(--surface-alt)}
+ .library-chapter-group,.library-upcoming-box{background:var(--surface-alt);border-color:var(--border)}
+ .library-chapter-group-head strong,.library-upcoming-chip strong{color:var(--text)}
+ .library-upcoming-chip,.library-lesson-card{background:var(--surface);border-color:var(--border)}
+ .library-lesson-card.active-lesson{border-color:var(--accent)}
+ .library-lesson-main h4{color:var(--text)}
+ .library-lesson-main p,.library-book-summary,.library-book-meta{color:var(--muted-ink)}
+}

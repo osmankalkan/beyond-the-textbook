@@ -382,40 +382,96 @@ function selectBookForMap(bookId){
   else location.hash='map';
 }
 
+let expandedLibraryBookId=null;
+
 function renderLibrary(){
   $('#library-list').innerHTML=BOOKS.map(rawBook=>{
     const book=localizeBook(rawBook,lang);
-    const lessonsHtml=book.lessons.map(lesson=>{
+    const isExpanded=expandedLibraryBookId===book.id;
+    const isCurrentBook=book.id===currentBook.id;
+    let bookCompleted=0,bookTotal=0;
+    const chapterGroups=[];
+    const groupMap=new Map();
+    for(const lesson of book.lessons){
       const stats=countLessonProgress(progressByLesson[lesson.id],lesson);
-      const isCurrent=lesson.id===currentLesson.id;
-      return `<div class="library-lesson-card ${isCurrent?'active-lesson':''}">
-        <div class="library-lesson-main">
-          <div class="library-lesson-meta"><span class="chapter-pill">${escape(t('chapterBadge',lesson.chapterNumber))} · §${escape(lesson.section)}</span><span>${escape(t('printedAndPdfPages',lesson.pages,lesson.pdfPages))}</span></div>
-          <h4>${escape(lesson.title)}</h4>
-          <p>${escape(lesson.subtitle)}</p>
-        </div>
-        <div class="library-lesson-actions">
-          <span class="library-progress-pill" title="${escape(t('progressPillTitle'))}">${escape(t('progressPill',stats.completed,stats.total))}</span>
-          <button type="button" class="button secondary" data-open-lesson="${escape(lesson.id)}" data-target-view="lesson">${escape(t('lessonBtn'))}</button>
-          <button type="button" class="button secondary" data-open-lesson="${escape(lesson.id)}" data-target-view="practice">${escape(lesson.presentation?.practice||t('examPrepBtn'))}</button>
-          <button type="button" class="button primary" data-open-lesson="${escape(lesson.id)}" data-target-view="lab">${escape(lesson.presentation?.lab||t('labBtn'))}</button>
-        </div>
-      </div>`;
+      bookCompleted+=stats.completed;
+      bookTotal+=stats.total;
+      let group=groupMap.get(lesson.chapterNumber);
+      if(!group){
+        group={chapterNumber:lesson.chapterNumber,chapterTitle:lesson.chapterTitle,lessons:[]};
+        groupMap.set(lesson.chapterNumber,group);
+        chapterGroups.push(group);
+      }
+      group.lessons.push(lesson);
+    }
+    const chapterGroupsHtml=chapterGroups.map(group=>{
+      const lessonsHtml=group.lessons.map(lesson=>{
+        const stats=countLessonProgress(progressByLesson[lesson.id],lesson);
+        const isCurrent=lesson.id===currentLesson.id;
+        return `<div class="library-lesson-card ${isCurrent?'active-lesson':''}">
+          <div class="library-lesson-main">
+            <div class="library-lesson-meta"><span class="chapter-pill">${escape(t('chapterBadge',lesson.chapterNumber))} · §${escape(lesson.section)}</span><span>${escape(t('printedAndPdfPages',lesson.pages,lesson.pdfPages))}</span></div>
+            <h4>${escape(lesson.title)}</h4>
+            <p>${escape(lesson.subtitle)}</p>
+          </div>
+          <div class="library-lesson-actions">
+            <span class="library-progress-pill" title="${escape(t('progressPillTitle'))}">${escape(t('progressPill',stats.completed,stats.total))}</span>
+            <button type="button" class="button secondary" data-open-lesson="${escape(lesson.id)}" data-target-view="lesson">${escape(t('lessonBtn'))}</button>
+            <button type="button" class="button secondary" data-open-lesson="${escape(lesson.id)}" data-target-view="practice">${escape(lesson.presentation?.practice||t('examPrepBtn'))}</button>
+            <button type="button" class="button primary" data-open-lesson="${escape(lesson.id)}" data-target-view="lab">${escape(lesson.presentation?.lab||t('labBtn'))}</button>
+          </div>
+        </div>`;
+      }).join('');
+      return `<section class="library-chapter-group">
+        <header class="library-chapter-group-head">
+          <span class="chapter-pill">${escape(t('chapterBadge',group.chapterNumber))}</span>
+          <strong>${escape(group.chapterTitle)}</strong>
+          <small>${escape(t('bookChapterGroupCount',group.lessons.length))}</small>
+        </header>
+        <div class="library-lessons">${lessonsHtml}</div>
+      </section>`;
     }).join('');
-    return `<article class="panel library-book">
-      <div class="library-book-header">
+    const upcomingChapters=book.chapters
+      .map((c,i)=>({num:String(i+1).padStart(2,'0'),title:lang==='en'?c[1]:c[0],page:c[2],pdfPage:c[2]+book.pdfPageOffset}))
+      .filter(ch=>!groupMap.has(ch.num));
+    const upcomingHtml=upcomingChapters.length?`<div class="library-upcoming-box">
+      <p class="eyebrow">${escape(t('bookOtherChaptersTitle',upcomingChapters.length))}</p>
+      <div class="library-upcoming-grid">
+        ${upcomingChapters.map(ch=>`<div class="library-upcoming-chip"><span class="chapter-pill">${escape(t('chapterBadge',ch.num))}</span><strong>${escape(ch.title)}</strong><small>${escape(t('printedAndPdfShort',ch.page,ch.pdfPage))}</small></div>`).join('')}
+      </div>
+    </div>`:'';
+    return `<article class="panel library-book ${isExpanded?'is-expanded':''} ${isCurrentBook?'is-current-book':''}" data-book-id="${escape(book.id)}">
+      <div class="library-book-header" data-toggle-book="${escape(book.id)}" role="button" tabindex="0" aria-expanded="${String(isExpanded)}">
         <div class="library-cover" aria-hidden="true">${coverMarkup(book)}</div>
         <div class="library-book-info">
-          <p class="eyebrow">${escape(t('bookCardEyebrow',book.chapters.length,book.lessons.length))}</p>
+          <div class="library-book-eyebrow-row">
+            <p class="eyebrow">${escape(t('bookCardEyebrow',book.chapters.length,book.lessons.length))}</p>
+            ${isCurrentBook?`<span class="library-active-book-pill">${escape(t('bookActiveBadge'))}</span>`:''}
+          </div>
           <h3>${escape(book.title)}</h3>
           <p class="library-book-meta">${escape(book.author)} · ${escape(book.publisher)}, ${book.year}</p>
           <p class="library-book-summary">${escape(book.summary)}</p>
         </div>
-        <button type="button" class="button secondary" data-open-book-map="${escape(book.id)}">${escape(t('bookMapBtn',book.chapters.length))}</button>
+        <div class="library-book-cta">
+          <span class="library-progress-pill" title="${escape(t('progressPillTitle'))}">${escape(t('bookTotalProgress',bookCompleted,bookTotal))}</span>
+          <span class="button ${isExpanded?'secondary':'primary'} library-toggle-pill">${escape(isExpanded?t('bookHideContentsBtn'):t('bookShowContentsBtn',book.lessons.length))}</span>
+        </div>
       </div>
-      <div class="library-lessons">${lessonsHtml}</div>
+      <div class="library-book-contents" ${isExpanded?'':'hidden'}>
+        <div class="library-contents-toolbar">
+          <p class="eyebrow">${escape(t('bookContentsReadyHeading',book.lessons.length,book.chapters.length))}</p>
+          <button type="button" class="button secondary" data-open-book-map="${escape(book.id)}">${escape(t('bookMapBtn',book.chapters.length))}</button>
+        </div>
+        <div class="library-chapter-groups">${chapterGroupsHtml}</div>
+        ${upcomingHtml}
+      </div>
     </article>`;
   }).join('');
+}
+
+function toggleLibraryBook(bookId){
+  expandedLibraryBookId=expandedLibraryBookId===bookId?null:bookId;
+  renderLibrary();
 }
 
 $('#library-list').addEventListener('click',e=>{
@@ -427,6 +483,20 @@ $('#library-list').addEventListener('click',e=>{
   const mapBtn=e.target.closest('[data-open-book-map]');
   if(mapBtn){
     selectBookForMap(mapBtn.dataset.openBookMap);
+    return;
+  }
+  const bookToggle=e.target.closest('[data-toggle-book]');
+  if(bookToggle){
+    toggleLibraryBook(bookToggle.dataset.toggleBook);
+  }
+});
+
+$('#library-list').addEventListener('keydown',e=>{
+  if(e.key!=='Enter'&&e.key!==' ')return;
+  const bookToggle=e.target.closest('[data-toggle-book]');
+  if(bookToggle&&e.target===bookToggle){
+    e.preventDefault();
+    toggleLibraryBook(bookToggle.dataset.toggleBook);
   }
 });
 
