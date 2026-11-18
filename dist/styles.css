@@ -189,3 +189,7 @@ body.math-reference-open{overflow:hidden}
   .math-reference-body{padding:18px 20px 30px}
   .math-reference-group math{font-size:18px}
 }
+.prose .lesson-figure{margin:24px 0;padding:18px 20px;background:#f4f8ef;border:1px solid #dce5d2;border-radius:10px}
+.prose .lesson-figure svg{display:block;width:100%;height:auto;border-radius:8px;background:#fbfcf8;border:1px solid #dce5d2}
+.prose .lesson-figure figcaption{margin-top:12px;font-size:13px;line-height:1.55;color:#5d6c53}
+.prose .lesson-figure figcaption strong{color:#2f593b}

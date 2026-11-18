@@ -234,10 +234,17 @@ function applyStaticTranslations(){
 
 function renderMathReference(){
   const reference=getMathReference(currentLesson.section,lang);
+  const bookUi=currentBook.uiPresentation||{};
   const itemHtml=item=>`<li><span>${escape(item.label)}</span>${math(item.math)}</li>`;
   const empty=`<li class="math-reference-empty">${escape(t('mathReferenceEmpty'))}</li>`;
+  $('#math-reference-open-title').textContent=bookUi.mathReferenceOpen||t('mathReferenceOpen');
+  $('#math-reference-open-hint').textContent=bookUi.mathReferenceOpenHint||t('mathReferenceOpenHint');
+  $('#math-reference-open').setAttribute('aria-label',bookUi.mathReferenceOpen||t('mathReferenceOpen'));
+  $('#math-reference-title').textContent=bookUi.mathReferenceTitle||t('mathReferenceTitle');
+  $('#math-reference-derivative-title').textContent=bookUi.mathReferenceDerivative||t('mathReferenceDerivative');
+  $('#math-reference-integral-title').textContent=bookUi.mathReferenceIntegral||t('mathReferenceIntegral');
   $('#math-reference-eyebrow').textContent=t('mathReferenceEyebrow',currentLesson.section);
-  $('#math-reference-intro').textContent=t('mathReferenceIntro',currentLesson.section);
+  $('#math-reference-intro').textContent=bookUi.mathReferenceIntro||t('mathReferenceIntro',currentLesson.section);
   $('#math-reference-derivative').innerHTML=reference?reference.derivative.map(itemHtml).join(''):empty;
   $('#math-reference-integral').innerHTML=reference?reference.integral.map(itemHtml).join(''):empty;
 }
@@ -277,6 +284,9 @@ function applyActiveContext(){
   $('#source-model-limits').textContent=currentLesson.modelLimits;
   $('#source-download').href=currentLesson.lessonPath;
   $('#source-download').setAttribute('download',currentLesson.downloadName);
+  const bookUi=currentBook.uiPresentation||{};
+  $('#chapter-search').setAttribute('placeholder',bookUi.mapSearchPlaceholder||t('mapSearchPlaceholder'));
+  $('#footer-motto').textContent=bookUi.footerMotto||t('footerMotto');
   $('#footer-source').textContent=`${t('footerSourcePrefix')} ${currentBook.author.split(' ').at(-1)} · §${currentLesson.section} ↗`;
   const presentation=currentLesson.presentation||{};
   $('#meta-description').setAttribute('content',currentLesson.subtitle);
@@ -999,7 +1009,8 @@ const labHost=createLabHost({
   'matrix-systems':()=>import('./labs/matrix-systems/controller.js'),
   'systems-summary':()=>import('./labs/systems-summary/controller.js'),
   'summary':()=>import('./labs/summary/controller.js'),
-  'concepts-foundations':()=>import('./labs/concepts/controller.js')
+  'concepts-foundations':()=>import('./labs/concepts/controller.js'),
+  'packet-delay':()=>import('./labs/packet-delay/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));
 async function activateLab(){

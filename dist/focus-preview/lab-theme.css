@@ -83,6 +83,27 @@ html[data-ui="focus"] {
  .reading-layout{grid-template-columns:minmax(0,720px) minmax(180px,1fr);gap:32px}
  .prose{font-size:18px;line-height:1.7;padding:32px;color:var(--text)}
  .prose :is(p,li){font-size:18px;line-height:1.7;color:var(--text)}.prose :is(h1,h2,h3,strong){color:var(--text)}
+ .prose .table-wrap{background:var(--surface-alt);border-color:var(--border)}
+ .prose table{background:var(--surface);color:var(--text)}
+ .prose th{background:var(--surface-alt);color:var(--primary-ink);border-color:var(--border)}
+ .prose td{background:var(--surface);color:var(--text);border-color:var(--border)}
+ .prose tr:nth-child(even) td{background:var(--surface-alt)}
+ .prose blockquote{background:var(--surface-alt);color:var(--text);border-left-color:var(--primary)}
+ .prose code{background:var(--surface-alt);color:var(--text);border-color:var(--border)}
+ .prose .lesson-figure{margin:24px 0;padding:18px 20px;background:var(--surface-alt);border:1px solid var(--border);border-radius:10px}
+ .prose .lesson-figure svg{display:block;width:100%;height:auto;border-radius:8px;background:var(--surface);border:1px solid var(--border)}
+ .prose .lesson-figure figcaption{margin-top:12px;font-size:13.5px;line-height:1.55;color:var(--muted-ink)}
+ .prose .lesson-figure figcaption strong{color:var(--primary-ink)}
+ .math-reference-trigger{background:var(--surface-alt);color:var(--text);border-color:var(--border)}
+ .math-reference-trigger strong{color:var(--text)}
+ .math-reference-trigger small,.math-reference-trigger-arrow{color:var(--muted-ink)}
+ .math-reference-sheet{background:var(--surface);color:var(--text);border-left-color:var(--border)}
+ .math-reference-head{background:var(--surface);border-bottom-color:var(--border)}
+ .math-reference-head h2,.math-reference-group h3{color:var(--text)}
+ .math-reference-head p,.math-reference-group li span{color:var(--muted-ink)}
+ .math-reference-group li{background:var(--surface-alt);color:var(--text);border-color:var(--border)}
+ .math-reference-group li math{color:var(--text)}
+ .math-reference-close{background:var(--surface-alt);color:var(--text);border-color:var(--border)}
  .formula{background:var(--surface-alt);border:0}.reading-aside{font-size:14px;color:var(--muted-ink)}
  .exercise :is(p,label),.exercise .feedback{font-size:16px;color:var(--text)}
  .exercise .choice{background:var(--surface-alt);border-color:var(--border)}

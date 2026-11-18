@@ -23,6 +23,7 @@ import {matrixSystemsLesson} from './lessons/xie-2010/7-4/content.js';
 import {systemsSummaryLesson} from './lessons/xie-2010/7-5/content.js';
 import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
+import {packetDelayLesson} from './lessons/kurose-ross-8e/1-4/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
 
 export const LEGACY_LESSON_ID = 'xie-2010:3.1';
@@ -1059,6 +1060,120 @@ export const BOOKS = [
         498,
         '12.1 Kapalı biçimde çözümler · s.499|12.2 Seri çözümleri · s.512|12.3 Sayısal çözümler · s.517',
         '12.1 Closed-Form Solutions · p. 499|12.2 Series Solutions · p. 512|12.3 Numerical Solutions · p. 517'
+      ]
+    ]
+  },
+  {
+    id: 'kurose-ross-8e',
+    title: 'Computer Networking: A Top-Down Approach',
+    shortTitle: {
+      tr: 'Bilgisayar Ağları',
+      en: 'Computer Networking'
+    },
+    author: 'James F. Kurose & Keith W. Ross',
+    year: 2021,
+    publisher: 'Pearson (8th Edition)',
+    pdfPages: 775,
+    pdfPageOffset: 11,
+    coverLines: ['COMPUTER', 'NETWORKING', 'TOP-DOWN · 8E'],
+    coverSymbol: '⇄',
+    summary: {
+      tr: 'Uygulama katmanından fiziksel katmana yukarıdan aşağıya bilgisayar ağları: paket anahtarlama, iletim/yayılma gecikmeleri, store-and-forward boru hattı, HTTP/DNS, güvenilir veri aktarımı (TCP), yönlendirme, yerel ağlar, kablosuz ağlar ve ağ güvenliği.',
+      en: 'Computer networking from the application layer down to the physical layer: packet switching, transmission and propagation delays, store-and-forward pipelining, HTTP/DNS, reliable data transfer (TCP), routing, LANs, wireless networks, and network security.'
+    },
+    uiPresentation: {
+      mapSearchPlaceholder: {
+        tr: 'Konu ara: paket anahtarlama, store-and-forward, TCP, DNS, BGP…',
+        en: 'Search topics: packet switching, store-and-forward, TCP, DNS, BGP…'
+      },
+      footerMotto: {
+        tr: 'Her paket, uçtan uca bir protokol ve zamanlama öyküsü taşır.',
+        en: 'Every packet carries an end-to-end story of protocols and timing.'
+      },
+      mathReferenceOpen: {
+        tr: 'Gecikme & verim formülleri',
+        en: 'Delay & throughput formulas'
+      },
+      mathReferenceOpenHint: {
+        tr: 'Bu bölüm için temel ağ bağıntıları',
+        en: 'Core networking relations for this section'
+      },
+      mathReferenceTitle: {
+        tr: 'Gecikme, BDP ve boru hattı bağıntıları',
+        en: 'Delay, BDP, and pipelining relations'
+      },
+      mathReferenceIntro: {
+        tr: '§1.4 dersinde kullanılan temel gecikme, Bant Genişliği–Gecikme Çarpımı (BDP), store-and-forward boru hattı ve darboğaz verim formülleri.',
+        en: 'Core nodal delay, Bandwidth-Delay Product (BDP), store-and-forward pipelining, and bottleneck throughput formulas used in §1.4.'
+      },
+      mathReferenceDerivative: {
+        tr: 'Tek bağlantı gecikme ve dalga bağıntıları',
+        en: 'Single-link delay and wave relations'
+      },
+      mathReferenceIntegral: {
+        tr: 'Çok bağlantılı boru hattı, kuyruk ve verim bağıntıları',
+        en: 'Multi-link pipelining, queuing, and throughput relations'
+      }
+    },
+    lessons: [
+      packetDelayLesson
+    ],
+    chapters: [
+      [
+        'Bilgisayar ağları ve İnternet',
+        'Computer Networks and the Internet',
+        1,
+        '1.1 İnternet nedir? · s.2|1.2 Ağ kenarı (erişim ağları ve fiziksel ortam) · s.9|1.3 Ağ çekirdeği (paket anahtarlama, store-and-forward, devre anahtarlama) · s.22|1.4 Paket anahtarlamalı ağlarda gecikme, kayıp ve verim (iletim vs yayılma, store-and-forward) · s.35|1.5 Protokol katmanları ve hizmet modelleri · s.47|1.6 Saldırı altındaki ağlar · s.54|1.7 Bilgisayar ağlarının ve İnternet’in tarihçesi · s.58|1.8 Özet · s.64',
+        '1.1 What Is the Internet? · p. 2|1.2 The Network Edge (Access Networks & Physical Media) · p. 9|1.3 The Network Core (Packet Switching, Store-and-Forward, Circuit Switching) · p. 22|1.4 Delay, Loss, and Throughput in Packet-Switched Networks (Transmission vs Propagation, Store-and-Forward) · p. 35|1.5 Protocol Layers and Their Service Models · p. 47|1.6 Networks Under Attack · p. 54|1.7 History of Computer Networking and the Internet · p. 58|1.8 Summary · p. 64'
+      ],
+      [
+        'Uygulama katmanı',
+        'Application Layer',
+        81,
+        '2.1 Ağ uygulamalarının ilkeleri · s.82|2.2 Web ve HTTP · s.95|2.3 İnternet’te elektronik posta (SMTP) · s.116|2.4 DNS — İnternet’in dizin hizmeti · s.122|2.5 Eşler arası (P2P) dosya dağıtımı · s.136|2.6 Video akışı ve içerik dağıtım ağları (CDN) · s.143|2.7 Soket programlama (UDP ve TCP) · s.152|2.8 Özet · s.165',
+        '2.1 Principles of Network Applications · p. 82|2.2 The Web and HTTP · p. 95|2.3 Electronic Mail in the Internet (SMTP) · p. 116|2.4 DNS—The Internet’s Directory Service · p. 122|2.5 Peer-to-Peer File Distribution · p. 136|2.6 Video Streaming and Content Distribution Networks · p. 143|2.7 Socket Programming: Creating Network Applications · p. 152|2.8 Summary · p. 165'
+      ],
+      [
+        'Taşıma katmanı',
+        'Transport Layer',
+        181,
+        '3.1 Giriş ve taşıma katmanı hizmetleri · s.182|3.2 Çoklama ve çoğul çözme · s.187|3.3 Bağlantısız taşıma: UDP · s.194|3.4 Güvenilir veri aktarım ilkeleri (rdt, GBN, SR) · s.200|3.5 Bağlantı yönelimli taşıma: TCP · s.227|3.6 Tıkanıklık denetimi ilkeleri · s.255|3.7 TCP tıkanıklık denetimi · s.263|3.8 Taşıma katmanı işlevselliğinin evrimi · s.279|3.9 Özet · s.282',
+        '3.1 Introduction and Transport-Layer Services · p. 182|3.2 Multiplexing and Demultiplexing · p. 187|3.3 Connectionless Transport: UDP · p. 194|3.4 Principles of Reliable Data Transfer (rdt, GBN, SR) · p. 200|3.5 Connection-Oriented Transport: TCP · p. 227|3.6 Principles of Congestion Control · p. 255|3.7 TCP Congestion Control · p. 263|3.8 Evolution of Transport-Layer Functionality · p. 279|3.9 Summary · p. 282'
+      ],
+      [
+        'Ağ katmanı: Veri düzlemi',
+        'The Network Layer: Data Plane',
+        303,
+        '4.1 Ağ katmanına genel bakış · s.304|4.2 Bir yönlendiricinin içinde ne var? · s.311|4.3 İnternet Protokolü (IP): IPv4, adresleme, NAT, IPv6 · s.330|4.4 Genelleştirilmiş iletim ve SDN · s.353|4.5 Ara kutular (Middleboxes) · s.360|4.6 Özet · s.364',
+        '4.1 Overview of Network Layer · p. 304|4.2 What’s Inside a Router? · p. 311|4.3 The Internet Protocol (IP): IPv4, Addressing, IPv6, and More · p. 330|4.4 Generalized Forwarding and SDN · p. 353|4.5 Middleboxes · p. 360|4.6 Summary · p. 364'
+      ],
+      [
+        'Ağ katmanı: Denetim düzlemi',
+        'The Network Layer: Control Plane',
+        377,
+        '5.1 Giriş · s.378|5.2 Yönlendirme algoritmaları (Link-State ve Distance-Vector) · s.380|5.3 İnternet’te AS içi yönlendirme: OSPF · s.395|5.4 İSS’ler arası yönlendirme: BGP · s.399|5.5 SDN denetim düzlemi · s.411|5.6 ICMP: İnternet Denetim Mesajı Protokolü · s.423|5.7 Ağ yönetimi ve SNMP, NETCONF/YANG · s.425|5.8 Özet · s.436',
+        '5.1 Introduction · p. 378|5.2 Routing Algorithms (Link-State & Distance-Vector) · p. 380|5.3 Intra-AS Routing in the Internet: OSPF · p. 395|5.4 Routing Among the ISPs: BGP · p. 399|5.5 The SDN Control Plane · p. 411|5.6 ICMP: The Internet Control Message Protocol · p. 423|5.7 Network Management and SNMP, NETCONF/YANG · p. 425|5.8 Summary · p. 436'
+      ],
+      [
+        'Bağlantı katmanı ve yerel ağlar (LAN)',
+        'The Link Layer and LANs',
+        449,
+        '6.1 Bağlantı katmanına giriş · s.450|6.2 Hata sezme ve düzeltme teknikleri (Eşlik, sağlama toplamı, CRC) · s.454|6.3 Çoklu erişim bağlantıları ve protokolleri · s.461|6.4 Anahtarlamalı yerel alan ağları (ARP, Ethernet, VLAN) · s.477|6.5 Bağlantı sanallaştırma: MPLS · s.501|6.6 Veri merkezi ağları · s.505|6.7 Geriye bakış: Bir web sayfası isteğinin yaşamında bir gün · s.512|6.8 Özet · s.518',
+        '6.1 Introduction to the Link Layer · p. 450|6.2 Error-Detection and -Correction Techniques · p. 454|6.3 Multiple Access Links and Protocols · p. 461|6.4 Switched Local Area Networks (ARP, Ethernet, VLANs) · p. 477|6.5 Link Virtualization: A Network as a Link Layer (MPLS) · p. 501|6.6 Data Center Networking · p. 505|6.7 Retrospective: A Day in the Life of a Web Page Request · p. 512|6.8 Summary · p. 518'
+      ],
+      [
+        'Kablosuz ve mobil ağlar',
+        'Wireless and Mobile Networks',
+        531,
+        '7.1 Giriş · s.532|7.2 Kablosuz bağlantı ve ağ özellikleri (CDMA) · s.536|7.3 WiFi: 802.11 kablosuz LAN’lar · s.542|7.4 Hücresel ağlar: 4G ve 5G · s.563|7.5 Hareketlilik yönetimi: İlkeler · s.578|7.6 Uygulamada hareketlilik yönetimi · s.587|7.7 Kablosuz ve hareketlilik: Üst katman protokollerine etkisi · s.594|7.8 Özet · s.596',
+        '7.1 Introduction · p. 532|7.2 Wireless Links and Network Characteristics (CDMA) · p. 536|7.3 WiFi: 802.11 Wireless LANs · p. 542|7.4 Cellular Networks: 4G and 5G · p. 563|7.5 Mobility Management: Principles · p. 578|7.6 Mobility Management in Practice · p. 587|7.7 Wireless and Mobility: Impact on Higher-Layer Protocols · p. 594|7.8 Summary · p. 596'
+      ],
+      [
+        'Bilgisayar ağlarında güvenlik',
+        'Security in Computer Networks',
+        607,
+        '8.1 Ağ güvenliği nedir? · s.608|8.2 Kriptografi ilkeleri · s.610|8.3 Mesaj bütünlüğü ve dijital imzalar · s.624|8.4 Uç nokta kimlik doğrulaması · s.634|8.5 E-posta güvenliği (PGP) · s.639|8.6 TCP bağlantılarını güvenli kılma: TLS · s.644|8.7 Ağ katmanı güvenliği: IPsec ve VPN · s.651|8.8 Kablosuz LAN ve 4G/5G ağ güvenliği · s.659|8.9 Operasyonel güvenlik: Güvenlik duvarları ve IDS · s.667|8.10 Özet · s.679',
+        '8.1 What Is Network Security? · p. 608|8.2 Principles of Cryptography · p. 610|8.3 Message Integrity and Digital Signatures · p. 624|8.4 End-Point Authentication · p. 634|8.5 Securing E-Mail · p. 639|8.6 Securing TCP Connections: TLS · p. 644|8.7 Network-Layer Security: IPsec and Virtual Private Networks · p. 651|8.8 Securing Wireless LANs and 4G/5G Cellular Networks · p. 659|8.9 Operational Security: Firewalls and Intrusion Detection Systems · p. 667|8.10 Summary · p. 679'
       ]
     ]
   }
