@@ -36,7 +36,7 @@ SYMBOLS = {
 
 FUNCTIONS = {'ln', 'log', 'exp', 'sin', 'cos', 'tan', 'sec', 'csc', 'cot',
              'arcsin', 'arccos', 'arctan', 'sinh', 'cosh', 'tanh', 'lim',
-             'det', 'diag', 'deg', 'rank', 'tr'}
+             'det', 'diag', 'deg', 'rank', 'tr', 'min', 'max'}
 
 GREEK = {
     'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ', 'epsilon': 'ε',
