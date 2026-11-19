@@ -31,6 +31,7 @@ SYMBOLS = {
     'int': mo('∫'), 'sum': mo('∑'), 'partial': mo('∂'), 'prime': mo('′'),
     'in': mo('∈'),
     'vert': mo('&#124;'), 'mid': mo('&#124;'),
+    'lceil': mo('⌈'), 'rceil': mo('⌉'), 'lfloor': mo('⌊'), 'rfloor': mo('⌋'),
     '{': mo('{'), '}': mo('}'), '%': mo('%'),
 }
 
