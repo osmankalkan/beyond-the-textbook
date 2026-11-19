@@ -233,7 +233,7 @@ function applyStaticTranslations(){
 }
 
 function renderMathReference(){
-  const reference=getMathReference(currentLesson.section,lang);
+  const reference=getMathReference(currentLesson.section,lang,currentLesson.id);
   const bookUi=currentBook.uiPresentation||{};
   const itemHtml=item=>`<li><span>${escape(item.label)}</span>${math(item.math)}</li>`;
   const empty=`<li class="math-reference-empty">${escape(t('mathReferenceEmpty'))}</li>`;
@@ -1080,6 +1080,8 @@ const labHost=createLabHost({
   'systems-summary':()=>import('./labs/systems-summary/controller.js'),
   'summary':()=>import('./labs/summary/controller.js'),
   'concepts-foundations':()=>import('./labs/concepts/controller.js'),
+  'internet-anatomy':()=>import('./labs/internet-anatomy/controller.js'),
+  'network-edge':()=>import('./labs/network-edge/controller.js'),
   'packet-delay':()=>import('./labs/packet-delay/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));

@@ -23,6 +23,8 @@ import {matrixSystemsLesson} from './lessons/xie-2010/7-4/content.js';
 import {systemsSummaryLesson} from './lessons/xie-2010/7-5/content.js';
 import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
+import {internetAnatomyLesson} from './lessons/kurose-ross-8e/1-1/content.js';
+import {networkEdgeLesson} from './lessons/kurose-ross-8e/1-2/content.js';
 import {packetDelayLesson} from './lessons/kurose-ross-8e/1-4/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
 
@@ -1116,6 +1118,8 @@ export const BOOKS = [
       }
     },
     lessons: [
+      internetAnatomyLesson,
+      networkEdgeLesson,
       packetDelayLesson
     ],
     chapters: [

@@ -112,6 +112,18 @@ const dEulerFirst=rule('Euler dönüşümü: z = ln x, x > 0; 𝒟 = d/dz','Eule
 const dEulerThird=rule('Euler üçüncü türev dönüşümü (x > 0)','Euler third derivative transformation (x > 0)',pow(x,n(3))+prime('y',3)+eq+v('𝒟')+p(v('𝒟')+minus+n(1))+p(v('𝒟')+minus+n(2))+y);
 const iEulerSub=rule('Logaritmik değişkenle integral (x > 0, z = ln x)','Integration in the logarithmic variable (x > 0, z = ln x)',integral(fn('g',fn('ln',x))+f(dx,x))+eq+integral(fn('g',v('z'))+v('d')+v('z')));
 
+/* Kurose & Ross §1.1: Packetization, header overhead, efficiency, and 2-RTT protocol exchange. */
+const dNetPktCount=rule('Paket sayısı (F bayt veri, P_data yük)','Packet count (F-byte data, P_data payload)',v('K')+eq+o('⌈')+f(v('F'),sub(v('P'),v('data')))+o('⌉'));
+const dNetPktLen=rule('Dolu paket uzunluğu (H bayt başlık)','Full packet size (H-byte header)',v('L')+eq+sub(v('P'),v('data'))+plus+v('H'));
+const iNetEff=rule('Protokol verimliliği (η)','Protocol efficiency (η)',v('η')+eq+f(v('F'),v('F')+plus+v('K')+o('·')+v('H')));
+const iNetTwoRtt=rule('İki gidiş-dönüşlü Web isteği (Şekil 1.2)','Two-RTT Web exchange (Figure 1.2)',sub(v('T'),v('exchange'))+eq+n(2)+o('·')+v('RTT')+plus+f(sub(v('L'),v('file')),v('R')));
+
+/* Kurose & Ross §1.2: Shared access rate, file transfer time, OC-n optical carrier, and satellite delay. */
+const dNetSharedRate=rule('Paylaşımlı erişim hızı (HFC / PON / WiFi)','Shared access rate (HFC / PON / WiFi)',sub(v('R'),v('user'))+eq+f(sub(v('R'),v('down')),sub(v('N'),v('active'))));
+const dNetOcSpeed=rule('Optik taşıyıcı hızı (OC-n, Mbps)','Optical carrier speed (OC-n, Mbps)',sub(v('R'),v('OC-n'))+eq+v('n')+o('·')+n('51.8'));
+const iNetSatProp=rule('Uydu tek yön yayılma gecikmesi (2h/c)','Satellite one-way propagation delay (2h/c)',sub(v('d'),v('prop,sat'))+o('≈')+f(n(2)+o('·')+v('h'),v('c')));
+const iNetTransfer=rule('Dosya aktarım süresi (F MB → 8F Mbit)','File transfer duration (F MB → 8F Mbits)',sub(v('T'),v('transfer'))+eq+f(n(8)+o('·')+sub(v('F'),v('MB')),sub(v('R'),v('eff'))));
+
 /* Kurose & Ross §1.4: Packet delay, store-and-forward pipelining, BDP, and throughput relations. */
 const dNetTrans=rule('İletim gecikmesi (L bit, R bps)','Transmission delay (L bits, R bps)',sub(v('d'),v('trans'))+eq+f(v('L'),v('R')));
 const dNetProp=rule('Yayılma gecikmesi (d metre, v m/sn)','Propagation delay (d meters, v m/s)',sub(v('d'),v('prop'))+eq+f(v('d'),v('v')));
@@ -233,14 +245,22 @@ export const MATH_REFERENCE={
     derivative:[dMatrixCharEq,dEigenCondition,dJordanChain,dFundamentalMatrixEq,dLinear],
     integral:[iMatrixVariation,iTanIntegral,iModalTransform,iLinear]
   },
+  'kurose-ross-8e:1.1':{
+    derivative:[dNetPktCount,dNetPktLen],
+    integral:[iNetEff,iNetTwoRtt]
+  },
+  'kurose-ross-8e:1.2':{
+    derivative:[dNetSharedRate,dNetOcSpeed],
+    integral:[iNetSatProp,iNetTransfer]
+  },
   '7.5':{
     derivative:[dProduct,dExpChain,dSin,dCos,dOperatorDet,dCramerOperator,dLaplacePrime,dLaplaceSecond,dHeavisideShift,dDiracLaplace,dJordanChain,dFundamentalMatrixEq],
     integral:[iExpA,iParts,iInversePartialFrac,iInverseConvolution,iMatrixVariation,iStateTransition]
   }
 };
 
-export function getMathReference(section,lang='tr'){
-  const entry=MATH_REFERENCE[section];
+export function getMathReference(section,lang='tr',lessonId=null){
+  const entry=(lessonId&&MATH_REFERENCE[lessonId])||MATH_REFERENCE[section];
   if(!entry)return null;
   const localize=list=>list.map(item=>({label:pickLang(item.label,lang),math:item.math}));
   return {derivative:localize(entry.derivative),integral:localize(entry.integral)};
