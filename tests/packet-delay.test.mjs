@@ -171,13 +171,13 @@ test('Kurose & Ross book and §1.4 lesson have complete bilingual metadata, TOC 
   // Verify bilingual formula parity and absence of raw LaTeX in prose
   const mathMap = JSON.parse(readFileSync('dist/lessons/kurose-ross-8e/1-4/math.json', 'utf8'));
   const inlineMap = JSON.parse(readFileSync('dist/lessons/kurose-ross-8e/1-4/inline.json', 'utf8'));
-  assert.equal(Object.keys(mathMap).length, 13);
+  assert.equal(Object.keys(mathMap).length, 14);
   assert.ok(Object.keys(inlineMap).length >= 90);
 
   for (const mdPath of ['dist/lessons/kurose-ross-8e/1-4/lesson.md', 'dist/lessons/kurose-ross-8e/1-4/lesson-en.md']) {
     const raw = readFileSync(mdPath, 'utf8');
     const blocks = [...raw.matchAll(/\$\$\s*([\s\S]*?)\s*\$\$/g)].map(m => m[1].trim());
-    assert.equal(blocks.length, 13);
+    assert.equal(blocks.length, 14);
     for (const b of blocks) {
       assert.ok(mathMap[b], `missing display MathML for ${b} in ${mdPath}`);
     }

@@ -421,3 +421,13 @@ $$ d_{\mathrm{queue},p} = (p - 1)\left(\frac{L}{R_2} - \frac{L}{R_1}\right), \qq
 </figure>
 
 > **INDEPENDENT VERIFICATION:** When you select the **"Bottleneck & Queue (R₁ > R₂)"** preset in the laboratory (\(R_1 = 6 \times 10^6 \implies d_{\mathrm{trans},1} = 2\text{ ms}\), \(R_2 = 2 \times 10^6 \implies d_{\mathrm{trans},2} = 6\text{ ms}\)), you can directly observe in both the space-time diagram and the discrete event log that Packets 1, 2, 3, and 4 experience queuing delays of \(0\text{ ms}\), \(4\text{ ms}\), \(8\text{ ms}\), and \(12\text{ ms}\) at Router 1.
+
+## 7. Finite buffers and path measurements
+
+Let \(a\) be the mean arrival rate (packets/s), \(L\) the packet size (bits), and \(R\) the output rate (bits/s). Compare offered load to available capacity with traffic intensity:
+
+$$ I = \frac{La}{R} $$
+
+If \(I>1\) persists, an unlimited queue grows. A real output buffer can drop an arrival when it fills up. A short burst can fill it even when \(I<1\). For example, if eight packets arrive together and an idle output can immediately take one into service and hold four waiting, three are dropped. The timing of arrivals matters. In §1.3 you can step through the burst queue.
+
+Each row of a **traceroute** measurement gives a round-trip time for a response from that point along the path. For example, consecutive rows with 12 ms and 18 ms do not give a one-way link delay of 6 ms. Return paths, queues, and processing can differ. A missing response on one row also does not by itself establish that later destinations are unreachable.

@@ -435,3 +435,13 @@ $$ d_{\mathrm{queue},p} = (p - 1)\left(\frac{L}{R_2} - \frac{L}{R_1}\right), \qq
 </figure>
 
 > **BAĞIMSIZ DOĞRULAMA:** Laboratuvarda **"Darboğaz & Kuyruk (R₁ > R₂)"** hazır ayarını (\(R_1 = 6 \times 10^6 \implies d_{\mathrm{trans},1} = 2\text{ ms}\), \(R_2 = 2 \times 10^6 \implies d_{\mathrm{trans},2} = 6\text{ ms}\)) seçtiğinde, 1., 2., 3. ve 4. paketlerin yönlendirici kuyruğunda sırasıyla \(0\text{ ms}\), \(4\text{ ms}\), \(8\text{ ms}\) ve \(12\text{ ms}\) beklediğini hem uzay-zaman diyagramında hem de olay kaydında doğrudan doğrulayabilirsin.
+
+## 7. Sonlu tampon ve ölçülen yol
+
+\(a\) ortalama paket geliş hızı (paket/sn), \(L\) paket boyu (bit) ve \(R\) çıkış hızı (bit/sn) olsun. Ortalama gelen yükü kapasiteyle karşılaştırmak için trafik yoğunluğunu hesapla:
+
+$$ I = \frac{La}{R} $$
+
+\(I>1\) sürerse sınırsız kuyruk büyür. Gerçek bir çıkış tamponu dolduğunda gelen paket düşebilir. \(I<1\) olsa da kısa bir patlama tamponu doldurabilir. Örneğin aynı anda 8 paket gelirse ve boş çıkış birini hemen işleme alıp 4’ünü bekletebiliyorsa 3 paket düşer. Gelişlerin zamana dağılışı bu hesabın parçasıdır. §1.3’te patlamanın kuyruğunu adım adım inceleyebilirsin.
+
+**Traceroute** ölçümünde her satır, ilgili ara düğümden dönen yanıtın gidiş-dönüş süresini gösterir. Örneğin iki satırda 12 ms ve 18 ms görmek, aradaki bağlantının tek yön gecikmesinin 6 ms olduğunu göstermez. Yanıt yolu, kuyruk ve işleme farklı olabilir. Yanıt alınmayan bir satır da tek başına sonraki hedeflerin erişilemez olduğunu kanıtlamaz.
