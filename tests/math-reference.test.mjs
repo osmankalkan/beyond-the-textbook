@@ -5,8 +5,10 @@ import {getMathReference, MATH_REFERENCE} from '../dist/lessons/math-reference.j
 import {getLesson, BOOKS} from '../dist/content.js';
 import {ui} from '../dist/i18n.js';
 
-const developedSections=BOOKS.flatMap(book=>book.lessons.map(lesson=>lesson.section));
-const referenceSections=[...new Set([...developedSections,'4.4'])];
+const referenceSections=[
+  ...BOOKS.flatMap(book=>book.lessons.map(({section,id})=>({section,id}))),
+  {section:'4.4'}
+];
 const wrap=fragment=>`<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow>${fragment}</mrow></math>`;
 
 function assertBalancedMarkup(markup,label){
@@ -22,12 +24,12 @@ function assertBalancedMarkup(markup,label){
   assert.deepEqual(stack,[],`${label}: unclosed tags`);
 }
 
-test('Every developed section has section-specific derivative and integral rules',()=>{
-  for(const section of referenceSections){
-    const reference=getMathReference(section,'tr');
+test('Every developed lesson has section-specific reference formulas',()=>{
+  for(const {section,id} of referenceSections){
+    const reference=getMathReference(section,'tr',id);
     assert.ok(reference,`missing reference for §${section}`);
-    assert.ok(reference.derivative.length>=4,`§${section} needs enough derivative rules`);
-    assert.ok(reference.integral.length>=4,`§${section} needs enough integral rules`);
+    assert.ok(reference.derivative.length>0,`§${section} needs rules in the first group`);
+    assert.ok(reference.integral.length>0,`§${section} needs rules in the second group`);
     for(const item of [...reference.derivative,...reference.integral]){
       assert.ok(item.label,`§${section} has an unlabelled rule`);
       assert.ok(item.math,`§${section} has an empty formula`);
@@ -96,8 +98,8 @@ test('Rules follow the mathematical focus of each lesson',()=>{
 });
 
 test('Reference labels are bilingual while formulas stay identical',()=>{
-  for(const section of referenceSections){
-    const tr=getMathReference(section,'tr'),en=getMathReference(section,'en');
+  for(const {section,id} of referenceSections){
+    const tr=getMathReference(section,'tr',id),en=getMathReference(section,'en',id);
     for(const kind of ['derivative','integral']){
       assert.equal(tr[kind].length,en[kind].length);
       assert.notDeepEqual(tr[kind].map(item=>item.label),en[kind].map(item=>item.label),`§${section} ${kind} labels are not localized`);

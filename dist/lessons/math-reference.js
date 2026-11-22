@@ -1,3 +1,5 @@
+import {layerFormulas} from './kurose-ross-8e/1-5/study.js';
+import {networkCoreFormulas} from './kurose-ross-8e/1-3/study.js';
 import {T, v, n, o, r, p, f, pow, sub, prime, eq, plus, minus, x, y, C, dx, dy, fn, exp, abs, integral, dot} from '../study/math.js';
 import {pickLang} from '../i18n.js';
 
@@ -252,6 +254,27 @@ export const MATH_REFERENCE={
   'kurose-ross-8e:1.2':{
     derivative:[dNetSharedRate,dNetOcSpeed],
     integral:[iNetSatProp,iNetTransfer]
+  },
+  'kurose-ross-8e:1.3':{
+    derivative:[
+      dNetTrans,
+      rule('Bir çerçevede gönderilen paketler','Packets served in one frame',networkCoreFormulas.service),
+      rule('Çerçeve sonundaki kuyruk','End-of-frame queue',networkCoreFormulas.queue)
+    ],
+    integral:[
+      rule('Eş devrelere düşen hız','Rate per equal circuit',networkCoreFormulas.division),
+      rule('TDM devre hızı','TDM circuit rate',networkCoreFormulas.tdm)
+    ]
+  },
+  'kurose-ross-8e:1.5':{
+    derivative:[
+      rule('IP datagramı uzunluğu','IP datagram length',layerFormulas.datagram),
+      rule('En küçük Ethernet yükü için dolgu','Padding to the minimum Ethernet payload',layerFormulas.padding)
+    ],
+    integral:[
+      rule('FCS dahil Ethernet çerçevesi','Ethernet frame length including FCS',layerFormulas.frame),
+      rule('Çerçevede uygulama verisi payı','Application data fraction of a frame',layerFormulas.fraction)
+    ]
   },
   '7.5':{
     derivative:[dProduct,dExpChain,dSin,dCos,dOperatorDet,dCramerOperator,dLaplacePrime,dLaplaceSecond,dHeavisideShift,dDiracLaplace,dJordanChain,dFundamentalMatrixEq],

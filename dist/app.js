@@ -1082,7 +1082,9 @@ const labHost=createLabHost({
   'concepts-foundations':()=>import('./labs/concepts/controller.js'),
   'internet-anatomy':()=>import('./labs/internet-anatomy/controller.js'),
   'network-edge':()=>import('./labs/network-edge/controller.js'),
-  'packet-delay':()=>import('./labs/packet-delay/controller.js')
+  'network-core':()=>import('./labs/network-core/controller.js'),
+  'packet-delay':()=>import('./labs/packet-delay/controller.js'),
+  'protocol-layers':()=>import('./labs/protocol-layers/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));
 async function activateLab(){

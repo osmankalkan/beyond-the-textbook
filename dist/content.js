@@ -25,7 +25,9 @@ import {conceptsLesson} from './lessons/xie-2010/1-2/content.js';
 import {introductionLesson} from './lessons/xie-2010/1-1/content.js';
 import {internetAnatomyLesson} from './lessons/kurose-ross-8e/1-1/content.js';
 import {networkEdgeLesson} from './lessons/kurose-ross-8e/1-2/content.js';
+import {networkCoreLesson} from './lessons/kurose-ross-8e/1-3/content.js';
 import {packetDelayLesson} from './lessons/kurose-ross-8e/1-4/content.js';
+import {protocolLayersLesson} from './lessons/kurose-ross-8e/1-5/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
 
 export const LEGACY_LESSON_ID = 'xie-2010:3.1';
@@ -1093,34 +1095,36 @@ export const BOOKS = [
         en: 'Every packet carries an end-to-end story of protocols and timing.'
       },
       mathReferenceOpen: {
-        tr: 'Gecikme & verim formülleri',
-        en: 'Delay & throughput formulas'
+        tr: 'Hızlı ağ başvurusu',
+        en: 'Networking quick reference'
       },
       mathReferenceOpenHint: {
         tr: 'Bu bölüm için temel ağ bağıntıları',
         en: 'Core networking relations for this section'
       },
       mathReferenceTitle: {
-        tr: 'Gecikme, BDP ve boru hattı bağıntıları',
-        en: 'Delay, BDP, and pipelining relations'
+        tr: 'Temel ağ bağıntıları',
+        en: 'Core networking relations'
       },
       mathReferenceIntro: {
-        tr: '§1.4 dersinde kullanılan temel gecikme, Bant Genişliği–Gecikme Çarpımı (BDP), store-and-forward boru hattı ve darboğaz verim formülleri.',
-        en: 'Core nodal delay, Bandwidth-Delay Product (BDP), store-and-forward pipelining, and bottleneck throughput formulas used in §1.4.'
+        tr: 'Seçili derste kullanılan bağıntılar.',
+        en: 'Relations used in the selected lesson.'
       },
       mathReferenceDerivative: {
-        tr: 'Tek bağlantı gecikme ve dalga bağıntıları',
-        en: 'Single-link delay and wave relations'
+        tr: 'Temel hesaplar',
+        en: 'Core calculations'
       },
       mathReferenceIntegral: {
-        tr: 'Çok bağlantılı boru hattı, kuyruk ve verim bağıntıları',
-        en: 'Multi-link pipelining, queuing, and throughput relations'
+        tr: 'Tamamlayıcı hesaplar',
+        en: 'Related calculations'
       }
     },
     lessons: [
       internetAnatomyLesson,
       networkEdgeLesson,
-      packetDelayLesson
+      networkCoreLesson,
+      packetDelayLesson,
+      protocolLayersLesson
     ],
     chapters: [
       [
