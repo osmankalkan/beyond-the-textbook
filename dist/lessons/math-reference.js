@@ -1,3 +1,6 @@
+import {defenseFraction} from './kurose-ross-8e/1-6/study.js';
+import {yearGap, protocolGap} from './kurose-ross-8e/1-7/study.js';
+import {bits, first} from './kurose-ross-8e/1-8/study.js';
 import {layerFormulas} from './kurose-ross-8e/1-5/study.js';
 import {networkCoreFormulas} from './kurose-ross-8e/1-3/study.js';
 import {T, v, n, o, r, p, f, pow, sub, prime, eq, plus, minus, x, y, C, dx, dy, fn, exp, abs, integral, dot} from '../study/math.js';
@@ -275,6 +278,18 @@ export const MATH_REFERENCE={
       rule('FCS dahil Ethernet çerçevesi','Ethernet frame length including FCS',layerFormulas.frame),
       rule('Çerçevede uygulama verisi payı','Application data fraction of a frame',layerFormulas.fraction)
     ]
+  },
+  'kurose-ross-8e:1.6':{
+    derivative:[rule('Tamamlanan meşru talep oranı','Legitimate completion fraction',defenseFraction)],
+    integral:[rule('Boş kapasite = toplam − meşgul','Free capacity = total minus occupied',n(100)+minus+n(60)+eq+n(40))]
+  },
+  'kurose-ross-8e:1.7':{
+    derivative:[rule('İki olay arasındaki takvim yılı farkı','Calendar-year gap between two events',yearGap)],
+    integral:[rule('1974 yaklaşımından 1983 ARPANET geçişine','From the 1974 proposal to the 1983 transition',protocolGap)]
+  },
+  'kurose-ross-8e:1.8':{
+    derivative:[rule('Çerçeve baytını bite çevir','Convert frame bytes to bits',bits),dNetTrans,dNetProp],
+    integral:[rule('İlk varış (bekleme ve işleme yok)','First arrival without queueing or processing',first),iNetThroughput]
   },
   '7.5':{
     derivative:[dProduct,dExpChain,dSin,dCos,dOperatorDet,dCramerOperator,dLaplacePrime,dLaplaceSecond,dHeavisideShift,dDiracLaplace,dJordanChain,dFundamentalMatrixEq],

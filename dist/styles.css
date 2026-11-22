@@ -245,3 +245,25 @@ body.math-reference-open{overflow:hidden}
 .layers-summary span {padding-inline:7px;border-inline-start:1px solid var(--line)}
 .layers-actions {justify-content:space-between}
 .layers-stage .layers-mac {margin-top:8px;color:var(--muted)}
+
+.chapter-one-lab .cx-section-head p {color:var(--muted)}
+.chapter-one-lab .sep-control select {width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:inherit;font:inherit}
+.chapter-one-result {border:1px solid var(--line);border-radius:8px;padding:16px}
+.chapter-one-result h4 {margin:0 0 8px;font-size:17px}
+.chapter-one-result p {margin:0;font-size:14px;line-height:1.55}
+.chapter-one-result dl {display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:14px 0 0}
+.chapter-one-result dl div {padding:9px;border:1px solid var(--line);border-radius:6px;min-width:0}
+.chapter-one-result dt {color:var(--muted);font-size:12px;line-height:1.35}
+.chapter-one-result dd {margin:5px 0 0;color:var(--green);font-size:14px;line-height:1.4}
+.chapter-one-result ol {padding-inline-start:26px;margin:14px 0 0;font-size:13px;line-height:1.5}
+.chapter-one-result li {padding:4px}
+.chapter-one-result [aria-current=step] {font-weight:700;color:var(--green)}
+.chapter-one-lab .sep-control select {font-size:13px}
+@media(min-width:1051px) {
+  .chapter-one-lab .sep-grid {grid-template-columns:minmax(215px,260px) minmax(0,1fr)}
+}
+@media(max-width:680px) {
+  .chapter-one-lab .sep-controls {grid-template-columns:minmax(0,1fr);gap:12px}
+  .chapter-one-lab .sep-control {margin:0}
+  .chapter-one-lab .sep-control label {min-height:0;margin-bottom:6px}
+}

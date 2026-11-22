@@ -1084,7 +1084,10 @@ const labHost=createLabHost({
   'network-edge':()=>import('./labs/network-edge/controller.js'),
   'network-core':()=>import('./labs/network-core/controller.js'),
   'packet-delay':()=>import('./labs/packet-delay/controller.js'),
-  'protocol-layers':()=>import('./labs/protocol-layers/controller.js')
+  'protocol-layers':()=>import('./labs/protocol-layers/controller.js'),
+  'network-defense':()=>import('./labs/network-defense/controller.js'),
+  'network-history':()=>import('./labs/network-history/controller.js'),
+  'network-review':()=>import('./labs/network-review/controller.js')
 });
 const studyGuide=createStudyGuide(document.querySelector('#lesson-guide'));
 async function activateLab(){

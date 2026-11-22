@@ -54,6 +54,9 @@ AUTO_BLOCK_SETS = [
     ('lessons/kurose-ross-8e/1-3/lesson.md', 'lessons/kurose-ross-8e/1-3/lesson-en.md', 'lessons/kurose-ross-8e/1-3/math.json'),
     ('lessons/kurose-ross-8e/1-4/lesson.md', 'lessons/kurose-ross-8e/1-4/lesson-en.md', 'lessons/kurose-ross-8e/1-4/math.json'),
     ('lessons/kurose-ross-8e/1-5/lesson.md', 'lessons/kurose-ross-8e/1-5/lesson-en.md', 'lessons/kurose-ross-8e/1-5/math.json'),
+    ('lessons/kurose-ross-8e/1-6/lesson.md', 'lessons/kurose-ross-8e/1-6/lesson-en.md', 'lessons/kurose-ross-8e/1-6/math.json'),
+    ('lessons/kurose-ross-8e/1-7/lesson.md', 'lessons/kurose-ross-8e/1-7/lesson-en.md', 'lessons/kurose-ross-8e/1-7/math.json'),
+    ('lessons/kurose-ross-8e/1-8/lesson.md', 'lessons/kurose-ross-8e/1-8/lesson-en.md', 'lessons/kurose-ross-8e/1-8/math.json'),
 ]
 
 # Optional named formula registries let activities use IDs rather than JSON order.
@@ -201,6 +204,21 @@ INLINE_SETS = {
     'lessons/kurose-ross-8e/1-5/lesson.md': (
         'lessons/kurose-ross-8e/1-5/lesson-en.md',
         'lessons/kurose-ross-8e/1-5/inline.json',
+        None,
+    ),
+    'lessons/kurose-ross-8e/1-6/lesson.md': (
+        'lessons/kurose-ross-8e/1-6/lesson-en.md',
+        'lessons/kurose-ross-8e/1-6/inline.json',
+        None,
+    ),
+    'lessons/kurose-ross-8e/1-7/lesson.md': (
+        'lessons/kurose-ross-8e/1-7/lesson-en.md',
+        'lessons/kurose-ross-8e/1-7/inline.json',
+        None,
+    ),
+    'lessons/kurose-ross-8e/1-8/lesson.md': (
+        'lessons/kurose-ross-8e/1-8/lesson-en.md',
+        'lessons/kurose-ross-8e/1-8/inline.json',
         None,
     )
 }
