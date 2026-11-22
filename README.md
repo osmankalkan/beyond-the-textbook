@@ -2,7 +2,7 @@
 
 A bilingual learning workspace for studying textbooks through notes, guided reasoning, interactive experiments, worked problems, and a personal notebook.
 
-Twenty-six sections of Wei-Chau Xie's *Differential Equations for Engineers* and the first section (§1.4 / §1.3.1) of James F. Kurose & Keith W. Ross's *Computer Networking: A Top-Down Approach* (8th Edition) are available in Turkish and English:
+Twenty-six sections of Wei-Chau Xie's *Differential Equations for Engineers* and all eight sections of Chapter 1 (§1.1–§1.8) of James F. Kurose & Keith W. Ross's *Computer Networking: A Top-Down Approach* (8th Edition) are available in Turkish and English:
 
 | Chapter | Section | Topic | Core Focus & Interactive Lab |
 | :--- | :--- | :--- | :--- |
@@ -32,9 +32,16 @@ Twenty-six sections of Wei-Chau Xie's *Differential Equations for Engineers* and
 | | **§7.3** | Method of Laplace Transform | Initial condition absorption, s-domain Cramer, ZIR/ZSR, delayed forcing |
 | | **§7.4** | The Matrix Method | Eigenvalue spectrum, invariant rays, defective matrices, fundamental matrix inversion, sec(t) forcing |
 | | **§7.5** | Summary: Linear Systems | Operator, Laplace & Matrix synthesis, 60-s triage, 10 diagnostic cards, comparison matrix |
-| **Kurose & Ross Ch 1** | **§1.4 (§1.3.1)** | Transmission, Propagation & Store-and-Forward | L/R vs d/v, store-and-forward pipelining, BDP, bottleneck queuing, discrete-event & space-time simulator |
+| **Kurose & Ross Ch 1** | **§1.1** | What Is the Internet? | Network components, protocol exchange, and topology lab |
+| | **§1.2** | The Network Edge | Access technologies, shared capacity, and physical media lab |
+| | **§1.3** | The Network Core | Forwarding, routing, circuits, and ISP interconnection, with a frame-by-frame switching lab |
+| | **§1.4 (§1.3.1)** | Transmission, Propagation & Store-and-Forward | L/R vs d/v, store-and-forward pipelining, BDP, bottleneck queuing, discrete-event & space-time simulator |
+| | **§1.5** | Protocol Layers and Their Service Models | Internet and OSI models, hop-by-hop encapsulation, and byte accounting lab |
+| | **§1.6** | Networks Under Attack | Confidentiality, identity, recovery, and availability in a defensive lab |
+| | **§1.7** | History of Computer Networking and the Internet | Interactive timeline that pairs network design needs with milestones |
+| | **§1.8** | Chapter Review | Campus path lab comparing access speed, backbone speed, and server distance |
 
-Every developed lesson includes guided derivations with conceptual predictions, an interactive dual-curve SVG laboratory, four fully worked exam clinic problems (with trap analysis and scoring rubric), and a section-aware derivative/integral reference drawer in Turkish and English.
+Developed lessons combine guided predictions, a topic-specific interactive lab, worked problems, and a quick reference in Turkish and English.
 
 Other sections remain a searchable contents map. Browser storage keeps per-lesson notes, progress, and language preference. No account is required.
 
@@ -46,4 +53,4 @@ Run `npm start`, then open the address printed in the terminal (normally http://
 
 The app uses native ES modules and no runtime dependencies. Lesson data lives under `dist/lessons/`, pure models under `dist/models/`, and lab controllers under `dist/labs/`. `dist/core/study-guide.js` renders topic-authored predictions and derivations; it does not own navigation or persistent progress. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
-Current review: Chapter 2, Chapter 4, Chapter 6, and Chapter 7 are fully developed to the §3.1 depth standard (§7.1–§7.5). See [the revision record](docs/QUALITY-REVISION.md). Recent developments remain local until explicitly requested for GitHub.
+Current review: Chapter 2, Chapter 4, Chapter 6, and Chapter 7 are fully developed to the §3.1 depth standard (§7.1–§7.5). See [the revision record](docs/QUALITY-REVISION.md).

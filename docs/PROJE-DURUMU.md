@@ -1,8 +1,8 @@
 # Güncel proje durumu
 
-Son güncelleme: 8 Kasım 2026.
+Son güncelleme: 22 Kasım 2026.
 
-Yirmi altı çift dilli ders hazırdır: §1.1, §1.2, §2.1–§2.7, §3.1, §4.1–§4.5, §6.1–§6.7 ve §7.1–§7.5. Bölüm 1, 2, 4, 6 ve 7 eksiksiz tamamlanmıştır:
+Xie kitabında yirmi altı çift dilli ders hazırdır: §1.1, §1.2, §2.1–§2.7, §3.1, §4.1–§4.5, §6.1–§6.7 ve §7.1–§7.5. Bölüm 1, 2, 4, 6 ve 7 eksiksiz tamamlanmıştır:
 
 | Bölüm | Konular | Temel Kapsam ve Atölyeler |
 | :--- | :--- | :--- |
@@ -21,7 +21,7 @@ Her hazır dersin okuma kenar çubuğunda bölüme özel bir “Türev & integra
 
 Hesap veya LLM entegrasyonu yoktur. Notlar/ilerleme yerel tarayıcıda ders kimliğine göre tutulur. Kaynak PDF dağıtım ve Git dışıdır. npm start yerel adresi bildirir; port 4317 doluysa sonraki port kullanılır.
 
-GitHub: https://github.com/osmankalkan/beyond-the-textbook . Yapılan son geliştirmeler yereldedir; kullanıcı açıkça istemedikçe commit/push yapılmaz ve kullanıcı incelemesi beklenir.
+[GitHub deposu](https://github.com/osmankalkan/beyond-the-textbook). Commit ve push kullanıcı isteğiyle yapılır.
 
 ## 10 Kasım 2026 — varsayılan çalışma arayüzü
 Onaylanan Ders Defteri/laboratuvar birleşimi artık parametresiz açılışta varsayılandır. Renk tokenları, görünüm katmanları ve ortak çalışma araçları dist/focus-preview/ altındadır. Kronometre, 25/5 sayaç, isteğe bağlı bitiş sesi, açık/koyu tema, yazı boyutu ve odak modu gerçek ders uygulamasına bağlanmıştır. Sayaç aynı sayfadaki ders/görünüm geçişlerinde çalışır; tam yenilemede sıfırlanır. Önceki arayüz ?ui=classic ile açılabilir. Ders verileri ve mevcut ilerleme kayıtları aynı uygulama tarafından yönetilir.
@@ -36,3 +36,28 @@ Onaylanan Ders Defteri/laboratuvar birleşimi artık parametresiz açılışta v
 - **Kaynak şekil çıkarımı ve telif ayrımı:** Kaynak PDF’deki Şekil 1.11 (s.24, PDF s.35), Şekil 1.12 (s.25, PDF s.36), Şekil 1.16 (s.36, PDF s.47), Şekil 1.17 (s.38, PDF s.49) ve Şekil 1.27 (s.75, PDF s.86) yüksek çözünürlüklü olarak `private/book/kurose-ross-8e-figures/` ve `artifacts/kurose-ross-8e/` altına manifestosuyla çıkarıldı (Git ve dağıtım dışı). Uygulama içinde ise telif sorunu taşımayan ve doğrudan matematiksel model durumundan (`dist/models/packet-delay.js`) çizilen özgün SVG/DOM uyarlaması (`dist/labs/packet-delay/controller.js`) kuruldu.
 - **Etkileşimli laboratuvar:** Gönderici, 1 veya 2 yönlendirici ve alıcı topolojisi; paket boyutu \(L\), paket sayısı \(P\), bağlantı hızları \(R_1, R_2, R_3\), mesafeler \(d_1, d_2, d_3\) ve yayılma hızı \(v\) kontrolleri; store-and-forward ve karşılaştırmalı cut-through modu; başlat, duraklat, önceki olay, tek olay ilerlet, sıfırla, hız seçimi ve hareketi azalt (`prefers-reduced-motion`) desteği; canlı bit-dalgası boru görünümü, uzay–zaman (trellis) diyagramı ve tıklanabilir ayrık olay kaydı.
 - **Rehberli çalışma, sınav kliniği ve doğrulama:** 2 kavramsal tahmin, ikişer 5 adımlı türetim yolu, 22 puanlık 4 tam çözümlü sınav kliniği vakası, 12 özgün soru, 13 blok ve 92 satır içi eşlenmiş MathML formülü ve §1.4 hızlı başvuru çekmecesi eklendi. Toplam 185 otomatik test (`npm test`), `python3 build_math.py` ve `git diff --check` hatasız geçmektedir.
+
+## 22 Kasım 2026 — Kurose & Ross §1.3 Ağ çekirdeği
+
+Kurose & Ross §1.1–§1.4 katalogda gezinilebilir. §1.3 için basılı s. 22–34 (PDF s. 33–45) üzerinden paket iletimi ve yönlendirme, çıkış kuyruğu, devre rezervasyonu ve FDM/TDM, ISP transit ve peering ilişkileri işlendi. Dört özgün şema, iki beş adımlı rehber, 22 puanlık dört çözüm ve iki aşamalı ipuçlarıyla 12 özgün soru Türkçe ve İngilizce hazırlandı.
+
+Lab tek bir hat üzerinde eşzamanlı paket gelişini ve sabit devre yuvalarını aynı çerçevede gösterir. Sakin trafik ve patlama ayarları, boş ayrılmış yuvaları, kabul edilmeyen akışları ve patlama sonrası boşalan kuyruğu görünür kılar. Model sınırsız paket kuyruğu varsayar. Sonlu tampon kaybı ayrı çözümlü vakada hesaplanır.
+
+Doğrulama: 197 otomatik test ve eşlenmiş 5 blok, 9 satır içi formül. 1440 px masaüstü ve 390 px mobil Chrome’da deney, rehber, ders notu, başvuru çekmecesi, çözüm ve soru akışları kontrol edildi.
+
+## 22 Kasım 2026 — Kurose & Ross §1.5 Protokol katmanları ve hizmet modelleri
+
+Basılı s. 47–54 (PDF s. 58–65) temelinde eşler arası protokol ile katmanlar arası hizmet, beş katmanlı İnternet modeli, OSI ve kapsülleme eklendi. Ders dört özgün şema, iki rehberli tahmin, 22 puanlık dört çözüm ve 12 ipuçlu soru içerir.
+
+İki etiketsiz Ethernet bağlantısından geçen örnek mesajın boyutu ve TCP/UDP seçimi değiştirilebilir. On adımda uygulama verisi, başlıklar, Ethernet dolgusu, FCS, yerel MAC hedefleri ve yönlendiricide azalan TTL izlenir. IP parçalanması, bağlantı kurulumu, Ethernet önsözü ve çerçeveler arası boşluk model dışıdır.
+
+Doğrulama: 201 otomatik test, eşlenmiş 3 blok ve 5 satır içi formül. Chrome’da 1440 px masaüstü ve 390 px mobilde kapsülleme, dolgu, TTL, geçersiz boyut, dil değişiminde ayarların korunması, rehber, not, başvuru paneli ve soru akışları kontrol edildi.
+
+## 22 Kasım 2026 — Kurose & Ross 1. ünite tamamlandı
+
+- §1.6 (s. 54–58) gizlilik, doğrulama, cihaz kurtarma ve kullanılabilirlik belirtilerini dört sentetik olayda savunmalarla eşleştirir.
+- §1.7 (s. 58–64) tarihsel tasarım ihtiyaçlarını altı dönüm noktasıyla eşleştirir. ARPANET, ağlar arası tasarım, TCP/IP geçişi, Web, ticari omurgalar ve mobil erişim ve içerik ağları kapsanır.
+- §1.8 (s. 64–65) kapsüllemeyi ve paket zamanlamasını aynı kampüs yolu üzerinde birleştirir. Hız ve mesafe seçenekleri ilk/son varış, kuyruk ve darboğazı ayrı gösterir.
+- §1.1 ve §1.2'nin rehber ve sınav kliniği verileri arayüz sözleşmesine eşlendi. §1.4 notlarına sonlu tampon kaybı ve Traceroute ölçümünün yorumu eklendi.
+
+Ünite kapsamında sekiz çift dilli ders, 32 çözümlü vaka ve 96 alıştırma var. Formüller üretildi ve 205 otomatik test geçti. Sekiz dersin lab, rehber, not, formül çekmecesi ve alıştırma akışları 1440 px masaüstü ile 390 px mobilde kontrol edildi.
