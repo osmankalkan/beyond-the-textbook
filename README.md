@@ -43,7 +43,7 @@ Twenty-six sections of Wei-Chau Xie's *Differential Equations for Engineers* and
 
 Developed lessons combine guided predictions, a topic-specific interactive lab, worked problems, and a quick reference in Turkish and English.
 
-Other sections remain a searchable contents map. Browser storage keeps per-lesson notes, progress, and language preference. No account is required.
+Chapter 2 §2.1, Principles of Network Applications, is also available with transport and distribution labs. Other sections remain a searchable contents map. Browser storage keeps per-lesson notes, progress, and language preference. No account is required.
 
 ## Run locally
 

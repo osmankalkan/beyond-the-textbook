@@ -61,3 +61,7 @@ Doğrulama: 201 otomatik test, eşlenmiş 3 blok ve 5 satır içi formül. Chrom
 - §1.1 ve §1.2'nin rehber ve sınav kliniği verileri arayüz sözleşmesine eşlendi. §1.4 notlarına sonlu tampon kaybı ve Traceroute ölçümünün yorumu eklendi.
 
 Ünite kapsamında sekiz çift dilli ders, 32 çözümlü vaka ve 96 alıştırma var. Formüller üretildi ve 205 otomatik test geçti. Sekiz dersin lab, rehber, not, formül çekmecesi ve alıştırma akışları 1440 px masaüstü ile 390 px mobilde kontrol edildi.
+
+## 22 Kasım 2026 — Kurose & Ross §2.1 Ağ uygulamalarının ilkeleri
+
+Türkçe ve İngilizce ders, §2.1’in mimari, süreç, soket, taşıma hizmeti ve uygulama protokolü ayrımlarını kapsar. İlk lab dosya, canlı ses ve oyun senaryolarında TCP/UDP tercihlerini karşılaştırır. İkinci lab §2.5’e hazırlık olarak istemci–sunucu ve P2P dağıtım alt sınırlarını gösterir. İki rehberli tahmin, 22 puanlık dört çözüm ve 12 ipuçlu soru eklendi. 207 test ve Chrome’da 1440 px ile 390 px kritik akışları doğrulandı.

@@ -1,3 +1,4 @@
+import {cs, p2p} from './kurose-ross-8e/2-1/study.js';
 import {defenseFraction} from './kurose-ross-8e/1-6/study.js';
 import {yearGap, protocolGap} from './kurose-ross-8e/1-7/study.js';
 import {bits, first} from './kurose-ross-8e/1-8/study.js';
@@ -290,6 +291,10 @@ export const MATH_REFERENCE={
   'kurose-ross-8e:1.8':{
     derivative:[rule('Çerçeve baytını bite çevir','Convert frame bytes to bits',bits),dNetTrans,dNetProp],
     integral:[rule('İlk varış (bekleme ve işleme yok)','First arrival without queueing or processing',first),iNetThroughput]
+  },
+  'kurose-ross-8e:2.1':{
+    derivative:[rule('İstemci–sunucu süre alt sınırı','Client–server lower bound',cs)],
+    integral:[rule('P2P süre alt sınırı','P2P lower bound',p2p)]
   },
   '7.5':{
     derivative:[dProduct,dExpChain,dSin,dCos,dOperatorDet,dCramerOperator,dLaplacePrime,dLaplaceSecond,dHeavisideShift,dDiracLaplace,dJordanChain,dFundamentalMatrixEq],

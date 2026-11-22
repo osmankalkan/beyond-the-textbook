@@ -31,6 +31,7 @@ import {protocolLayersLesson} from './lessons/kurose-ross-8e/1-5/content.js';
 import {networkDefenseLesson} from './lessons/kurose-ross-8e/1-6/content.js';
 import {networkHistoryLesson} from './lessons/kurose-ross-8e/1-7/content.js';
 import {networkReviewLesson} from './lessons/kurose-ross-8e/1-8/content.js';
+import {applicationPrinciplesLesson} from './lessons/kurose-ross-8e/2-1/content.js';
 import { deepLocalize, normalizeLang } from './i18n.js';
 
 export const LEGACY_LESSON_ID = 'xie-2010:3.1';
@@ -1130,7 +1131,8 @@ export const BOOKS = [
       protocolLayersLesson,
       networkDefenseLesson,
       networkHistoryLesson,
-      networkReviewLesson
+      networkReviewLesson,
+      applicationPrinciplesLesson
     ],
     chapters: [
       [
