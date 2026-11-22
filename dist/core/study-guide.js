@@ -19,7 +19,7 @@ export function createStudyGuide(root){
     return typeof val==='string'?val:String(val||'');
   });
   const question=loc(prediction.question||prediction.prompt||'',lang);
-  const reason=loc(prediction.reason||prediction.feedback||prediction.explanation||'',lang);
+  const reason=loc(rawChoices[choice]?.feedback||prediction.reason||prediction.feedback||prediction.explanation||'',lang);
   const title=loc(data.title||'',lang);
   const intro=loc(data.intro||'',lang);
   const predContext=loc(prediction.context||'',lang);

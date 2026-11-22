@@ -81,7 +81,8 @@ test('Kurose & Ross §1.1 has bilingual notes with 5 embedded SVG figures, study
   assert.equal(lessonTr.questions.length, 12);
   assert.equal(lessonEn.questions.length, 12);
   assert.equal(lessonTr.studySupport.paths.length, 2);
-  assert.equal(lessonTr.guidedTools.examCases.length, 4);
+  assert.equal(lessonTr.studySupport.predictions.length, 2);
+  assert.equal(lessonTr.guidedTools.examClinic.length, 4);
 
   const mdTr = fs.readFileSync(new URL('../dist/lessons/kurose-ross-8e/1-1/lesson.md', import.meta.url), 'utf8');
   const mdEn = fs.readFileSync(new URL('../dist/lessons/kurose-ross-8e/1-1/lesson-en.md', import.meta.url), 'utf8');

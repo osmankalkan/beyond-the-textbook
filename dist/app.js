@@ -81,7 +81,7 @@ function renderExamClinicSection(){
       <summary>${escape(t('examStepsSummary',c.steps.length))}</summary>
       <div class="clinic-step-list">${c.steps.map(st=>`<div class="clinic-step">
         <strong>${formatMathText(st.label)}</strong>
-        ${math(st.math)}
+        ${st.math?math(st.math):''}
         <p>${formatMathText(st.text)}</p>
       </div>`).join('')}</div>
     </details>
