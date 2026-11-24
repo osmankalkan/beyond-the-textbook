@@ -142,7 +142,7 @@ export function mount(root, initial) {
     overlay += plot.line(secondary, '#b47b55', 'stroke-dasharray="7 5" stroke-width="2.1"');
     overlay += plot.line(primary, '#397752', 'stroke-width="2.3"');
     if (Number.isFinite(val)) {
-      overlay += plot.dot(at, val, '#397752', 4.5);
+      overlay += plot.point(at, val, '#397752');
     }
     const svg = root.querySelector('#comp-plot');
     if (svg) svg.innerHTML = plot.markup + `<g clip-path="url(#${plot.clipId})">${overlay}</g>`;

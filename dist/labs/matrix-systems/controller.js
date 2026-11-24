@@ -219,14 +219,15 @@ export function mount(root, initial = {}) {
 
     // Eigenvector lines markup if toggled
     let eigenRaysMarkup = '';
+    const projectPhase = (x, y) => [phasePlot.x(x), phasePlot.y(y)];
     if (state.showEigenRays && (isDistinct || isDefective)) {
       if (isDistinct) {
         // v1 = [1, -1] => slope = -1
         // v2 = [4, 1] => slope = 1/4 = 0.25
-        const p1A = phasePlot.project(-maxBound, maxBound);
-        const p1B = phasePlot.project(maxBound, -maxBound);
-        const p2A = phasePlot.project(-maxBound, -0.25 * maxBound);
-        const p2B = phasePlot.project(maxBound, 0.25 * maxBound);
+        const p1A = projectPhase(-maxBound, maxBound);
+        const p1B = projectPhase(maxBound, -maxBound);
+        const p2A = projectPhase(-maxBound, -0.25 * maxBound);
+        const p2B = projectPhase(maxBound, 0.25 * maxBound);
 
         eigenRaysMarkup = `
           <line x1="${p1A[0]}" y1="${p1A[1]}" x2="${p1B[0]}" y2="${p1B[1]}" stroke="#888" stroke-width="1.6" stroke-dasharray="4 4" />
@@ -236,8 +237,8 @@ export function mount(root, initial = {}) {
         `;
       } else if (isDefective) {
         // v1 = [2, -1] => slope = -0.5
-        const pA = phasePlot.project(-maxBound, 0.5 * maxBound);
-        const pB = phasePlot.project(maxBound, -0.5 * maxBound);
+        const pA = projectPhase(-maxBound, 0.5 * maxBound);
+        const pB = projectPhase(maxBound, -0.5 * maxBound);
         eigenRaysMarkup = `
           <line x1="${pA[0]}" y1="${pA[1]}" x2="${pB[0]}" y2="${pB[1]}" stroke="#777" stroke-width="1.6" stroke-dasharray="4 4" />
           <text x="${pB[0] - 50}" y="${pB[1] - 8}" font-size="10" fill="#666">v₁ [2, -1]</text>
