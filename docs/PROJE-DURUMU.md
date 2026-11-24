@@ -1,6 +1,6 @@
 # Güncel proje durumu
 
-Son güncelleme: 22 Kasım 2026.
+Son güncelleme: 24 Kasım 2026.
 
 Xie kitabında yirmi altı çift dilli ders hazırdır: §1.1, §1.2, §2.1–§2.7, §3.1, §4.1–§4.5, §6.1–§6.7 ve §7.1–§7.5. Bölüm 1, 2, 4, 6 ve 7 eksiksiz tamamlanmıştır:
 
@@ -65,3 +65,7 @@ Doğrulama: 201 otomatik test, eşlenmiş 3 blok ve 5 satır içi formül. Chrom
 ## 22 Kasım 2026 — Kurose & Ross §2.1 Ağ uygulamalarının ilkeleri
 
 Türkçe ve İngilizce ders, §2.1’in mimari, süreç, soket, taşıma hizmeti ve uygulama protokolü ayrımlarını kapsar. İlk lab dosya, canlı ses ve oyun senaryolarında TCP/UDP tercihlerini karşılaştırır. İkinci lab §2.5’e hazırlık olarak istemci–sunucu ve P2P dağıtım alt sınırlarını gösterir. İki rehberli tahmin, 22 puanlık dört çözüm ve 12 ipuçlu soru eklendi. 207 test ve Chrome’da 1440 px ile 390 px kritik akışları doğrulandı.
+
+## 24 Kasım 2026 — Çalışma masası
+
+Kitap rafı, ders notu, rehber ve deney, sınav kliniği, kişisel not ve kitap haritası onaylanan retro kabuğu kullanır. İki kitabın kataloğu, ders bazlı kayıtlar ve çift dilli deneyler aynı çalışma zamanı üzerinden çalışır. [Arayüz standardı](UI-STANDARD.md) sonraki dersler için bağlayıcıdır.

@@ -36,3 +36,5 @@ Yerel tarayıcı incelemesinde §1.1 ve §1.2'nin rehber ve klinik verileri bulu
 22 Kasım 2026: Kullanıcının isteğiyle **Kurose & Ross 1. ünite (§1.1–§1.8)** tamamlandı. §1.6–§1.8 için savunma, tarih çizelgesi ve kapanış labları eklendi. §1.1–§1.2’de yukarıda kaydedilen rehber ve klinik görünürlüğü sorunu düzeltildi. §1.4’te sonlu tampon ve Traceroute yorumu işlendi. Sıradaki başlık 2. ünite §2.1 Ağ Uygulamalarının İlkeleri.
 
 22 Kasım 2026: Kurose & Ross §2.1 tamamlandı. Ders `dist/lessons/kurose-ross-8e/2-1/`, iki deney `dist/labs/application-principles/controller.js` altında. Kullanıcı incelemesi sonrası sıradaki başlık §2.2 Web ve HTTP.
+
+24 Kasım 2026: Çalışma masası varsayılan arayüzdür. Yeni dersleri [arayüz standardına](UI-STANDARD.md) göre geliştir. Stil ve özgün görseller `dist/retro/` altında. Eski görünümler `?ui=classic` ve `?ui=focus` üzerinden açılabilir.

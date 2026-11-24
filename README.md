@@ -49,6 +49,8 @@ Chapter 2 §2.1, Principles of Network Applications, is also available with tran
 
 Run `npm start`, then open the address printed in the terminal (normally http://127.0.0.1:4317). No install or build is needed. `npm test` runs the mathematical, bilingual, and lifecycle checks. `python3 build_math.py` validates paired LaTeX blocks and regenerates reviewed MathML.
 
+The default interface is the retro Study Desktop. Choose a book from the shelf to open its ready lessons or browse its full contents map. The visual standard for future lessons is documented in [UI-STANDARD.md](docs/UI-STANDARD.md).
+
 ## Architecture
 
 The app uses native ES modules and no runtime dependencies. Lesson data lives under `dist/lessons/`, pure models under `dist/models/`, and lab controllers under `dist/labs/`. `dist/core/study-guide.js` renders topic-authored predictions and derivations; it does not own navigation or persistent progress. See [ARCHITECTURE.md](ARCHITECTURE.md).

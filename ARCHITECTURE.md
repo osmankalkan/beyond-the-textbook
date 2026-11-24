@@ -10,7 +10,7 @@ Her yeni konu kaynak sayfalarından doğrulanır. Konuya uygun tahmin → gerek�
 
 ## Çalışma zamanı
 
-Uygulama buildless HTML/CSS ve yerel JavaScript ES modülleridir. Bundler, framework veya npm çalışma zamanı bağımlılığı eklenmez. `server.mjs` yalnız yerel statik sunucudur; dağıtılacak dosyalar `dist/` içindedir. `npm start` adresi terminalde bildirir; varsayılan port 4317’dir. Kullanıcı hesabı gerekmez.
+Uygulama buildless HTML/CSS ve yerel JavaScript ES modülleridir. Bundler, framework veya npm çalışma zamanı bağımlılığı eklenmez. `server.mjs` yalnız yerel statik sunucudur; dağıtılacak dosyalar `dist/` içindedir. `npm start` adresi terminalde bildirir; varsayılan port 4317’dir. Kullanıcı hesabı gerekmez. Varsayılan kabuk Çalışma masasıdır. Arayüz sözleşmesi [UI-STANDARD.md](docs/UI-STANDARD.md) dosyasındadır. Görsel bileşenler `dist/retro/` içinde yaşar ve ders yönlendirmesi ile kayıtlar `dist/app.js` tarafından yönetilir.
 
 ## Katmanlar ve bağımlılık yönü
 
