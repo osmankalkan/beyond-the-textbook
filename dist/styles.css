@@ -267,3 +267,20 @@ body.math-reference-open{overflow:hidden}
   .chapter-one-lab .sep-control {margin:0}
   .chapter-one-lab .sep-control label {min-height:0;margin-bottom:6px}
 }
+
+/* Native buttons make protocol log navigation available from the keyboard. */
+.inet-log { list-style: none; margin: 0; padding: 0; }
+.inet-log-entry {
+  width: 100%;
+  display: grid;
+  gap: 2px;
+  text-align: start;
+  overflow-wrap: anywhere;
+  margin-bottom: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+}
+.inet-log-entry span { color: var(--muted); font-size: 12px; }
+.inet-log-entry[aria-current="step"] { border-color: #b26a2a; background: #f6ebd7; color: #3e3023; }

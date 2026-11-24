@@ -168,7 +168,7 @@ export function mount(root, initialCtx) {
     }).join('');
 
     const cur = NODE_META[currentId];
-    const packetBadge = `<g transform="translate(${cur.x - 16}, ${cur.y - 34})">
+    const packetBadge = `<g transform="translate(${cur.x + 14}, ${cur.y - 22})">
       <rect width="32" height="17" rx="4" fill="#d97706" stroke="#ffffff" stroke-width="1.3"/>
       <text x="16" y="12" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">PKT</text>
     </g>`;
@@ -197,7 +197,7 @@ export function mount(root, initialCtx) {
       keyPkt: 'Aktif Paket Konumu'
     };
 
-    return `<svg viewBox="0 0 720 390" class="cx-chart" role="img" aria-label="${esc(lang === 'en' ? 'Interactive Figure 1.1 Internet pieces topology' : 'Etkileşimli Şekil 1.1 İnternet parçaları topolojisi')}">
+    return `<svg viewBox="0 0 720 390" class="cx-chart inet-topology" role="img" aria-label="${esc(lang === 'en' ? 'Interactive Figure 1.1 Internet pieces topology' : 'Etkileşimli Şekil 1.1 İnternet parçaları topolojisi')}">
       <!-- Network region clouds (Figure 1.1 adaptation) -->
       <rect x="22" y="20" width="248" height="102" rx="22" fill="#e0f2fe" fill-opacity="0.45" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="4 3"/>
       <text x="36" y="39" font-size="11" font-weight="700" fill="#0369a1">${L.mobile}</text>
@@ -270,16 +270,16 @@ export function mount(root, initialCtx) {
       const x2 = st.to === 'right' ? rightX - 10 : leftX + 10;
       const dir = x2 > x1 ? 1 : -1;
       const midX = (x1 + x2) / 2;
-      const midY = (y1 + y2) / 2 - 8;
+      const labelY = y1 - 7;
 
       return `<g opacity="${opacity}">
         <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${isActive ? 3.2 : 2.2}"/>
         <polygon points="${x2 + dir * 6},${y2} ${x2 - dir * 5},${y2 - 5} ${x2 - dir * 5},${y2 + 5}" fill="${color}"/>
-        <text x="${midX}" y="${midY}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${isActive ? '#b45309' : 'var(--text,#1e293b)'}">${esc(label)}</text>
+        <text x="${midX}" y="${labelY}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${isActive ? '#b45309' : 'var(--text,#1e293b)'}">${esc(label)}</text>
       </g>`;
     }).join('');
 
-    return `<svg viewBox="0 0 720 360" class="cx-chart" role="img" aria-label="${esc(lang === 'en' ? 'Interactive Figure 1.2 Protocol message exchange sequence' : 'Etkileşimli Şekil 1.2 Protokol mesaj alışverişi diyagramı')}">
+    return `<svg viewBox="0 0 720 360" class="cx-chart inet-sequence" role="img" aria-label="${esc(lang === 'en' ? 'Interactive Figure 1.2 Protocol message exchange sequence' : 'Etkileşimli Şekil 1.2 Protokol mesaj alışverişi diyagramı')}">
       <!-- Entity Headers -->
       <rect x="${leftX - 115}" y="14" width="230" height="44" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.6"/>
       <text x="${leftX}" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">${esc(leftTitle)}</text>
@@ -368,7 +368,7 @@ export function mount(root, initialCtx) {
           </div>
 
           <div class="cx-chart-box">
-            ${renderTopologySvg(lang, routeInfo)}
+            <div class="inet-topology-scroll">${renderTopologySvg(lang, routeInfo)}</div>
             <div class="cx-callout" style="margin-top:12px">
               <strong>${esc(t('inetCurrentHopEyebrow', routeInfo.hopIndex, routeInfo.maxHop))} · ${esc(pick(curNodeMeta, lang))}</strong>
               <p>${esc(nodeRoleText)}<br><small>${esc(t('inetLayerStackLabel'))}: ${esc(routeInfo.currentNode.layer)}</small></p>
@@ -399,10 +399,10 @@ export function mount(root, initialCtx) {
       const active = protoInfo.activeStep;
       const stepRows = protoInfo.allSteps.map((st, idx) => {
         const isCurrent = idx === protoInfo.step - 1;
-        return `<li style="cursor:pointer;padding:8px 10px;border-radius:6px;border:1px solid ${isCurrent ? '#d97706' : 'var(--border,#e2e8f0)'};background:${isCurrent ? 'rgba(217,119,6,0.1)' : 'var(--surface,#fff)'};margin-bottom:6px" data-inet-proto-step="${idx + 1}">
+        return `<li><button type="button" class="inet-log-entry" data-inet-proto-step="${idx + 1}"${isCurrent ? ' aria-current="step"' : ''}>
           <strong>${st.order} · ${esc(pick(st.label, lang))}</strong>
-          <div style="font-size:12px;margin-top:2px;color:var(--muted-ink,#52634c)">${esc(pick(st.format, lang))} — ${esc(pick(st.action, lang))}</div>
-        </li>`;
+          <span>${esc(pick(st.format, lang))} — ${esc(pick(st.action, lang))}</span>
+        </button></li>`;
       }).join('');
 
       bodyHtml = `
@@ -433,16 +433,16 @@ export function mount(root, initialCtx) {
           </div>
 
           <div class="cx-chart-box">
-            ${renderProtocolSvg(lang, protoInfo)}
+            <div class="inet-sequence-scroll">${renderProtocolSvg(lang, protoInfo)}</div>
             <div style="margin-top:12px">
               <p class="eyebrow" style="margin-bottom:8px">${esc(t('inetProtoLogTitle'))}</p>
-              <ul style="list-style:none;padding:0;margin:0">${stepRows}</ul>
+              <ul class="inet-log">${stepRows}</ul>
             </div>
           </div>
         </div>`;
     }
 
-    root.innerHTML = `<section class="sep-lab panel cx-work-panel">
+    root.innerHTML = `<section class="sep-lab panel cx-work-panel inet-work" data-inet-view="${state.tab}">
       <div class="cx-header">
         <p class="eyebrow">${esc(t('inetLabEyebrow'))}</p>
         <h2>${esc(t('inetLabTitle'))}</h2>
@@ -483,6 +483,7 @@ export function mount(root, initialCtx) {
       stopTimer();
       state.protoStep = Number(stepRow.dataset.inetProtoStep);
       render();
+      root.querySelector(`[data-inet-proto-step="${state.protoStep}"]`)?.focus({ preventScroll: true });
       return;
     }
     const nodeEl = e.target.closest('[data-hop-node]');

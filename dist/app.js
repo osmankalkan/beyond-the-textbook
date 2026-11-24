@@ -7,6 +7,7 @@ import {marked} from './vendor/marked.js';
 import {cooling, calibrateK, halfLife, targetTime, eulerCooling, building, buildingSteady, buildingTransient, buildingMetrics} from './models.js';
 import {BOOKS, LEGACY_LESSON_ID, getBook, getLesson, localizeBook, findLessonBySection, migrateProgressStore, migrateNotesStore, countLessonProgress} from './content.js';
 import {normalizeLang, ui} from './i18n.js';
+import {createBookshelf} from './retro/bookshelf.js';
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 let storageOK=true;
@@ -251,7 +252,7 @@ function renderMathReference(){
 
 let loadedLessonKey=null;
 function applyActiveContext(){
-  document.title=`Beyond the Textbook · ${currentLesson.title}`;
+  document.title=view==='library'&&document.documentElement.dataset.ui==='retro'?'Beyond the Textbook':`Beyond the Textbook · ${currentLesson.title}`;
   $('#sidebar-cover').innerHTML=coverMarkup(currentBook);
   $('#sidebar-book-name').innerHTML=escape(currentBook.title).replace(' for ','<br>for ');
   $('#sidebar-book-meta').textContent=`${currentBook.author} · ${currentBook.year}`;
@@ -383,8 +384,11 @@ function selectBookForMap(bookId){
 }
 
 let expandedLibraryBookId=null;
+const shelfDialog=$('#shelf-dialog');
+const bookshelf=shelfDialog&&createBookshelf(shelfDialog,selectLesson,selectBookForMap);
 
 function renderLibrary(){
+  if(bookshelf){bookshelf.render($('#library-list'),BOOKS,lang,progressByLesson,t);return;}
   $('#library-list').innerHTML=BOOKS.map(rawBook=>{
     const book=localizeBook(rawBook,lang);
     const isExpanded=expandedLibraryBookId===book.id;
@@ -472,6 +476,7 @@ function renderLibrary(){
 function toggleLibraryBook(bookId){
   expandedLibraryBookId=expandedLibraryBookId===bookId?null:bookId;
   renderLibrary();
+  $$('[data-toggle-book]').find(button=>button.dataset.toggleBook===bookId)?.focus({preventScroll:true});
 }
 
 $('#library-list').addEventListener('click',e=>{
@@ -487,12 +492,13 @@ $('#library-list').addEventListener('click',e=>{
   }
   const bookToggle=e.target.closest('[data-toggle-book]');
   if(bookToggle){
-    toggleLibraryBook(bookToggle.dataset.toggleBook);
+    if(bookshelf)bookshelf.open(bookToggle.dataset.toggleBook,bookToggle);
+    else toggleLibraryBook(bookToggle.dataset.toggleBook);
   }
 });
 
 $('#library-list').addEventListener('keydown',e=>{
-  if(e.key!=='Enter'&&e.key!==' ')return;
+  if(bookshelf||(e.key!=='Enter'&&e.key!==' '))return;
   const bookToggle=e.target.closest('[data-toggle-book]');
   if(bookToggle&&e.target===bookToggle){
     e.preventDefault();
@@ -953,7 +959,7 @@ $('#lesson-complete').addEventListener('change',e=>{
 function renderExercises(){
   const prog=currentProgress();
   const questions=currentLesson.questions;
-  $('#exercises').innerHTML=questions.map((q,i)=>`<form class="panel exercise" data-question="${i}"><div class="exercise-top"><span>${String(i+1).padStart(2,'0')} / ${escape(q.tag)}${q.difficulty?`<span class="difficulty-badge">${escape(q.difficulty)}</span>`:''}</span><span class="exercise-status ${prog.solved.includes(i)?'solved':''}">${escape(prog.solved.includes(i)?t('statusSolved'):t('statusUnsolved'))}</span></div><h3>${formatMathText(q.title)}</h3><p>${formatMathText(q.text)}</p>${q.choices?`<div role="radiogroup" aria-label="${escape(q.title)}">${q.choices.map((c,j)=>`<label class="choice"><input type="radio" name="answer-${i}" value="${j}" required>${formatMathText(c)}</label>`).join('')}</div><button class="button primary" type="submit">${escape(t('checkChoiceBtn'))}</button>`:`<label for="answer-${i}">${escape(t('yourAnswerLabel',q.unit))}</label><div class="answer-line"><input id="answer-${i}" name="numeric" inputmode="decimal" placeholder="${escape(t('numericPlaceholder'))}" autocomplete="off" required aria-label="${escape(t('numericAria',q.title))}"><button class="button primary" type="submit">${escape(t('checkNumericBtn'))}</button></div>`}<p class="feedback" role="status" hidden></p><button class="text-button hint-button" type="button">${escape(t('openFirstHint'))}</button><ol class="hint-list"></ol>${q.solutionSummary?`<details class="solution-details"><summary>${escape(t('solutionSummaryLabel'))}</summary><p>${formatMathText(q.solutionSummary)}</p></details>`:''}</form>`).join('');
+  $('#exercises').innerHTML=questions.map((q,i)=>`<form class="panel exercise" data-question="${i}"><div class="exercise-top"><span>${String(i+1).padStart(2,'0')} / ${escape(q.tag)}${q.difficulty?`<span class="difficulty-badge">${escape(q.difficulty)}</span>`:''}</span><span class="exercise-status ${prog.solved.includes(i)?'solved':''}">${escape(prog.solved.includes(i)?t('statusSolved'):t('statusUnsolved'))}</span></div><h3>${formatMathText(q.title)}</h3><p>${formatMathText(q.text)}</p>${q.choices?`<div role="radiogroup" aria-label="${escape(q.title)}">${q.choices.map((c,j)=>`<label class="choice"><input type="radio" name="answer-${i}" value="${j}" required><span class="choice-text">${formatMathText(c)}</span></label>`).join('')}</div><button class="button primary" type="submit">${escape(t('checkChoiceBtn'))}</button>`:`<label for="answer-${i}">${escape(t('yourAnswerLabel',q.unit))}</label><div class="answer-line"><input id="answer-${i}" name="numeric" inputmode="decimal" placeholder="${escape(t('numericPlaceholder'))}" autocomplete="off" required aria-label="${escape(t('numericAria',q.title))}"><button class="button primary" type="submit">${escape(t('checkNumericBtn'))}</button></div>`}<p class="feedback" role="status" hidden></p><button class="text-button hint-button" type="button">${escape(t('openFirstHint'))}</button><ol class="hint-list"></ol>${q.solutionSummary?`<details class="solution-details"><summary>${escape(t('solutionSummaryLabel'))}</summary><p>${formatMathText(q.solutionSummary)}</p></details>`:''}</form>`).join('');
 }
 $('#exercises').addEventListener('submit',e=>{
   e.preventDefault();const form=e.target,i=Number(form.dataset.question),q=currentLesson.questions[i];let answer;
@@ -1048,6 +1054,7 @@ async function loadLesson(){
 
 function syncContextUrl(){
   const url=new URL(location.href);
+  if(view==='library'&&!url.hash&&!url.searchParams.has('lesson')&&document.documentElement.dataset.ui==='retro')url.hash='library';
   url.searchParams.set('lesson',currentLesson.id);
   url.searchParams.set('lang',lang);
   history.replaceState(null,'',url);
@@ -1118,8 +1125,11 @@ async function activateLab(){
 }
 
 function route(){
-  const requested=location.hash.slice(1)||'lab';
+  const isRetro=document.documentElement.dataset.ui==='retro';
+  const defaultView=isRetro&&!new URLSearchParams(location.search).has('lesson')?'library':'lab';
+  const requested=location.hash.slice(1)||defaultView;
   view=['library','lab','lesson','practice','notes','map','source'].includes(requested)?requested:'lab';
+  document.documentElement.dataset.view=view;
   $('#lesson-heading').hidden=view==='library';
   $$('.view').forEach(el=>el.hidden=el.id!=='view-'+view);
   $$('[data-view]').forEach(a=>{a.classList.toggle('active',a.dataset.view===view);if(a.dataset.view===view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
@@ -1127,6 +1137,7 @@ function route(){
   $('#menu').setAttribute('aria-expanded','false');
   $('#menu').setAttribute('aria-label',t('openMenuAria'));
   if(view!=='lab')stop();
+  if(isRetro)document.title=view==='library'?'Beyond the Textbook':`Beyond the Textbook · ${currentLesson.title}`;
   if(view==='library')renderLibrary();
   if(view==='lab')activateLab();
   if(view==='lesson')loadLesson();
